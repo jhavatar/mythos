@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.cthonic.mythos.kotlinexample">
+    package="io.chthonic.mythos.kotlinexample">
 
     <application
         android:allowBackup="true"

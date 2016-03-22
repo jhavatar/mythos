@@ -25,10 +25,10 @@
         android:gravity="center"
         android:text="toggle dah"/>
 
-    <io.cthonic.mythos.kotlinexample.ui.layouts.DahLayout
+    <io.chthonic.mythos.kotlinexample.ui.layouts.DahLayout
         android:id="@+id/dah_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    </io.cthonic.mythos.kotlinexample.ui.layouts.DahLayout>
+    </io.chthonic.mythos.kotlinexample.ui.layouts.DahLayout>
 
 </LinearLayout>
