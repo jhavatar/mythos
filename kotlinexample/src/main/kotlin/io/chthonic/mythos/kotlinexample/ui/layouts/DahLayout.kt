@@ -9,12 +9,12 @@ import android.view.ViewGroup
 import io.chthonic.mythos.kotlinexample.ui.presenters.DahPresenter
 import io.chthonic.mythos.kotlinexample.ui.vus.FusVu
 import io.chthonic.mythos.mvp.MVPDispatcher
-import io.chthonic.mythos.mvp.MVPlayout
+import io.chthonic.mythos.mvp.MVPLayout
 
 /**
  * Created by jhavatar on 3/12/2016.
  */
-class DahLayout : MVPlayout<DahPresenter, FusVu> {
+class DahLayout : MVPLayout<DahPresenter, FusVu> {
 
     override fun createMVPDispatcher(): MVPDispatcher<DahPresenter, FusVu> {
         return object: MVPDispatcher<DahPresenter, FusVu>() {

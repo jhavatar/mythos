@@ -25,7 +25,7 @@ abstract class MVPDispatcher<P, V>() where P : Presenter<V>, V : Vu {
 
     fun attachPresenter(activity: Activity,
                         fragment: Fragment? = null,
-                        mvpLayout: MVPlayout<P, V>? = null,
+                        mvpLayout: MVPLayout<P, V>? = null,
                         inState: Bundle? = null) {
 
         val args: Bundle = activity.intent.extras ?: Bundle();

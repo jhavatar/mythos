@@ -22,7 +22,7 @@ class FusVu(inflater: LayoutInflater,
                 parentView = parentView) {
 
     override fun getRootViewLayoutId(): Int {
-       return R.layout.layout_fus;
+        return R.layout.layout_fus;
     }
 
     fun setTitle(text: String) {

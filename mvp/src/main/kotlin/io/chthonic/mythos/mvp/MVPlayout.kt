@@ -13,7 +13,7 @@ import android.widget.FrameLayout
 /**
  * Created by jhavatar on 3/12/2016.
  */
-abstract class MVPlayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
+abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
 
     var mvpDispatcher: MVPDispatcher<P, V>? = null;
     var focusObserver: WindowId.FocusObserver? = null;

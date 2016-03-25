@@ -13,12 +13,12 @@ import org.jetbrains.annotations.Nullable;
 import io.chthonic.mythos.javaexample.ui.presenters.DahPresenter;
 import io.chthonic.mythos.javaexample.ui.vus.FusVu;
 import io.chthonic.mythos.mvp.MVPDispatcher;
-import io.chthonic.mythos.mvp.MVPlayout;
+import io.chthonic.mythos.mvp.MVPLayout;
 
 /**
  * Created by jhavatar on 3/12/2016.
  */
-public class DahLayout extends MVPlayout<DahPresenter, FusVu> {
+public class DahLayout extends MVPLayout<DahPresenter, FusVu> {
 
     public DahLayout(@Nullable Context context) {
         super(context);
