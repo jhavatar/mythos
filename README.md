@@ -4,7 +4,7 @@ A Model-View-Presenter library for Android apps.
 ## Dependency
 ```groovy
 dependencies {
-	compile 'io.chthonic.mythos:mythos:0.8.0'
+	compile 'io.chthonic.mythos:mythos:0.8.1'
 }
 ```
 
