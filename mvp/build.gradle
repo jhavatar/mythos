@@ -121,8 +121,8 @@ install {
 Properties bintrayProps = new Properties()
 bintrayProps.load(project.rootProject.file('local.properties').newDataInputStream())
 bintray {
-    user = bintrayProps.getProperty("bintray.user") //'jhavatar'
-    key = bintrayProps.getProperty("bintray.apikey") //'129a0141a501d5f36b1e9c3724ffc5d1b2b2780b'
+    user = bintrayProps.getProperty("bintray.user")
+    key = bintrayProps.getProperty("bintray.apikey")
     configurations = ['archives']
     pkg {
         repo = 'maven'
@@ -137,7 +137,7 @@ bintray {
             name = version
             gpg {
                 sign = true //Determines whether to GPG sign the files. The default is false
-                passphrase =  bintrayProps.getProperty("bintray.gpg.passphrase") //'cthulu_fht4gn' //Optional. The passphrase for GPG signing'
+                passphrase =  bintrayProps.getProperty("bintray.gpg.passphrase") //Optional. The passphrase for GPG signing'
             }
         }
     }
