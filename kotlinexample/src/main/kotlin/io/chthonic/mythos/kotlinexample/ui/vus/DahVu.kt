@@ -8,18 +8,17 @@ import io.chthonic.mythos.kotlinexample.R
 import io.chthonic.mythos.mvp.VuImpl
 
 /**
- * Created by jhavatar on 3/3/2016.
+ * Created by jhdev on 3/30/2016.
  */
-class FusVu(inflater: LayoutInflater,
+class DahVu(inflater: LayoutInflater,
             override val activity: Activity,
             override var fragment: Fragment? = null,
-            override var parentView: ViewGroup? = null) :
+            override var parentView: ViewGroup? = null):
         VuImpl(inflater,
                 activity = activity,
                 fragment = fragment,
                 parentView = parentView) {
-
     override fun getRootViewLayoutId(): Int {
-        return R.layout.activity_fus;
+        return R.layout.layout_dah;
     }
 }

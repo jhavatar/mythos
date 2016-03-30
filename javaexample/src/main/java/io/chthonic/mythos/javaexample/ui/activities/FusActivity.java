@@ -1,6 +1,7 @@
 package io.chthonic.mythos.javaexample.ui.activities;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -35,7 +36,7 @@ public class FusActivity extends MVPActivity<FusPresenter, FusVu> {
 
             fragment = new RoFragment();
             getSupportFragmentManager().beginTransaction()
-                    .add(getMvpContainerResId(), fragment, RoFragment.TAG)
+                    .add(R.id.child_container, fragment, RoFragment.TAG)
                     .commit();
         }
     }
@@ -59,17 +60,7 @@ public class FusActivity extends MVPActivity<FusPresenter, FusVu> {
     }
 
     @Override
-    protected int getContentViewRes() {
-        return R.layout.activity_main;
-    }
-
-    @Override
-    protected int getMvpContainerResId() {
-        return R.id.activity_mvp_container;
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         if (fragment != null) {
             getSupportFragmentManager().putFragment(outState, RoFragment.TAG, fragment);

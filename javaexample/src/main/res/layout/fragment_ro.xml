@@ -28,7 +28,8 @@
     <io.chthonic.mythos.javaexample.ui.layouts.DahLayout
         android:id="@+id/dah_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin">
     </io.chthonic.mythos.javaexample.ui.layouts.DahLayout>
 
 </LinearLayout>

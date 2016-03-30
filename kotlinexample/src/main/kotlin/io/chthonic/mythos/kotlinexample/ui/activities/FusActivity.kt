@@ -14,9 +14,6 @@ import io.chthonic.mythos.mvp.MVPDispatcher
 
 class FusActivity : MVPActivity<FusPresenter, FusVu>() {
 
-    override val contentViewRes: Int = R.layout.activity_main;
-    override val mvpContainerResId: Int = R.id.activity_mvp_container;
-
     private var fragment: Fragment? = null;
 
     override fun createMVPDispatcher(): MVPDispatcher<FusPresenter, FusVu> {
@@ -48,7 +45,7 @@ class FusActivity : MVPActivity<FusPresenter, FusVu>() {
 
             fragment = RoFragment();
             supportFragmentManager.beginTransaction()
-                    .add(mvpContainerResId, fragment, RoFragment.Companion.TAG)
+                    .add(R.id.child_container, fragment, RoFragment.Companion.TAG)
                     .commit();
         }
     }

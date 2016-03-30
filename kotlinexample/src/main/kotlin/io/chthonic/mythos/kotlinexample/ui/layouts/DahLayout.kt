@@ -7,24 +7,24 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.chthonic.mythos.kotlinexample.ui.presenters.DahPresenter
-import io.chthonic.mythos.kotlinexample.ui.vus.FusVu
+import io.chthonic.mythos.kotlinexample.ui.vus.DahVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPLayout
 
 /**
  * Created by jhavatar on 3/12/2016.
  */
-class DahLayout : MVPLayout<DahPresenter, FusVu> {
+class DahLayout : MVPLayout<DahPresenter, DahVu> {
 
-    override fun createMVPDispatcher(): MVPDispatcher<DahPresenter, FusVu> {
-        return object: MVPDispatcher<DahPresenter, FusVu>() {
+    override fun createMVPDispatcher(): MVPDispatcher<DahPresenter, DahVu> {
+        return object: MVPDispatcher<DahPresenter, DahVu>() {
 
             override fun createPresenter(): DahPresenter {
                 return DahPresenter();
             }
 
-            override fun createVu(inflater: LayoutInflater, activity: Activity, fragment: Fragment?, parentView: ViewGroup?): FusVu {
-                return FusVu(inflater, activity = activity, fragment = fragment, parentView = parentView);
+            override fun createVu(inflater: LayoutInflater, activity: Activity, fragment: Fragment?, parentView: ViewGroup?): DahVu {
+                return DahVu(inflater, activity = activity, fragment = fragment, parentView = parentView);
             }
 
         };

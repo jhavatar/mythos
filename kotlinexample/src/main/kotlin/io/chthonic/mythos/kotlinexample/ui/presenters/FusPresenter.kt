@@ -8,10 +8,4 @@ import io.chthonic.mythos.mvp.PresenterImpl
  */
 class FusPresenter() : PresenterImpl<FusVu>() {
 
-    override fun attachVu(vu: FusVu) {
-        super.attachVu(vu);
-
-        vu.setTitle("FUS");
-        vu.setBg("#FC6C85")
-    }
 }

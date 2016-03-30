@@ -5,13 +5,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/activity_vertical_margin"
+        android:background="#1FCECB"
         >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/text"
-            android:text="TEXT"
+            android:text="DAH"
             android:gravity="center"
             android:textColor="@android:color/black"
             />

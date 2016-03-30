@@ -11,14 +11,14 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import io.chthonic.mythos.javaexample.ui.presenters.DahPresenter;
-import io.chthonic.mythos.javaexample.ui.vus.FusVu;
+import io.chthonic.mythos.javaexample.ui.vus.DahVu;
 import io.chthonic.mythos.mvp.MVPDispatcher;
 import io.chthonic.mythos.mvp.MVPLayout;
 
 /**
  * Created by jhavatar on 3/12/2016.
  */
-public class DahLayout extends MVPLayout<DahPresenter, FusVu> {
+public class DahLayout extends MVPLayout<DahPresenter, DahVu> {
 
     public DahLayout(@Nullable Context context) {
         super(context);
@@ -38,13 +38,13 @@ public class DahLayout extends MVPLayout<DahPresenter, FusVu> {
 
     @NotNull
     @Override
-    protected MVPDispatcher<DahPresenter, FusVu> createMVPDispatcher() {
-        return new MVPDispatcher<DahPresenter, FusVu>() {
+    protected MVPDispatcher<DahPresenter, DahVu> createMVPDispatcher() {
+        return new MVPDispatcher<DahPresenter, DahVu>() {
 
             @NotNull
             @Override
-            protected FusVu createVu(@NotNull LayoutInflater inflater, @NotNull Activity activity, @Nullable Fragment fragment, @Nullable ViewGroup parentView) {
-                return new FusVu(inflater, activity, fragment, parentView);
+            protected DahVu createVu(@NotNull LayoutInflater inflater, @NotNull Activity activity, @Nullable Fragment fragment, @Nullable ViewGroup parentView) {
+                return new DahVu(inflater, activity, fragment, parentView);
             }
 
             @NotNull

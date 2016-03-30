@@ -2,7 +2,6 @@ package io.chthonic.mythos.mvp
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.ViewGroup
 
 /**
  * Created by jhavatar on 3/5/2016.
@@ -12,33 +11,17 @@ abstract class MVPActivity<P, V>: AppCompatActivity() where P : Presenter<V>, V 
         createMVPDispatcher();
     }
 
-    abstract protected val contentViewRes: Int;
-    abstract protected val mvpContainerResId: Int;
-
-    private var _mvpContainer: ViewGroup? = null;
-    var mvpContainer: ViewGroup?
-        get() {
-            if (_mvpContainer == null) {
-                _mvpContainer = this.findViewById(mvpContainerResId) as? ViewGroup;
-            }
-            return _mvpContainer;
-        }
-        set(value) {
-            _mvpContainer = value
-        }
-
     abstract fun createMVPDispatcher(): MVPDispatcher<P, V>;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
-        setContentView(contentViewRes);
+
         mvpDispatcher.attachPresenter(this,
                 inState = savedInstanceState);
         mvpDispatcher.attachVu(layoutInflater,
-                activity = this,
-                parentView = mvpContainer);
+                activity = this);
 
-        mvpContainer!!.addView(mvpDispatcher.vu!!.rootView);
+        setContentView(mvpDispatcher.vu!!.rootView);
     }
 
     override fun onStart() {
