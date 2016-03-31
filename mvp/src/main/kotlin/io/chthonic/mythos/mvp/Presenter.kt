@@ -7,16 +7,16 @@ import java.lang.ref.WeakReference
 /**
  * Created by jhavatar on 3/3/2016.
  */
-interface Presenter<V> where V : Vu {
+abstract class Presenter<V> where V : Vu {
 
-    var _vuRef: WeakReference<V>?;
-    var _activityRef: WeakReference<Activity>?;
-    var attached: Boolean;
+    private var _vuRef: WeakReference<V>? = null;
+    private var _activityRef: WeakReference<Activity>? = null;
+    var attached: Boolean = true;
 
-    fun attachVu(vu: V) {
+    open fun attachVu(vu: V) {
         this._vuRef = WeakReference<V>(vu);
     }
-    fun detachVu() {
+    open fun detachVu() {
         this._vuRef = null;
     }
     fun getVu(): V? {
@@ -33,21 +33,31 @@ interface Presenter<V> where V : Vu {
         return _activityRef?.get();
     }
 
-    fun initialize(activity: Activity, args: Bundle, inState: Bundle?) {
+    open fun initialize(activity: Activity, args: Bundle, inState: Bundle?) {
         _activityRef = WeakReference<Activity>(activity);
     }
 
-    fun onStartVu();
+    open fun onStartVu() {
 
-    fun onResumeVu();
+    }
 
-    fun onPauseVu();
+    open fun onResumeVu() {
 
-    fun onStopVu();
+    }
 
-    fun onDestroy() {
+    open fun onPauseVu() {
+
+    }
+
+    open fun onStopVu() {
+
+    }
+
+    open fun onDestroy() {
         attached = false;
     }
 
-    fun onSaveState(outState: Bundle);
+    open fun onSaveState(outState: Bundle) {
+
+    }
 }

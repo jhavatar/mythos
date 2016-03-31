@@ -6,17 +6,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.chthonic.mythos.kotlinexample.R
 import io.chthonic.mythos.kotlinexample.ui.layouts.DahLayout
-import io.chthonic.mythos.mvp.VuImpl
+import io.chthonic.mythos.mvp.Vu
 import kotlinx.android.synthetic.main.fragment_ro.view.*
 
 /**
  * Created by jhavatar on 3/22/2016.
  */
 class RoVu (inflater: LayoutInflater,
-            override val activity: Activity,
-            override var fragment: Fragment? = null,
-            override var parentView: ViewGroup? = null) :
-        VuImpl(inflater,
+            activity: Activity,
+            fragment: Fragment? = null,
+            parentView: ViewGroup? = null) :
+        Vu(inflater,
                 activity = activity,
                 fragment = fragment,
                 parentView = parentView) {

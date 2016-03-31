@@ -9,12 +9,12 @@ import android.widget.Button;
 
 import io.chthonic.mythos.javaexample.R;
 import io.chthonic.mythos.javaexample.ui.layouts.DahLayout;
-import io.chthonic.mythos.mvp.VuImpl;
+import io.chthonic.mythos.mvp.Vu;
 
 /**
  * Created by jhavatar on 3/22/2016.
  */
-public class RoVu extends VuImpl {
+public class RoVu extends Vu {
 
     public RoVu(LayoutInflater inflater,
                  Activity activity,

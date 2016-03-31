@@ -9,12 +9,12 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import io.chthonic.mythos.javaexample.R;
-import io.chthonic.mythos.mvp.VuImpl;
+import io.chthonic.mythos.mvp.Vu;
 
 /**
  * Created by jhavatar on 3/30/2016.
  */
-public class DahVu extends VuImpl {
+public class DahVu extends Vu {
 
     public DahVu(@NotNull LayoutInflater inflater, @NotNull Activity activity, @Nullable Fragment fragment, @Nullable ViewGroup parentView) {
         super(inflater, activity, fragment, parentView);

@@ -6,12 +6,12 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import io.chthonic.mythos.javaexample.R;
-import io.chthonic.mythos.mvp.VuImpl;
+import io.chthonic.mythos.mvp.Vu;
 
 /**
  * Created by jhavatar on 3/3/2016.
  */
-public class FusVu extends VuImpl {
+public class FusVu extends Vu {
 
     public FusVu(LayoutInflater inflater,
           Activity activity,
