@@ -11,6 +11,7 @@ interface Presenter<V> where V : Vu {
 
     var _vuRef: WeakReference<V>?;
     var _activityRef: WeakReference<Activity>?;
+    var attached: Boolean;
 
     fun attachVu(vu: V) {
         this._vuRef = WeakReference<V>(vu);
@@ -44,7 +45,9 @@ interface Presenter<V> where V : Vu {
 
     fun onStopVu();
 
-    fun onDestroy();
+    fun onDestroy() {
+        attached = false;
+    }
 
     fun onSaveState(outState: Bundle);
 }

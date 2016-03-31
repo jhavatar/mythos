@@ -11,6 +11,7 @@ abstract class PresenterImpl<V> : Presenter<V> where V: Vu {
 
     override var _vuRef: WeakReference<V>? = null;
     override var _activityRef: WeakReference<Activity>? = null;
+    override var attached: Boolean = true;
 
     override fun onStartVu() {
     }
@@ -22,9 +23,6 @@ abstract class PresenterImpl<V> : Presenter<V> where V: Vu {
     }
 
     override fun onStopVu() {
-    }
-
-    override fun onDestroy() {
     }
 
     override fun onSaveState(outState: Bundle) {
