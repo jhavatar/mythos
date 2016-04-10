@@ -1,5 +1,5 @@
 # mythos
-A Model-View-Presenter library for Android apps.
+A Model-View-Presenter library with lifecycle callbacks for Android apps.
 
 ## Dependency
 ```groovy
