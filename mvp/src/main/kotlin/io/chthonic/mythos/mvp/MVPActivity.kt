@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity
 
 /**
  * Created by jhavatar on 3/5/2016.
+ *
+ * Implement a MVP pattern using an Activity.
  */
 abstract class MVPActivity<P, V>: AppCompatActivity() where P : Presenter<V>, V : Vu {
     val mvpDispatcher: MVPDispatcher<P, V> by lazy {

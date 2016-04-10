@@ -6,6 +6,8 @@ import java.lang.ref.WeakReference
 
 /**
  * Created by jhavatar on 3/3/2016.
+ *
+ * Manages the Presenter component of an MVP architectural pattern.
  */
 abstract class Presenter<V> where V : Vu {
 
@@ -18,7 +20,8 @@ abstract class Presenter<V> where V : Vu {
     /** True if Presenter is attached */
     var attached: Boolean = true;
 
-    /** Attach Vu to Presenter.
+    /**
+     * Attach Vu to Presenter.
      *
      * @param vu VU thatis being attached.
      */
@@ -62,7 +65,7 @@ abstract class Presenter<V> where V : Vu {
     /**
      * Initialize Presenter. Call after passed parameters are initialized.
      *
-     * @param activity Activity that the PResenter belongs to.
+     * @param activity Activity that the Presenter belongs to.
      * @param args Arguments passed to presented object.
      * @param inState Data of Presenter's instance last saved in onSaveState call.
      */
@@ -71,35 +74,35 @@ abstract class Presenter<V> where V : Vu {
     }
 
     /**
-     * Called when Vu is to be displayed.
+     * Called when Vu is to be displayed. Lifecycle callback.
      */
     open fun onStartVu() {
 
     }
 
     /**
-     * Called when Vu is moved to screen's foreground.
+     * Called when Vu is moved to screen's foreground. Lifecycle callback.
      */
     open fun onResumeVu() {
 
     }
 
     /**
-     * Called when Vu is moved from screen's foreground to background.
+     * Called when Vu is moved from screen's foreground to background. Lifecycle callback.
      */
     open fun onPauseVu() {
 
     }
 
     /**
-     * Called when Vu is no longer visible.
+     * Called when Vu is no longer visible. Lifecycle callback.
      */
     open fun onStopVu() {
 
     }
 
     /**
-     * Called when presented object is being destroyed. Perform final Presenter cleanup.
+     * Called when presented object is being destroyed. Perform final Presenter cleanup. Lifecycle callback.
      */
     open fun onDestroy() {
         attached = false;

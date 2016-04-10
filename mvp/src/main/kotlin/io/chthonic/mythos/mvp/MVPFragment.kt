@@ -8,6 +8,8 @@ import android.view.ViewGroup
 
 /**
  * Created by jhavatar on 3/4/2016.
+ *
+ * Implement a MVP pattern using a Fragment.
  */
 abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
 

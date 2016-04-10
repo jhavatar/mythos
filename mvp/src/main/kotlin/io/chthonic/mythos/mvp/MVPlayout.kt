@@ -12,6 +12,8 @@ import android.widget.FrameLayout
 
 /**
  * Created by jhavatar on 3/12/2016.
+ *
+ * Implement a MVP pattern using a Framelayout.
  */
 abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
 

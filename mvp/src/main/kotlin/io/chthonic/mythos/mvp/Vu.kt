@@ -8,13 +8,17 @@ import android.view.ViewGroup
 
 /**
  * Created by jhavatar on 3/3/2016.
+ *
+ * Manages the View component of an MVP architectural pattern.
+ *
+ * @param activity the Activity that Vu rootView belongs to.
+ * @param fragment the Fragment that Vu's rootView is a child of (Optional).
+ * @param parentView the ViewGroup that is the direct parent to Vu's rootView (Optional).
+ * @constructor Initialize MVP's View. Call when view is attached before it is displayed
  */
 abstract class Vu(inflater: LayoutInflater,
-                  /** Activity that Vu rootView belongs to. */
                   val activity: Activity,
-                  /** Fragment that Vu's rootView is a child of (Optional). */
                   var fragment: Fragment? = null,
-                  /** ViewGroup that is the direct parent to Vu's rootView (Optional). */
                   var parentView: ViewGroup? = null) {
 
     /**
