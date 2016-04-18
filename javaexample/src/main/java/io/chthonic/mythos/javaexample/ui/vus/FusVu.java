@@ -1,11 +1,11 @@
 package io.chthonic.mythos.javaexample.ui.vus;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import io.chthonic.mythos.javaexample.R;
+import io.chthonic.mythos.mvp.FragmentWrapper;
 import io.chthonic.mythos.mvp.Vu;
 
 /**
@@ -14,14 +14,14 @@ import io.chthonic.mythos.mvp.Vu;
 public class FusVu extends Vu {
 
     public FusVu(LayoutInflater inflater,
-          Activity activity,
-          Fragment fragment,
-          ViewGroup parentView) {
+                 Activity activity,
+                 FragmentWrapper fragment,
+                 ViewGroup parentView) {
         super(inflater, activity, fragment, parentView);
     }
 
     @Override
     public int getRootViewLayoutId(){
-       return R.layout.activity_fus;
+        return R.layout.activity_fus;
     }
 }

@@ -14,6 +14,7 @@ import io.chthonic.mythos.javaexample.R;
 import io.chthonic.mythos.javaexample.ui.fragments.RoFragment;
 import io.chthonic.mythos.javaexample.ui.presenters.FusPresenter;
 import io.chthonic.mythos.javaexample.ui.vus.FusVu;
+import io.chthonic.mythos.mvp.FragmentWrapper;
 import io.chthonic.mythos.mvp.MVPActivity;
 import io.chthonic.mythos.mvp.MVPDispatcher;
 
@@ -53,7 +54,7 @@ public class FusActivity extends MVPActivity<FusPresenter, FusVu> {
 
             @NotNull
             @Override
-            protected FusVu createVu(@NotNull LayoutInflater inflater, @NotNull Activity activity, @Nullable Fragment fragment, @Nullable ViewGroup parentView) {
+            protected FusVu createVu(@NotNull LayoutInflater inflater, @NotNull Activity activity, @Nullable FragmentWrapper fragment, @Nullable ViewGroup parentView) {
                 return new FusVu(inflater, activity, fragment, parentView);
             }
         };

@@ -1,7 +1,6 @@
 package io.chthonic.mythos.javaexample.ui.fragments;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -10,6 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 import io.chthonic.mythos.javaexample.ui.presenters.RoPresenter;
 import io.chthonic.mythos.javaexample.ui.vus.RoVu;
+import io.chthonic.mythos.mvp.FragmentWrapper;
 import io.chthonic.mythos.mvp.MVPDispatcher;
 import io.chthonic.mythos.mvp.MVPFragment;
 
@@ -32,7 +32,7 @@ public class RoFragment extends MVPFragment<RoPresenter, RoVu> {
 
             @NotNull
             @Override
-            protected RoVu createVu(@NotNull LayoutInflater inflater, @NotNull Activity activity, @Nullable Fragment fragment, @Nullable ViewGroup parentView) {
+            protected RoVu createVu(@NotNull LayoutInflater inflater, @NotNull Activity activity, @Nullable FragmentWrapper fragment, @Nullable ViewGroup parentView) {
                 return new RoVu(inflater, activity, fragment, parentView);
             }
         };

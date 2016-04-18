@@ -2,7 +2,6 @@ package io.chthonic.mythos.mvp
 
 import android.app.Activity
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.ViewGroup
 
@@ -39,7 +38,7 @@ abstract class MVPDispatcher<P, V>() where P : Presenter<V>, V : Vu {
      */
     protected abstract fun createVu(inflater: LayoutInflater,
                                     activity: Activity,
-                                    fragment: Fragment? = null,
+                                    fragment: FragmentWrapper? = null,
                                     parentView: ViewGroup? = null): V;
 
     /**
@@ -50,13 +49,13 @@ abstract class MVPDispatcher<P, V>() where P : Presenter<V>, V : Vu {
      * @param mvpLayout If present then it is the MVPLayout MVP pattern belongs to (Optional).
      */
     fun attachPresenter(activity: Activity,
-                        fragment: Fragment? = null,
+                        fragment: FragmentWrapper? = null,
                         mvpLayout: MVPLayout<P, V>? = null,
                         inState: Bundle? = null) {
 
         val args: Bundle = activity.intent.extras ?: Bundle();
-        if ((fragment != null) && (fragment.arguments != null)){
-            args.putAll(fragment.arguments);
+        if ((fragment != null) && (fragment.getArguments() != null)){
+            args.putAll(fragment.getArguments());
         }
         if ((mvpLayout != null) && (mvpLayout.args != null)) {
             args.putAll(mvpLayout.args);
@@ -76,7 +75,7 @@ abstract class MVPDispatcher<P, V>() where P : Presenter<V>, V : Vu {
     fun attachVu(inflater: LayoutInflater,
                  activity: Activity,
                  parentView: ViewGroup? = null,
-                 fragment: Fragment? = null) {
+                 fragment: FragmentWrapper? = null) {
 
         vu = createVu(inflater,
                 activity,

@@ -1,7 +1,6 @@
 package io.chthonic.mythos.javaexample.ui.vus;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +8,7 @@ import android.widget.Button;
 
 import io.chthonic.mythos.javaexample.R;
 import io.chthonic.mythos.javaexample.ui.layouts.DahLayout;
+import io.chthonic.mythos.mvp.FragmentWrapper;
 import io.chthonic.mythos.mvp.Vu;
 
 /**
@@ -17,9 +17,9 @@ import io.chthonic.mythos.mvp.Vu;
 public class RoVu extends Vu {
 
     public RoVu(LayoutInflater inflater,
-                 Activity activity,
-                 Fragment fragment,
-                 ViewGroup parentView) {
+                Activity activity,
+                FragmentWrapper fragment,
+                ViewGroup parentView) {
         super(inflater, activity, fragment, parentView);
 
         Button toggleButton = (Button) this.getRootView().findViewById(R.id.button_toggle_dah);

@@ -1,11 +1,11 @@
 package io.chthonic.mythos.kotlinexample.ui.fragments
 
 import android.app.Activity
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.chthonic.mythos.kotlinexample.ui.presenters.RoPresenter
 import io.chthonic.mythos.kotlinexample.ui.vus.RoVu
+import io.chthonic.mythos.mvp.FragmentWrapper
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
 
@@ -25,7 +25,7 @@ class RoFragment(): MVPFragment<RoPresenter, RoVu>() {
                 return RoPresenter();
             }
 
-            override fun createVu(inflater: LayoutInflater, activity: Activity, fragment: Fragment?, parentView: ViewGroup?): RoVu {
+            override fun createVu(inflater: LayoutInflater, activity: Activity, fragment: FragmentWrapper?, parentView: ViewGroup?): RoVu {
                 return RoVu(inflater, activity, fragment, parentView);
             }
         };

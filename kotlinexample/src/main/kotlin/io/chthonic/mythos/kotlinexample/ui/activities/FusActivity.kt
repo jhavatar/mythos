@@ -9,6 +9,7 @@ import io.chthonic.mythos.kotlinexample.R
 import io.chthonic.mythos.kotlinexample.ui.fragments.RoFragment
 import io.chthonic.mythos.kotlinexample.ui.presenters.FusPresenter
 import io.chthonic.mythos.kotlinexample.ui.vus.FusVu
+import io.chthonic.mythos.mvp.FragmentWrapper
 import io.chthonic.mythos.mvp.MVPActivity
 import io.chthonic.mythos.mvp.MVPDispatcher
 
@@ -23,7 +24,7 @@ class FusActivity : MVPActivity<FusPresenter, FusVu>() {
                             return FusPresenter();
                         }
 
-                        override fun createVu(inflater: LayoutInflater, activity: Activity, fragment: Fragment?, parentView: ViewGroup?): FusVu {
+                        override fun createVu(inflater: LayoutInflater, activity: Activity, fragment: FragmentWrapper?, parentView: ViewGroup?): FusVu {
                             return FusVu(inflater, activity = activity, parentView = parentView);
                         }
 

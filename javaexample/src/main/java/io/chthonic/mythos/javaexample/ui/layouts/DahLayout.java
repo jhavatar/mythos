@@ -2,7 +2,6 @@ package io.chthonic.mythos.javaexample.ui.layouts;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v4.app.Fragment;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 import io.chthonic.mythos.javaexample.ui.presenters.DahPresenter;
 import io.chthonic.mythos.javaexample.ui.vus.DahVu;
+import io.chthonic.mythos.mvp.FragmentWrapper;
 import io.chthonic.mythos.mvp.MVPDispatcher;
 import io.chthonic.mythos.mvp.MVPLayout;
 
@@ -43,7 +43,7 @@ public class DahLayout extends MVPLayout<DahPresenter, DahVu> {
 
             @NotNull
             @Override
-            protected DahVu createVu(@NotNull LayoutInflater inflater, @NotNull Activity activity, @Nullable Fragment fragment, @Nullable ViewGroup parentView) {
+            protected DahVu createVu(@NotNull LayoutInflater inflater, @NotNull Activity activity, @Nullable FragmentWrapper fragment, @Nullable ViewGroup parentView) {
                 return new DahVu(inflater, activity, fragment, parentView);
             }
 

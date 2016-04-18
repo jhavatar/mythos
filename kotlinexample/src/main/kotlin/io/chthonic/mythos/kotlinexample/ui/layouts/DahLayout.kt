@@ -2,12 +2,12 @@ package io.chthonic.mythos.kotlinexample.ui.layouts
 
 import android.app.Activity
 import android.content.Context
-import android.support.v4.app.Fragment
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.chthonic.mythos.kotlinexample.ui.presenters.DahPresenter
 import io.chthonic.mythos.kotlinexample.ui.vus.DahVu
+import io.chthonic.mythos.mvp.FragmentWrapper
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPLayout
 
@@ -23,7 +23,7 @@ class DahLayout : MVPLayout<DahPresenter, DahVu> {
                 return DahPresenter();
             }
 
-            override fun createVu(inflater: LayoutInflater, activity: Activity, fragment: Fragment?, parentView: ViewGroup?): DahVu {
+            override fun createVu(inflater: LayoutInflater, activity: Activity, fragment: FragmentWrapper?, parentView: ViewGroup?): DahVu {
                 return DahVu(inflater, activity = activity, fragment = fragment, parentView = parentView);
             }
 

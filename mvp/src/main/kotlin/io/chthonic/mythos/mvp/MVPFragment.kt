@@ -22,7 +22,7 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
         mvpDispatcher.attachPresenter(activity = activity,
-                fragment = this,
+                fragment = FragmentWrapper(this),
                 inState = savedInstanceState);
     }
 
@@ -32,7 +32,7 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
 
         mvpDispatcher.attachVu(inflater,
                 activity = this.activity,
-                fragment = this,
+                fragment = FragmentWrapper(this),
                 parentView = container);
         return mvpDispatcher.vu!!.rootView;
     }
