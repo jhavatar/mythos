@@ -42,7 +42,11 @@ class FragmentWrapper {
         if (isSupport()) {
             return support!!.context;
         } else {
-            return standard!!.context;
+            if (android.os.Build.VERSION.SDK_INT >= 23) {
+                return standard!!.context;
+            } else {
+                return standard!!.activity;
+            }
         }
     }
 

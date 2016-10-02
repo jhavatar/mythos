@@ -58,6 +58,7 @@ abstract class Vu(inflater: LayoutInflater,
     protected fun createRootView(inflater: LayoutInflater) : View {
         if (parentView != null) {
             return inflater.inflate(getRootViewLayoutId(), parentView, false);
+            
         } else {
             return inflater.inflate(getRootViewLayoutId(), null);
         }

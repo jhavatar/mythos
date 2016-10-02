@@ -88,14 +88,14 @@ abstract class MVPDispatcher<P, V>() where P : Presenter<V>, V : Vu {
     /**
      * Called when Vu is to be displayed. Lifecycle callback.
      */
-    fun onStartUI() {
+    fun startUI() {
         presenter.onStartVu();
     }
 
     /**
      * Called when Vu is moved to screen's foreground. Lifecycle callback.
      */
-    fun onResumeUI() {
+    fun resumeUI() {
         vu!!.onFocusedChanged(true);
         presenter.onResumeVu();
     }
@@ -103,7 +103,7 @@ abstract class MVPDispatcher<P, V>() where P : Presenter<V>, V : Vu {
     /**
      * Called when Vu is moved from screen's foreground to background. Lifecycle callback.
      */
-    fun onPauseUI() {
+    fun pauseUI() {
         presenter.onPauseVu();
         vu!!.onFocusedChanged(false);
     }
@@ -111,7 +111,7 @@ abstract class MVPDispatcher<P, V>() where P : Presenter<V>, V : Vu {
     /**
      * Called when Vu is no longer visible. Lifecycle callback.
      */
-    fun onStopUI() {
+    fun stopUI() {
         presenter.onStopVu();
     }
 

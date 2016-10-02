@@ -38,22 +38,22 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
     }
 
     override fun onStart() {
-        mvpDispatcher.onStartUI();
+        mvpDispatcher.startUI();
         super.onStart();
     }
 
     override fun onResume() {
-        mvpDispatcher.onResumeUI();
+        mvpDispatcher.resumeUI();
         super.onResume();
     }
 
     override fun onPause() {
-        mvpDispatcher.onPauseUI();
+        mvpDispatcher.pauseUI();
         super.onPause();
     }
 
     override fun onStop() {
-        mvpDispatcher.onStopUI();
+        mvpDispatcher.stopUI();
         super.onStop();
     }
 

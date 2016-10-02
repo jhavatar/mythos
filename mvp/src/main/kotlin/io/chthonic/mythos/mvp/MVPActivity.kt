@@ -28,21 +28,21 @@ abstract class MVPActivity<P, V>: AppCompatActivity() where P : Presenter<V>, V 
 
     override fun onStart() {
         super.onStart();
-        mvpDispatcher.onStartUI();
+        mvpDispatcher.startUI();
     }
 
     override fun onResume() {
         super.onResume();
-        mvpDispatcher.onResumeUI();
+        mvpDispatcher.resumeUI();
     }
 
     override fun onPause() {
-        mvpDispatcher.onPauseUI();
+        mvpDispatcher.pauseUI();
         super.onPause();
     }
 
     override fun onStop() {
-        mvpDispatcher.onStopUI();
+        mvpDispatcher.stopUI();
         super.onStop();
     }
 

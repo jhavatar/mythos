@@ -21,10 +21,10 @@ Optional prefab implementations of MVPActivity, MVPFragment and MVPLayout are av
 ### MVPDispatcher life cycle
 1. attachPresenter()
 2. attachVu()
-3. onStartUI()
-4. onResumeUI()
-5. onPauseUI() -- possibly goto step 4
-6. onStopUI() -- possibly goto step 3
+3. startUI()
+4. resumeUI()
+5. pauseUI() -- possibly goto step 4
+6. stopUI() -- possibly goto step 3
 7. destroyVu()  -- possibly goto step 2
 8. destroyPresenter()
 

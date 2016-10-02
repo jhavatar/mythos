@@ -75,12 +75,12 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
 
     private fun onFocusUI() {
         focused = true;
-        mvpDispatcher!!.onResumeUI();
+        mvpDispatcher!!.resumeUI();
     }
 
     private fun onUnFocusUI() {
         focused = false;
-        mvpDispatcher!!.onPauseUI();
+        mvpDispatcher!!.pauseUI();
     }
 
     override fun onAttachedToWindow(){
@@ -109,7 +109,6 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
             }
 
         };
-
         this.windowId.registerFocusObserver(focusObserver);
     }
 
