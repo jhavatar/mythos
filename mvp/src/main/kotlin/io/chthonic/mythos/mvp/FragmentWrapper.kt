@@ -13,6 +13,37 @@ class FragmentWrapper {
     val standard: android.app.Fragment?
     val support: android.support.v4.app.Fragment?
 
+    val activity: Activity?
+        get() {
+            if (isSupport()) {
+                return support!!.activity;
+            } else {
+                return standard!!.activity;
+            }
+        }
+
+    val context: Context?
+        get() {
+            if (isSupport()) {
+                return support!!.context;
+            } else {
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                    return standard!!.context;
+                } else {
+                    return standard!!.activity;
+                }
+            }
+        }
+
+    val arguments: Bundle?
+        get() {
+            if (isSupport()) {
+                return support!!.arguments;
+            } else {
+                return standard!!.arguments;
+            }
+        }
+
     constructor (fragment: android.app.Fragment) {
         standard = fragment;
         support = null;
@@ -30,39 +61,11 @@ class FragmentWrapper {
         return (support != null);
     }
 
-    fun getActivity(): Activity? {
-        if (isSupport()) {
-            return support!!.activity;
-        } else {
-            return standard!!.activity;
-        }
-    }
-
-    fun getContext(): Context? {
-        if (isSupport()) {
-            return support!!.context;
-        } else {
-            if (android.os.Build.VERSION.SDK_INT >= 23) {
-                return standard!!.context;
-            } else {
-                return standard!!.activity;
-            }
-        }
-    }
-
     fun isAdded(): Boolean {
         if (isSupport()) {
             return support!!.isAdded;
         } else {
             return standard!!.isAdded;
-        }
-    }
-
-    fun getArguments(): Bundle? {
-        if (isSupport()) {
-            return support!!.arguments;
-        } else {
-            return standard!!.arguments;
         }
     }
 

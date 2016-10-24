@@ -54,8 +54,8 @@ abstract class MVPDispatcher<P, V>() where P : Presenter<V>, V : Vu {
                         inState: Bundle? = null) {
 
         val args: Bundle = activity.intent.extras ?: Bundle();
-        if ((fragment != null) && (fragment.getArguments() != null)){
-            args.putAll(fragment.getArguments());
+        if ((fragment != null) && (fragment.arguments != null)){
+            args.putAll(fragment.arguments);
         }
         if ((mvpLayout != null) && (mvpLayout.args != null)) {
             args.putAll(mvpLayout.args);
