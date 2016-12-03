@@ -7,13 +7,13 @@ Properties mythosProps = new Properties()
 mythosProps.load(project.rootProject.file('mythos.properties').newDataInputStream())
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion '24.0.2'
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         applicationId "io.cthonic.mythos.kotlinexample"
         minSdkVersion 18
-        targetSdkVersion 24
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode = mythosProps.getProperty("versionCode")
         versionName = mythosProps.getProperty("versionName")
     }
@@ -35,7 +35,7 @@ dependencies {
     compile project(':mvp')
 }
 buildscript {
-    ext.kotlin_version = '1.0.4'
+    ext.kotlin_version = "${rootProject.ext.kotlin_version}"
     repositories {
         mavenCentral()
     }
