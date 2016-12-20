@@ -14,22 +14,22 @@ import android.view.ViewGroup
  *
  * Implement a MVP pattern using an Activity.
  */
-abstract class MVPActivity<P, V>: AppCompatActivity(), LoaderManager.LoaderCallbacks<P> where P : Presenter<V>, V : Vu {
-//    val mvpDispatcher: MVPDispatcher<P, V> by lazy {
-//        createMVPDispatcher();
-//    }
+abstract class MVPActivity<P, V>: AppCompatActivity() where P : Presenter<V>, V : Vu {
+    val mvpDispatcher: MVPDispatcher<P, V> by lazy {
+        createMVPDispatcher();
+    }
 
-    var presenter : P? = null;
-    var vu : V? = null;
-
-    abstract fun createPresenter(): P;
+//    var presenter : P? = null;
+//    var vu : V? = null;
+//
+//    abstract fun createPresenter(): P;
 
     protected abstract fun createMVPDispatcher(): MVPDispatcher<P, V>;
 
-    protected abstract fun createVu(inflater: LayoutInflater,
-                                    activity: Activity,
-                                    fragment: FragmentWrapper? = null,
-                                    parentView: ViewGroup? = null): V;
+//    protected abstract fun createVu(inflater: LayoutInflater,
+//                                    activity: Activity,
+//                                    fragment: FragmentWrapper? = null,
+//                                    parentView: ViewGroup? = null): V;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
@@ -39,61 +39,70 @@ abstract class MVPActivity<P, V>: AppCompatActivity(), LoaderManager.LoaderCallb
 //        mvpDispatcher.attachVu(layoutInflater,
 //                activity = this);
 
-        vu = createVu(this.layoutInflater, this);
-        setContentView(vu!!.rootView);
+        mvpDispatcher.attachVu(this.layoutInflater, this);
+        setContentView(mvpDispatcher.vu!!.rootView);
+
+        getSupportLoaderManager().initLoader(123,
+                null,
+                mvpDispatcher.presenterCache as LoaderManager.LoaderCallbacks<P>);
+
+
+//        mvpDispatcher.onCreate();
     }
 
     override fun onStart() {
         super.onStart();
 
-        presenter!!.onVuAttached(vu!!, this.intent.extras ?: Bundle());
+        mvpDispatcher.linkPresenter(this.intent.extras)
+//        presenter!!.onVuAttached(vu!!, this.intent.extras ?: Bundle());
 
 
 //        mvpDispatcher.startUI();
+//        mvpDispatcher.onStart()
     }
 
 //    override fun onResume() {
 //        super.onResume();
-//        mvpDispatcher.resumeUI();
+//        mvpDispatcher.onResume();
 //    }
 //
 //    override fun onPause() {
-//        mvpDispatcher.pauseUI();
+//        mvpDispatcher.onPause();
 //        super.onPause();
 //    }
-
+//
     override fun onStop() {
-//        mvpDispatcher.stopUI();
-        presenter!!.onVuDetached()
+        mvpDispatcher.detachVuAndUnlinkPresenter();
+//        presenter!!.onVuDetached()
         super.onStop();
     }
-
+//
 //    override fun onDestroy() {
-//        mvpDispatcher.destroyVu();
-//        mvpDispatcher.destroyPresenter();
+//        mvpDispatcher.onDestroy();
+////        mvpDispatcher.destroyVu();
+////        mvpDispatcher.destroyPresenter();
 //        super.onDestroy();
 //    }
 
 
     override fun onSaveInstanceState(outState: Bundle){
         super.onSaveInstanceState(outState);
-        presenter!!.onSaveState(outState);
-//        mvpDispatcher.savePresenterState(outState);
+        mvpDispatcher.savePresenterState(outState);
     }
 
-    override fun onCreateLoader(id: Int, arg: Bundle): Loader<P> {
-        return PresenterLoader<P>(this, {
-            createPresenter()
-        }) as (Loader<P>)
-    }
-
-    override fun onLoadFinished(loader: Loader<P>, presenter: P) {
-        this.presenter = presenter;
-//        mvpDispatcher.presenter = presenter
-    }
-
-    override fun onLoaderReset(loader: Loader<P>) {
+//    override fun onCreateLoader(id: Int, arg: Bundle): Loader<P> {
+//        return PresenterLoader<P>(this, {
+//            createPresenter()
+//        }) as (Loader<P>)
+//    }
+//
+//    override fun onLoadFinished(loader: Loader<P>, presenter: P) {
+//        this.presenter = presenter;
+////        mvpDispatcher.presenter = presenter
+//    }
+//
+//    override fun onLoaderReset(loader: Loader<P>) {
 //        presenter = null
-    }
+//    }
 
 }

@@ -28,22 +28,23 @@ abstract class Vu(inflater: LayoutInflater,
     }
 
     /** True if Vu is attached to a Presenter */
-    var attached: Boolean = true;
+    var attached: Boolean = true
+        private set
 
-    /** True if Vu is in screen's foreground */
-    var focused: Boolean = false;
+//    /** True if Vu is in screen's foreground */
+//    var focused: Boolean = false;
 
-    /**
-     * Called when Vu is moves to and from the screen's foreground.
-     */
-    fun onFocusedChanged(hasFocus: Boolean) {
-        focused = true;
-    }
+//    /**
+//     * Called when Vu is moves to and from the screen's foreground.
+//     */
+//    fun onFocusedChanged(hasFocus: Boolean) {
+//        focused = true;
+//    }
 
     /**
      * Called after Vu is detached from Presenter its rootView will no longer be used. Perform any final Vu cleanup.
      */
-    open fun onDestroy() {
+    open fun onDetached() {
         attached = false;
     }
 

@@ -41,11 +41,11 @@ abstract class Presenter<V> where V : Vu {
 //    /** True if Presenter is attached */
 //    var attached: Boolean = true;
 
-    fun onVuAttached(vu: V, inState: Bundle) {
+    fun onVuLinked(vu: V, inState: Bundle) {
         this._vuRef = WeakReference<V>(vu);
     }
 
-    fun onVuDetached() {
+    fun onVuUnlinked() {
         this._vuRef = null;
         firstAttach = false;
     }

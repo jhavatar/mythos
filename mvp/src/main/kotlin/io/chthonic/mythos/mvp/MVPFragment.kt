@@ -19,12 +19,12 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
 
     abstract fun createMVPDispatcher(): MVPDispatcher<P, V>;
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState);
-        mvpDispatcher.attachPresenter(activity = activity,
-                fragment = FragmentWrapper(this),
-                inState = savedInstanceState);
-    }
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState);
+//        mvpDispatcher.attachPresenter(activity = activity,
+//                fragment = FragmentWrapper(this),
+//                inState = savedInstanceState);
+//    }
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -37,13 +37,13 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
         return mvpDispatcher.vu!!.rootView;
     }
 
-    override fun onStart() {
-        mvpDispatcher.startUI();
-        super.onStart();
-    }
+//    override fun onStart() {
+//        mvpDispatcher.startUI();
+//        super.onStart();
+//    }
 
     override fun onResume() {
-        mvpDispatcher.resumeUI();
+        mvpDispatcher.linkPresenter(this.inst);
         super.onResume();
     }
 

@@ -13,10 +13,10 @@ import android.view.ViewGroup
  *
  * Coordinates the Presenter and View of a MVP architectural pattern and their lifecycle callbacks.
  */
-abstract class MVPDispatcher<P, V>(val presenter: P) where P : Presenter<V>,  V : Vu {
+abstract class MVPDispatcher<P, V> (val presenterCache: PresenterCache<P>) where P : Presenter<V>,  V : Vu {
 
     /** Reference to Vu instance */
-    var vu: V? = null;
+    var vu: V? = null
         private set
 
 //    /** Reference to Presenter instance */
@@ -24,15 +24,20 @@ abstract class MVPDispatcher<P, V>(val presenter: P) where P : Presenter<V>,  V 
 //        createPresenter();
 //    }
 
-//    var presenter: P? = null;
+    val presenter: P?
+        get() {
+            return presenterCache.presenter
+        }
 //        private set
 
-    /**
-     * Create Presenter instance.
-     *
-     * @return created instance.
-     */
-    protected abstract fun createPresenter(): P;
+    private var inState: Bundle? = null
+
+//    /**
+//     * Create Presenter instance.
+//     *
+//     * @return created instance.
+//     */
+//    protected abstract fun createPresenter(): P;
 
     /**
      * Create Vu instance.
@@ -71,7 +76,31 @@ abstract class MVPDispatcher<P, V>(val presenter: P) where P : Presenter<V>,  V 
 //    }
 
 
-    fun attach(inflater: LayoutInflater,
+
+//    fun attachVu(inflater: LayoutInflater,
+//               activity: Activity,
+//               parentView: ViewGroup? = null,
+//               fragment: FragmentWrapper? = null) {
+//
+//        vu = createVu(inflater,
+//                activity,
+//                fragment = fragment,
+//                parentView = parentView);
+//
+//        val args: Bundle = activity.intent.extras ?: Bundle();
+//        if ((fragment != null) && (fragment.arguments != null)){
+//            args.putAll(fragment.arguments);
+//        }
+//
+//        presenter!!.onVuAttached(vu!!, args);
+//    }
+
+
+//    fun detach() {
+//        presenter!!.onVuDetached();
+//    }
+
+    fun attachVu(inflater: LayoutInflater,
                activity: Activity,
                parentView: ViewGroup? = null,
                fragment: FragmentWrapper? = null) {
@@ -80,25 +109,21 @@ abstract class MVPDispatcher<P, V>(val presenter: P) where P : Presenter<V>,  V 
                 activity,
                 fragment = fragment,
                 parentView = parentView);
+    }
 
-        val args: Bundle = activity.intent.extras ?: Bundle();
-        if ((fragment != null) && (fragment.arguments != null)){
-            args.putAll(fragment.arguments);
+
+
+    fun linkPresenter(vararg inStates: Bundle) {
+
+        val args = Bundle()
+        for (state in inStates) {
+            args.putAll(state);
         }
 
-        presenter!!.onVuAttached(vu!!, args);
+        presenter!!.onVuLinked(vu!!, args)
+        vu!!.onDetached();
+        vu = null;
     }
-
-
-    fun detach() {
-        presenter!!.onVuDetached();
-    }
-
-    fun destroy() {
-        context = null;
-        presenter = null;
-    }
-
 
     /**
      * Called to allow saving of Presenter's data when presented object is about to be killed.
@@ -108,6 +133,37 @@ abstract class MVPDispatcher<P, V>(val presenter: P) where P : Presenter<V>,  V 
     fun savePresenterState(outState: Bundle) {
         presenter!!.onSaveState(outState);
     }
+
+
+    fun detachVuAndUnlinkPresenter() {
+        presenter!!.onVuUnlinked()
+    }
+//
+//    fun onCreate() {
+//    }
+//
+//    fun onStart() {
+//    }
+//
+//    fun onResume() {
+//    }
+//
+//    fun onPause() {
+//    }
+//
+//    fun onStop() {
+//    }
+//
+//    fun onDestroy() {
+////        context = null;
+////        presenter = null;
+//    }
+
+//    fun onSaveInstanceState (outState: Bundle) {
+//        presenter?.onSaveState(outState)
+//    }
+
+
 
 //    /**
 //    * Attach Vu to MVP pattern and Presenter

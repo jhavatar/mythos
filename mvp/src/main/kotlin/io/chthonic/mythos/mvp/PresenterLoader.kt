@@ -37,7 +37,6 @@ class PresenterLoader<P>(context: Context?, val presenterFactory: () -> P) : Loa
     }
 
     override fun onReset() {
-        presenter?.onDestroy()
         presenter = null
     }
 
