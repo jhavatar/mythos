@@ -10,6 +10,7 @@ import io.chthonic.mythos.kotlinexample.ui.vus.DahVu
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPLayout
+import io.chthonic.mythos.mvp.PresenterCacheBasic
 
 /**
  * Created by jhavatar on 3/12/2016.
@@ -17,11 +18,8 @@ import io.chthonic.mythos.mvp.MVPLayout
 class DahLayout : MVPLayout<DahPresenter, DahVu> {
 
     override fun createMVPDispatcher(): MVPDispatcher<DahPresenter, DahVu> {
-        return object: MVPDispatcher<DahPresenter, DahVu>() {
-
-            override fun createPresenter(): DahPresenter {
-                return DahPresenter();
-            }
+        return object: MVPDispatcher<DahPresenter, DahVu>(PresenterCacheBasic<DahPresenter>(DahPresenter())) {
+            override val uid = 33
 
             override fun createVu(inflater: LayoutInflater, activity: Activity, fragment: FragmentWrapper?, parentView: ViewGroup?): DahVu {
                 return DahVu(inflater, activity = activity, fragment = fragment, parentView = parentView);

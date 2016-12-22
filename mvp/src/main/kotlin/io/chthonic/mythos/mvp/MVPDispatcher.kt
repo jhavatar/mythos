@@ -21,7 +21,7 @@ abstract class MVPDispatcher<P, V> (val presenterCache: PresenterCache<P>) where
 
     val presenter: P?
         get() {
-            return presenterCache.presenter
+            return presenterCache.get()
         }
 
     private var lastPresenterState: Bundle? = null
@@ -60,11 +60,13 @@ abstract class MVPDispatcher<P, V> (val presenterCache: PresenterCache<P>) where
 
 
 
-    fun linkPresenter(vararg args: Bundle) {
+    fun linkPresenter(vararg args: Bundle?) {
 
         val linkArgs = Bundle()
-        for (args in args) {
-            linkArgs.putAll(args);
+        for (arg in args) {
+            if (arg != null) {
+                linkArgs.putAll(arg);
+            }
         }
 
         presenter!!.onLinked(vu!!, lastPresenterState, linkArgs)
