@@ -19,16 +19,14 @@ class FusActivity : MVPActivity<FusPresenter, FusVu>() {
 
     override fun createMVPDispatcher(): MVPDispatcher<FusPresenter, FusVu> {
         return object : MVPDispatcher<FusPresenter, FusVu>() {
+            override val uid: Int
+                get() = throw UnsupportedOperationException()
 
-                        override fun createPresenter(): FusPresenter {
-                            return FusPresenter();
-                        }
+            override fun createVu(inflater: LayoutInflater, activity: Activity, fragment: FragmentWrapper?, parentView: ViewGroup?): FusVu {
+                return FusVu(inflater, activity = activity, parentView = parentView);
+            }
 
-                        override fun createVu(inflater: LayoutInflater, activity: Activity, fragment: FragmentWrapper?, parentView: ViewGroup?): FusVu {
-                            return FusVu(inflater, activity = activity, parentView = parentView);
-                        }
-
-                    };
+        };
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

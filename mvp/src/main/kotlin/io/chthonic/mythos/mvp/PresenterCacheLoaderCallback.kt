@@ -8,7 +8,7 @@ import java.lang.ref.WeakReference
 /**
  * Created by jhavatar on 12/11/2016.
  */
-class PresenterLoaderCallbackCache<P>(context: Context, val createPresenter: () -> P) : LoaderManager.LoaderCallbacks<P>, PresenterCache<P> where P : Presenter<*>{
+class PresenterCacheLoaderCallback<P>(context: Context, val createPresenter: () -> P) : LoaderManager.LoaderCallbacks<P>, PresenterCache<P> where P : Presenter<*>{
 
     override var presenter: P? = null
 

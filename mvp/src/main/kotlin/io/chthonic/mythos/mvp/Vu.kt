@@ -31,16 +31,6 @@ abstract class Vu(inflater: LayoutInflater,
     var attached: Boolean = true
         private set
 
-//    /** True if Vu is in screen's foreground */
-//    var focused: Boolean = false;
-
-//    /**
-//     * Called when Vu is moves to and from the screen's foreground.
-//     */
-//    fun onFocusedChanged(hasFocus: Boolean) {
-//        focused = true;
-//    }
-
     /**
      * Called after Vu is detached from Presenter its rootView will no longer be used. Perform any final Vu cleanup.
      */
@@ -56,7 +46,7 @@ abstract class Vu(inflater: LayoutInflater,
     /**
      * Create rootView by inflating getRootViewLayoutId()'s layout.
      */
-    protected fun createRootView(inflater: LayoutInflater) : View {
+    open protected fun createRootView(inflater: LayoutInflater) : View {
         if (parentView != null) {
             return inflater.inflate(getRootViewLayoutId(), parentView, false);
             

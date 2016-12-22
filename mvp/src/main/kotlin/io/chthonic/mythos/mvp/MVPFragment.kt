@@ -2,6 +2,7 @@ package io.chthonic.mythos.mvp
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.LoaderManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,17 +20,11 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
 
     abstract fun createMVPDispatcher(): MVPDispatcher<P, V>;
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState);
-//        mvpDispatcher.attachPresenter(activity = activity,
-//                fragment = FragmentWrapper(this),
-//                inState = savedInstanceState);
-//    }
-
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?) : View? {
 
+        mvpDispatcher.restorePresenterState(savedInstanceState)
         mvpDispatcher.attachVu(inflater,
                 activity = this.activity,
                 fragment = FragmentWrapper(this),
@@ -37,34 +32,22 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
         return mvpDispatcher.vu!!.rootView;
     }
 
-//    override fun onStart() {
-//        mvpDispatcher.startUI();
-//        super.onStart();
-//    }
+    override fun onActivityCreated (savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        loaderManager.initLoader(mvpDispatcher.uid,
+                null,
+                mvpDispatcher.presenterCache as LoaderManager.LoaderCallbacks<P>);
+    }
 
     override fun onResume() {
-        mvpDispatcher.linkPresenter(this.inst);
         super.onResume();
+        mvpDispatcher.linkPresenter(this.activity.intent.extras, this.arguments);
     }
 
     override fun onPause() {
-        mvpDispatcher.pauseUI();
+        mvpDispatcher.detachVuAndUnlinkPresenter()
         super.onPause();
-    }
-
-    override fun onStop() {
-        mvpDispatcher.stopUI();
-        super.onStop();
-    }
-
-    override fun onDestroyView() {
-        mvpDispatcher.destroyVu();
-        super.onDestroyView();
-    }
-
-    override fun onDestroy() {
-        mvpDispatcher.destroyPresenter();
-        super.onDestroy();
     }
 
     override fun onSaveInstanceState (outState: Bundle) {
