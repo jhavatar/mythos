@@ -2,6 +2,7 @@ package io.chthonic.mythos.mvp
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 
@@ -56,6 +57,7 @@ abstract class MVPDispatcher<P, V> (val presenterCache: PresenterCache<P>) where
                 activity,
                 fragment = fragment,
                 parentView = parentView);
+        Log.d("mew", "attachVu, vu = " + vu);
     }
 
 
@@ -69,6 +71,7 @@ abstract class MVPDispatcher<P, V> (val presenterCache: PresenterCache<P>) where
             }
         }
 
+        Log.d("mew", "linkPresenter: presenter = " + presenter + ", vu = " + vu + ", lastPresenterState = " + lastPresenterState + ", linkArgs = " + linkArgs)
         presenter!!.onLinked(vu!!, lastPresenterState, linkArgs)
     }
 
@@ -90,9 +93,11 @@ abstract class MVPDispatcher<P, V> (val presenterCache: PresenterCache<P>) where
     }
 
 
-    fun detachVuAndUnlinkPresenter() {
+    fun unlinkPresenter() {
         presenter!!.onUnlinked()
+    }
 
+    fun detachVu() {
         vu!!.onDetached();
         vu = null;
     }

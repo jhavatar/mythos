@@ -17,21 +17,23 @@ class FusActivity : MVPActivity<FusPresenter, FusVu>() {
     private var fragment: Fragment? = null;
 
     override fun createMVPDispatcher(): MVPDispatcher<FusPresenter, FusVu> {
-        Log.d("mew", "createMVPDispatcher: this = " + this + ", func = " + {FusPresenter()});
+        Log.d("mew", "FusActivity.createMVPDispatcher: this = " + this + ", func = " + {FusPresenter()});
         val disp:  MVPDispatcher<FusPresenter, FusVu> = object : MVPDispatcher<FusPresenter, FusVu>(PresenterCacheLoaderCallback<FusPresenter>(this, {FusPresenter()})) {
             override val uid = 1234
 
             override fun createVu(inflater: LayoutInflater, activity: Activity, fragment: FragmentWrapper?, parentView: ViewGroup?): FusVu {
+                Log.d("mew", "FusActivity.createVu");
                 return FusVu(inflater, activity = activity, parentView = parentView);
             }
 
         };
 
-        Log.d("mew", "createMVPDispatcher: disp = " + disp);
+        Log.d("mew", "FusActivity.createMVPDispatcher: disp = " + disp);
         return disp
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d("mew", "FusActivity.onCreate");
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState != null) {

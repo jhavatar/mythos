@@ -46,8 +46,13 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
     }
 
     override fun onPause() {
-        mvpDispatcher.detachVuAndUnlinkPresenter()
+        mvpDispatcher.unlinkPresenter()
         super.onPause();
+    }
+
+    override fun onDestroyView() {
+        mvpDispatcher.detachVu()
+        super.onDestroyView()
     }
 
     override fun onSaveInstanceState (outState: Bundle) {

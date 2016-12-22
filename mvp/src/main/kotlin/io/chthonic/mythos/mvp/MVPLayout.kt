@@ -118,8 +118,9 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
         focusObserver = null;
 
         this.removeView(mvpDispatcher.vu!!.rootView);
-        mvpDispatcher.detachVuAndUnlinkPresenter();
+        mvpDispatcher.unlinkPresenter();
         mvpDispatcher.presenterCache.remove();
+        mvpDispatcher.detachVu()
 
         (this.context?.applicationContext as? Application)?.unregisterActivityLifecycleCallbacks(appLifecycleCallbacks)
         appLifecycleCallbacks = null;
