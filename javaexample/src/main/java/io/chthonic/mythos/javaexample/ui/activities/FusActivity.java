@@ -1,10 +1,9 @@
 package io.chthonic.mythos.javaexample.ui.activities;
 
 import android.app.Activity;
-import android.provider.ContactsContract;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -49,10 +48,10 @@ public class FusActivity extends MVPActivity<FusPresenter, FusVu> {
     @NotNull
     @Override
     public MVPDispatcher<FusPresenter, FusVu> createMVPDispatcher() {
-        return new MVPDispatcher<FusPresenter, FusVu>(new PresenterCacheLoaderCallback<FusPresenter>(this, new kotlin.jvm.functions.Function0<FusPresenter>() {
+        return new MVPDispatcher<FusPresenter, FusVu>(new PresenterCacheLoaderCallback<FusPresenter>(this, new Callable<FusPresenter>() {
 
             @Override
-            public FusPresenter invoke() {
+            public FusPresenter call() {
                 return new FusPresenter();
             }
         })) {

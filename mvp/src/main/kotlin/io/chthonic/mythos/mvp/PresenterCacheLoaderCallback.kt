@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.support.v4.app.LoaderManager
 import android.util.Log
 import java.lang.ref.WeakReference
+import java.util.concurrent.Callable
 
 /**
  * Created by jhavatar on 12/11/2016.
  */
 class PresenterCacheLoaderCallback<P>(context: Context, val createPresenter: () -> P) : PresenterCache<P>(), LoaderManager.LoaderCallbacks<P> where P : Presenter<*>{
+    constructor(context: Context, callable: Callable<P>) : this(context, {callable.call()})
 
     override var presenter: P? = null
 

@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.concurrent.Callable;
+
 import io.chthonic.mythos.javaexample.ui.presenters.FusPresenter;
 import io.chthonic.mythos.javaexample.ui.presenters.RoPresenter;
 import io.chthonic.mythos.javaexample.ui.vus.RoVu;
@@ -25,10 +27,10 @@ public class RoFragment extends MVPFragment<RoPresenter, RoVu> {
     @NotNull
     @Override
     public MVPDispatcher<RoPresenter, RoVu> createMVPDispatcher() {
-        return new MVPDispatcher<RoPresenter, RoVu>(new PresenterCacheLoaderCallback<RoPresenter>(this.getContext(), new kotlin.jvm.functions.Function0<RoPresenter>() {
+        return new MVPDispatcher<RoPresenter, RoVu>(new PresenterCacheLoaderCallback<RoPresenter>(this.getContext(), new Callable<RoPresenter>() {
 
             @Override
-            public RoPresenter invoke() {
+            public RoPresenter call() {
                 return new RoPresenter();
             }
         })) {
