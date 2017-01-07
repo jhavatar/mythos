@@ -20,6 +20,6 @@ class FusVu(inflater: LayoutInflater,
                 parentView = parentView) {
 
     override fun getRootViewLayoutId(): Int {
-        return R.layout.activity_fus;
+        return R.layout.activity_fus
     }
 }

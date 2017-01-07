@@ -6,6 +6,4 @@ import io.chthonic.mythos.mvp.Presenter
 /**
  * Created by jhavatar on 3/3/2016.
  */
-class FusPresenter() : Presenter<FusVu>() {
-
-}
+class FusPresenter : Presenter<FusVu>()

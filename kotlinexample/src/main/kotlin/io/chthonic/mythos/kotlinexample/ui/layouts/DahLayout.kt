@@ -18,11 +18,9 @@ import io.chthonic.mythos.mvp.PresenterCacheBasic
 class DahLayout : MVPLayout<DahPresenter, DahVu> {
 
     override fun createMVPDispatcher(): MVPDispatcher<DahPresenter, DahVu> {
-        return MVPDispatcher<DahPresenter, DahVu>(33,
-                PresenterCacheBasic<DahPresenter>(DahPresenter()),
-                {layoutInflater: LayoutInflater, activity: Activity, fragmentWrapper: FragmentWrapper?, parentView: ViewGroup? ->
-                    DahVu(layoutInflater, activity, fragmentWrapper, parentView);
-                })
+        return MVPDispatcher(33,
+                PresenterCacheBasic(DahPresenter()),
+                ::DahVu)
     }
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)

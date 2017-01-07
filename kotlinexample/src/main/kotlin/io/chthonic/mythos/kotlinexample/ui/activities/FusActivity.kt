@@ -17,56 +17,56 @@ import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback
 
 class FusActivity : MVPActivity<FusPresenter, FusVu>() {
 
-    private var fragment: Fragment? = null;
+    private var fragment: Fragment? = null
 
     override fun createMVPDispatcher(): MVPDispatcher<FusPresenter, FusVu> {
-        Log.d("mew", "FusActivity.createMVPDispatcher: this = " + this + ", func = " + {FusPresenter()});
-        val disp: MVPDispatcher<FusPresenter, FusVu> = MVPDispatcher<FusPresenter, FusVu>(1234,
-                PresenterCacheLoaderCallback<FusPresenter>(this, {FusPresenter()}),
+        Log.d("mew", "FusActivity.createMVPDispatcher: this = " + this + ", func = " + {FusPresenter()})
+        val disp: MVPDispatcher<FusPresenter, FusVu> = MVPDispatcher(1234,
+                PresenterCacheLoaderCallback(this, {FusPresenter()}),
                 {layoutInflater: LayoutInflater,
                 activity: Activity,
                 fragmentWrapper: FragmentWrapper?,
                 parentView: ViewGroup? ->
-            FusVu(layoutInflater, activity, parentView = parentView);
-        });
+            FusVu(layoutInflater, activity, parentView = parentView)
+        })
 
-        Log.d("mew", "FusActivity.createMVPDispatcher: disp = " + disp);
+        Log.d("mew", "FusActivity.createMVPDispatcher: disp = " + disp)
         return disp
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("mew", "FusActivity.onCreate");
+        Log.d("mew", "FusActivity.onCreate")
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState != null) {
-            restoreInstanceState(savedInstanceState);
+            restoreInstanceState(savedInstanceState)
         }
         if (fragment == null) {
 
-            var tempFragment: Fragment? = supportFragmentManager.findFragmentByTag(RoFragment.Companion.TAG);
+            val tempFragment: Fragment? = supportFragmentManager.findFragmentByTag(RoFragment.Companion.TAG)
             if (tempFragment != null) {
-                supportFragmentManager.beginTransaction().remove(tempFragment).commit();
+                supportFragmentManager.beginTransaction().remove(tempFragment).commit()
             }
 
-            fragment = RoFragment();
+            fragment = RoFragment()
             supportFragmentManager.beginTransaction()
                     .add(R.id.child_container, fragment, RoFragment.Companion.TAG)
-                    .commit();
+                    .commit()
         }
     }
 
 
     override fun onSaveInstanceState (outState: Bundle) {
-        super.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState)
         if (fragment != null) {
-            supportFragmentManager.putFragment(outState, RoFragment.Companion.TAG, fragment);
+            supportFragmentManager.putFragment(outState, RoFragment.Companion.TAG, fragment)
         }
     }
 
     fun restoreInstanceState(inState: Bundle?){
         if (inState != null) {
             if (inState.containsKey(RoFragment.Companion.TAG)) {
-                fragment = supportFragmentManager.getFragment(inState, RoFragment.Companion.TAG);
+                fragment = supportFragmentManager.getFragment(inState, RoFragment.Companion.TAG)
             }
         }
     }
