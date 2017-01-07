@@ -15,6 +15,7 @@ import io.chthonic.mythos.mvp.FragmentWrapper;
 import io.chthonic.mythos.mvp.MVPDispatcher;
 import io.chthonic.mythos.mvp.MVPLayout;
 import io.chthonic.mythos.mvp.PresenterCacheBasic;
+import kotlin.jvm.functions.Function4;
 
 /**
  * Created by jhavatar on 3/12/2016.
@@ -40,18 +41,13 @@ public class DahLayout extends MVPLayout<DahPresenter, DahVu> {
     @NotNull
     @Override
     protected MVPDispatcher<DahPresenter, DahVu> createMVPDispatcher() {
-        return new MVPDispatcher<DahPresenter, DahVu>(new PresenterCacheBasic<DahPresenter>(new DahPresenter())) {
-
-            @Override
-            public int getUid() {
-                return 800;
-            }
-
-            @NotNull
-            @Override
-            protected DahVu createVu(@NotNull LayoutInflater inflater, @NotNull Activity activity, @Nullable FragmentWrapper fragment, @Nullable ViewGroup parentView) {
-                return new DahVu(inflater, activity, fragment, parentView);
-            }
-        };
+        return new MVPDispatcher<DahPresenter, DahVu>(800,
+                new PresenterCacheBasic<DahPresenter>(new DahPresenter()),
+                new Function4<LayoutInflater, Activity, FragmentWrapper, ViewGroup, DahVu>() {
+                    @Override
+                    public DahVu invoke(LayoutInflater layoutInflater, Activity activity, FragmentWrapper fragmentWrapper, ViewGroup parentView) {
+                        return new DahVu(layoutInflater, activity, fragmentWrapper, parentView);
+                    }
+                });
     }
 }

@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.Callable;
 
@@ -20,6 +19,7 @@ import io.chthonic.mythos.mvp.FragmentWrapper;
 import io.chthonic.mythos.mvp.MVPActivity;
 import io.chthonic.mythos.mvp.MVPDispatcher;
 import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback;
+import kotlin.jvm.functions.Function4;
 
 public class FusActivity extends MVPActivity<FusPresenter, FusVu> {
 
@@ -48,25 +48,34 @@ public class FusActivity extends MVPActivity<FusPresenter, FusVu> {
     @NotNull
     @Override
     public MVPDispatcher<FusPresenter, FusVu> createMVPDispatcher() {
-        return new MVPDispatcher<FusPresenter, FusVu>(new PresenterCacheLoaderCallback<FusPresenter>(this, new Callable<FusPresenter>() {
+        return new MVPDispatcher<FusPresenter, FusVu>(1221,
+                new PresenterCacheLoaderCallback<FusPresenter>(this, new Callable<FusPresenter>() {
 
-            @Override
-            public FusPresenter call() {
-                return new FusPresenter();
-            }
-        })) {
+                    @Override
+                    public FusPresenter call() {
+                        return new FusPresenter();
+                    }
+                }),
 
-            @Override
-            public int getUid() {
-                return 1221;
-            }
-
-            @NotNull
-            @Override
-            protected FusVu createVu(@NotNull LayoutInflater inflater, @NotNull Activity activity, @Nullable FragmentWrapper fragment, @Nullable ViewGroup parentView) {
-                return new FusVu(inflater, activity, fragment, parentView);
-            }
-        };
+                new Function4<LayoutInflater, Activity, FragmentWrapper, ViewGroup, FusVu>() {
+                    @Override
+                    public FusVu invoke(LayoutInflater inflater, Activity activity, FragmentWrapper fragmentWrapper, ViewGroup parentView) {
+                        return new FusVu(inflater, activity, fragmentWrapper, parentView);
+                    }
+                });
+//        {
+//
+//            @Override
+//            public int getUid() {
+//                return 1221;
+//            }
+//
+//            @NotNull
+//            @Override
+//            protected FusVu createVu(@NotNull LayoutInflater inflater, @NotNull Activity activity, @Nullable FragmentWrapper fragment, @Nullable ViewGroup parentView) {
+//                return new FusVu(inflater, activity, fragment, parentView);
+//            }
+//        };
     }
 
     @Override

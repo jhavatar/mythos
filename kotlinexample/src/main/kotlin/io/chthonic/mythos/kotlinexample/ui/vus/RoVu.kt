@@ -14,11 +14,11 @@ import kotlinx.android.synthetic.main.fragment_ro.view.*
  */
 class RoVu (inflater: LayoutInflater,
             activity: Activity,
-            fragment: FragmentWrapper? = null,
+            fragmentWrapper: FragmentWrapper? = null,
             parentView: ViewGroup? = null) :
         Vu(inflater,
                 activity = activity,
-                fragment = fragment,
+                fragmentWrapper = fragmentWrapper,
                 parentView = parentView) {
 
         init {

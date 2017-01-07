@@ -11,9 +11,13 @@ import android.view.ViewGroup
  *
  * Coordinates the Presenter and View of a MVP architectural pattern and their lifecycle callbacks.
  */
-abstract class MVPDispatcher<P, V> (val presenterCache: PresenterCache<P>) where P : Presenter<V>,  V : Vu {
+class MVPDispatcher<P, V> (val uid: Int,
+                           val presenterCache: PresenterCache<P>,
+                           val createVu: (inflater: LayoutInflater,
+                                          activity: Activity,
+                                          fragmentWrapper: FragmentWrapper?,
+                                          parentView: ViewGroup?) -> V) where P : Presenter<V>,  V : Vu {
 
-    abstract val uid: Int
     private val stateKey: String = "presenter_" + uid
 
     /** Reference to Vu instance */
@@ -34,20 +38,7 @@ abstract class MVPDispatcher<P, V> (val presenterCache: PresenterCache<P>) where
     }
 
 
-    /**
-     * Create Vu instance.
-     *
-     * @param inflater a LayoutInflater to inflate layout XML
-     * @param activity the Activity that MVP pattern belongs to.
-     * @param fragment If present then the Fragment that Vu's rootView is a child of (Optional).
-     * @param parentView If present then the ViewGroup that is the direct parent to Vu's rootView (Optional).
-     * @return created instance.
-     */
-    protected abstract fun createVu(inflater: LayoutInflater,
-                                    activity: Activity,
-                                    fragment: FragmentWrapper? = null,
-                                    parentView: ViewGroup? = null): V;
-
+    @JvmOverloads
     fun attachVu(inflater: LayoutInflater,
                activity: Activity,
                parentView: ViewGroup? = null,
@@ -55,11 +46,10 @@ abstract class MVPDispatcher<P, V> (val presenterCache: PresenterCache<P>) where
 
         vu = createVu(inflater,
                 activity,
-                fragment = fragment,
-                parentView = parentView);
+                fragment,
+                parentView);
         Log.d("mew", "attachVu, vu = " + vu);
     }
-
 
 
     fun linkPresenter(vararg args: Bundle?) {

@@ -57,7 +57,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     compile "org.jetbrains.kotlin:kotlin-stdlib:${rootProject.ext.kotlinVersion}"
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 
 if (project.hasProperty("android")) { // Android libraries

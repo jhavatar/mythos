@@ -12,11 +12,11 @@ import io.chthonic.mythos.mvp.Vu
  */
 class FusVu(inflater: LayoutInflater,
             activity: Activity,
-            fragment: FragmentWrapper? = null,
+            fragmentWrapper: FragmentWrapper? = null,
             parentView: ViewGroup? = null) :
         Vu(inflater,
                 activity = activity,
-                fragment = fragment,
+                fragmentWrapper = fragmentWrapper,
                 parentView = parentView) {
 
     override fun getRootViewLayoutId(): Int {

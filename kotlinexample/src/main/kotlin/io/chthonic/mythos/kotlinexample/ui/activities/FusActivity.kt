@@ -10,7 +10,10 @@ import io.chthonic.mythos.kotlinexample.R
 import io.chthonic.mythos.kotlinexample.ui.fragments.RoFragment
 import io.chthonic.mythos.kotlinexample.ui.presenters.FusPresenter
 import io.chthonic.mythos.kotlinexample.ui.vus.FusVu
-import io.chthonic.mythos.mvp.*
+import io.chthonic.mythos.mvp.FragmentWrapper
+import io.chthonic.mythos.mvp.MVPActivity
+import io.chthonic.mythos.mvp.MVPDispatcher
+import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback
 
 class FusActivity : MVPActivity<FusPresenter, FusVu>() {
 
@@ -18,15 +21,14 @@ class FusActivity : MVPActivity<FusPresenter, FusVu>() {
 
     override fun createMVPDispatcher(): MVPDispatcher<FusPresenter, FusVu> {
         Log.d("mew", "FusActivity.createMVPDispatcher: this = " + this + ", func = " + {FusPresenter()});
-        val disp:  MVPDispatcher<FusPresenter, FusVu> = object : MVPDispatcher<FusPresenter, FusVu>(PresenterCacheLoaderCallback<FusPresenter>(this, {FusPresenter()})) {
-            override val uid = 1234
-
-            override fun createVu(inflater: LayoutInflater, activity: Activity, fragment: FragmentWrapper?, parentView: ViewGroup?): FusVu {
-                Log.d("mew", "FusActivity.createVu");
-                return FusVu(inflater, activity = activity, parentView = parentView);
-            }
-
-        };
+        val disp: MVPDispatcher<FusPresenter, FusVu> = MVPDispatcher<FusPresenter, FusVu>(1234,
+                PresenterCacheLoaderCallback<FusPresenter>(this, {FusPresenter()}),
+                {layoutInflater: LayoutInflater,
+                activity: Activity,
+                fragmentWrapper: FragmentWrapper?,
+                parentView: ViewGroup? ->
+            FusVu(layoutInflater, activity, parentView = parentView);
+        });
 
         Log.d("mew", "FusActivity.createMVPDispatcher: disp = " + disp);
         return disp

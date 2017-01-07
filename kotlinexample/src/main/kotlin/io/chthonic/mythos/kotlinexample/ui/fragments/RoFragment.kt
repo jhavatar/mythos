@@ -21,13 +21,11 @@ class RoFragment(): MVPFragment<RoPresenter, RoVu>() {
     }
 
     override fun createMVPDispatcher(): MVPDispatcher<RoPresenter, RoVu> {
-        return object : MVPDispatcher<RoPresenter, RoVu>(PresenterCacheLoaderCallback<RoPresenter>(this.activity, { RoPresenter() })) {
-            override val uid = 213
-
-            override fun createVu(inflater: LayoutInflater, activity: Activity, fragment: FragmentWrapper?, parentView: ViewGroup?): RoVu {
-                return RoVu(inflater, activity, fragment, parentView);
-            }
-        };
+        return MVPDispatcher<RoPresenter, RoVu>(213,
+                PresenterCacheLoaderCallback<RoPresenter>(this.activity, { RoPresenter() }),
+                {layoutInflater: LayoutInflater, activity: Activity, fragmentWrapper: FragmentWrapper?, parentView: ViewGroup? ->
+                    RoVu(layoutInflater, activity, fragmentWrapper, parentView);
+                })
     }
 
 }

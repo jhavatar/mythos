@@ -16,11 +16,11 @@ import io.chthonic.mythos.mvp.Vu;
  */
 public class RoVu extends Vu {
 
-    public RoVu(LayoutInflater inflater,
+    public RoVu(LayoutInflater layoutInflater,
                 Activity activity,
-                FragmentWrapper fragment,
+                FragmentWrapper fragmentWrapper,
                 ViewGroup parentView) {
-        super(inflater, activity, fragment, parentView);
+        super(layoutInflater, activity, fragmentWrapper, parentView);
 
         Button toggleButton = (Button) this.getRootView().findViewById(R.id.button_toggle_dah);
         toggleButton.setOnClickListener(new View.OnClickListener() {
