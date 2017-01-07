@@ -23,8 +23,6 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
     var focusObserver: WindowId.FocusObserver? = null
     var appLifecycleCallbacks: Application.ActivityLifecycleCallbacks? = null
 
-    var focused: Boolean = false
-
     var args: Bundle? = null
 
     companion object {
@@ -70,14 +68,6 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
         return outState
     }
 
-    private fun onFocusUI() {
-        focused = true
-    }
-
-    private fun onUnFocusUI() {
-        focused = false
-    }
-
     override fun onAttachedToWindow(){
         super.onAttachedToWindow()
 
@@ -87,35 +77,10 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
         this.addView(mvpDispatcher.vu!!.rootView)
 
         mvpDispatcher.linkPresenter(if (args != null) args!! else Bundle())
-
-        focusObserver = object:  WindowId.FocusObserver(){
-            override fun onFocusLost(p0: WindowId?) {
-
-                if (focused) {
-                    onUnFocusUI()
-                }
-            }
-
-            override fun onFocusGained(p0: WindowId?) {
-
-                if (!focused) {
-                    onFocusUI()
-                }
-            }
-
-        }
-        this.windowId.registerFocusObserver(focusObserver)
     }
 
 
     override fun onDetachedFromWindow() {
-        if (focused) {
-            onUnFocusUI()
-        }
-
-        this.windowId.unregisterFocusObserver(focusObserver)
-        focusObserver = null
-
         this.removeView(mvpDispatcher.vu!!.rootView)
         mvpDispatcher.unlinkPresenter()
         mvpDispatcher.presenterCache.remove()
