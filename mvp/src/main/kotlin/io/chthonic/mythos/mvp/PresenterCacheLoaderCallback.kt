@@ -15,26 +15,20 @@ class PresenterCacheLoaderCallback<P>(context: Context, val createPresenter: () 
 
     override var presenter: P? = null
 
-    val contextRef:  WeakReference<Context>
-
-    init {
-        Log.d("mew", "init: context = " + context);
-        contextRef = WeakReference(context)
-        Log.d("mew", "init: contextRef = " + contextRef + ", context = " + contextRef.get());
-    }
+    val contextRef:  WeakReference<Context> = WeakReference(context)
 
     override fun onCreateLoader(id: Int, arg: Bundle?): android.support.v4.content.Loader<P> {
-        Log.d("mew", "onCreateLoader");
-        return PresenterLoader<P>(contextRef.get(), createPresenter) as (android.support.v4.content.Loader<P>)
+        Log.d("mew", "onCreateLoader")
+        return PresenterLoader(contextRef.get(), createPresenter)
     }
 
     override fun onLoadFinished(loader: android.support.v4.content.Loader<P>, presenter: P) {
-        Log.d("mew", "onLoadFinished");
+        Log.d("mew", "onLoadFinished")
         this.presenter = presenter
     }
 
     override fun onLoaderReset(loader: android.support.v4.content.Loader<P>) {
-        Log.d("mew", "onLoaderReset");
-        remove();
+        Log.d("mew", "onLoaderReset")
+        remove()
     }
 }

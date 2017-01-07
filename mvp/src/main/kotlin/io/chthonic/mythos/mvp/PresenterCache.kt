@@ -12,6 +12,6 @@ abstract class PresenterCache<P> where P : Presenter<*>{
 
     open fun remove() {
         presenter?.onDestroy()
-        presenter = null;
+        presenter = null
     }
 }

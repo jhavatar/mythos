@@ -33,7 +33,7 @@ class MVPDispatcher<P, V> (val uid: Int,
 
     fun restorePresenterState(inState: Bundle?) {
         if (inState?.containsKey(stateKey) ?: false) {
-            lastPresenterState = inState?.get(stateKey) as Bundle;
+            lastPresenterState = inState?.get(stateKey) as Bundle
         }
     }
 
@@ -47,21 +47,19 @@ class MVPDispatcher<P, V> (val uid: Int,
         vu = createVu(inflater,
                 activity,
                 fragment,
-                parentView);
-        Log.d("mew", "attachVu, vu = " + vu);
+                parentView)
+        Log.d("mew", "attachVu, vu = " + vu)
     }
 
 
     fun linkPresenter(vararg args: Bundle?) {
 
         val linkArgs = Bundle()
-        for (arg in args) {
-            if (arg != null) {
-                linkArgs.putAll(arg);
-            }
-        }
+        args.asSequence()
+                .filterNotNull()
+                .forEach { linkArgs.putAll(it) }
 
-        Log.d("mew", "linkPresenter: presenter = " + presenter + ", vu = " + vu + ", lastPresenterState = " + lastPresenterState + ", linkArgs = " + linkArgs)
+        Log.d("mew", "linkPresenter: presenter = $presenter, vu = $vu, lastPresenterState = $lastPresenterState, linkArgs = $linkArgs")
         presenter!!.onLinked(vu!!, lastPresenterState, linkArgs)
     }
 
@@ -78,7 +76,7 @@ class MVPDispatcher<P, V> (val uid: Int,
             outState.putBundle(stateKey, newState)
 
         } else {
-            lastPresenterState = null;
+            lastPresenterState = null
         }
     }
 
@@ -88,7 +86,7 @@ class MVPDispatcher<P, V> (val uid: Int,
     }
 
     fun detachVu() {
-        vu!!.onDetached();
-        vu = null;
+        vu!!.onDetached()
+        vu = null
     }
 }

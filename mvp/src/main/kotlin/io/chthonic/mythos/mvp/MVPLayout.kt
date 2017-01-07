@@ -18,19 +18,18 @@ import android.widget.FrameLayout
 abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
 
     val mvpDispatcher: MVPDispatcher<P, V> by lazy {
-        createMVPDispatcher();
+        createMVPDispatcher()
     }
-    var focusObserver: WindowId.FocusObserver? = null;
-    var appLifecycleCallbacks: Application.ActivityLifecycleCallbacks? = null;
+    var focusObserver: WindowId.FocusObserver? = null
+    var appLifecycleCallbacks: Application.ActivityLifecycleCallbacks? = null
 
-    var focused: Boolean = false;
+    var focused: Boolean = false
 
-    var args: Bundle? = null;
-//    var presenterState: Bundle? = null;
+    var args: Bundle? = null
 
     companion object {
-        const val ARGS_KEY = "_args_key";
-        const val MVP_STATE_KEY = "_mvp_state_key";
+        const val ARGS_KEY = "_args_key"
+        const val MVP_STATE_KEY = "_mvp_state_key"
     }
 
     constructor(context: Context?) : super(context)
@@ -38,93 +37,93 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
 
-    abstract protected fun createMVPDispatcher(): MVPDispatcher<P, V>;
+    abstract protected fun createMVPDispatcher(): MVPDispatcher<P, V>
 
     override fun onRestoreInstanceState (inState: Parcelable) {
-        super.onRestoreInstanceState(null);
+        super.onRestoreInstanceState(null)
 
-        val inBundle: Bundle = inState as Bundle;
+        val inBundle: Bundle = inState as Bundle
         if (inBundle.containsKey(ARGS_KEY)) {
-            args = inBundle.getBundle(ARGS_KEY);
+            args = inBundle.getBundle(ARGS_KEY)
         }
         if (inBundle.containsKey(MVP_STATE_KEY)) {
-            val mvpState: Bundle = inBundle.getBundle(MVP_STATE_KEY);
-            mvpDispatcher.restorePresenterState(mvpState);
+            val mvpState: Bundle = inBundle.getBundle(MVP_STATE_KEY)
+            mvpDispatcher.restorePresenterState(mvpState)
         }
     }
 
     override fun onSaveInstanceState (): Parcelable {
-        super.onSaveInstanceState();
-        val outState: Bundle = Bundle();
+        super.onSaveInstanceState()
+        val outState: Bundle = Bundle()
 
-        val mvpStateNew: Bundle = Bundle();
-        mvpDispatcher.savePresenterState(mvpStateNew);
+        val mvpStateNew: Bundle = Bundle()
+        mvpDispatcher.savePresenterState(mvpStateNew)
         if (mvpStateNew.size() > 0) {
-            outState.putParcelable(MVP_STATE_KEY, mvpStateNew);
+            outState.putParcelable(MVP_STATE_KEY, mvpStateNew)
 
         }
 
         if (args != null) {
-            outState.putParcelable(ARGS_KEY, args);
+            outState.putParcelable(ARGS_KEY, args)
         }
 
-        return outState;
+        return outState
     }
 
     private fun onFocusUI() {
-        focused = true;
+        focused = true
     }
 
     private fun onUnFocusUI() {
-        focused = false;
+        focused = false
     }
 
     override fun onAttachedToWindow(){
-        super.onAttachedToWindow();
+        super.onAttachedToWindow()
 
         mvpDispatcher.attachVu(LayoutInflater.from(this.context),
                 activity = this.context as Activity,
-                parentView = this);
-        this.addView(mvpDispatcher.vu!!.rootView);
+                parentView = this)
+        this.addView(mvpDispatcher.vu!!.rootView)
 
-        mvpDispatcher.linkPresenter(if (args != null) args!! else Bundle());
+        mvpDispatcher.linkPresenter(if (args != null) args!! else Bundle())
 
         focusObserver = object:  WindowId.FocusObserver(){
             override fun onFocusLost(p0: WindowId?) {
 
                 if (focused) {
-                    onUnFocusUI();
+                    onUnFocusUI()
                 }
             }
 
             override fun onFocusGained(p0: WindowId?) {
 
                 if (!focused) {
-                    onFocusUI();
+                    onFocusUI()
                 }
             }
 
-        };
-        this.windowId.registerFocusObserver(focusObserver);
+        }
+        this.windowId.registerFocusObserver(focusObserver)
     }
 
 
     override fun onDetachedFromWindow() {
         if (focused) {
-            onUnFocusUI();
+            onUnFocusUI()
         }
 
-        this.windowId.unregisterFocusObserver(focusObserver);
-        focusObserver = null;
+        this.windowId.unregisterFocusObserver(focusObserver)
+        focusObserver = null
 
-        this.removeView(mvpDispatcher.vu!!.rootView);
-        mvpDispatcher.unlinkPresenter();
-        mvpDispatcher.presenterCache.remove();
+        this.removeView(mvpDispatcher.vu!!.rootView)
+        mvpDispatcher.unlinkPresenter()
+        mvpDispatcher.presenterCache.remove()
         mvpDispatcher.detachVu()
 
         (this.context?.applicationContext as? Application)?.unregisterActivityLifecycleCallbacks(appLifecycleCallbacks)
-        appLifecycleCallbacks = null;
+        appLifecycleCallbacks = null
 
-        super.onDetachedFromWindow();
+        super.onDetachedFromWindow()
     }
 }

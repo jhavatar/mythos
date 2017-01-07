@@ -13,44 +13,44 @@ import android.util.Log
  */
 abstract class MVPActivity<P, V>: AppCompatActivity() where P : Presenter<V>, V : Vu {
     val mvpDispatcher: MVPDispatcher<P, V> by lazy {
-        createMVPDispatcher();
+        createMVPDispatcher()
     }
 
-    protected abstract fun createMVPDispatcher(): MVPDispatcher<P, V>;
+    protected abstract fun createMVPDispatcher(): MVPDispatcher<P, V>
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("mew", "MVPActivity.onCreate");
-        super.onCreate(savedInstanceState);
+        Log.d("mew", "MVPActivity.onCreate")
+        super.onCreate(savedInstanceState)
 
         mvpDispatcher.restorePresenterState(savedInstanceState)
-        mvpDispatcher.attachVu(this.layoutInflater, this);
-        setContentView(mvpDispatcher.vu!!.rootView);
+        mvpDispatcher.attachVu(this.layoutInflater, this)
+        setContentView(mvpDispatcher.vu!!.rootView)
 
         supportLoaderManager.initLoader(mvpDispatcher.uid,
                 null,
-                mvpDispatcher.presenterCache as LoaderManager.LoaderCallbacks<P>);
+                mvpDispatcher.presenterCache as LoaderManager.LoaderCallbacks<P>)
     }
 
     override fun onStart() {
-        Log.d("mew", "MVPActivity.onStart");
-        super.onStart();
+        Log.d("mew", "MVPActivity.onStart")
+        super.onStart()
         mvpDispatcher.linkPresenter(this.intent.extras)
     }
 
     override fun onStop() {
-        Log.d("mew", "MVPActivity.onStop");
-        mvpDispatcher.unlinkPresenter();
-        super.onStop();
+        Log.d("mew", "MVPActivity.onStop")
+        mvpDispatcher.unlinkPresenter()
+        super.onStop()
     }
 
     override fun onDestroy() {
-        mvpDispatcher.detachVu();
+        mvpDispatcher.detachVu()
         super.onDestroy()
     }
 
 
     override fun onSaveInstanceState(outState: Bundle){
-        super.onSaveInstanceState(outState);
-        mvpDispatcher.savePresenterState(outState);
+        super.onSaveInstanceState(outState)
+        mvpDispatcher.savePresenterState(outState)
     }
 }

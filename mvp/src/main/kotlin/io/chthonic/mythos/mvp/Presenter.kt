@@ -1,6 +1,5 @@
 package io.chthonic.mythos.mvp
 
-import android.app.Activity
 import android.os.Bundle
 import java.lang.ref.WeakReference
 
@@ -12,32 +11,32 @@ import java.lang.ref.WeakReference
 abstract class Presenter<V> where V : Vu {
 
     /** Memory leak safe reference to attached Vu */
-    private var _vuRef: WeakReference<V>? = null;
+    private var _vuRef: WeakReference<V>? = null
 
-    var firstLink: Boolean = true;
-        private set;
+    var firstLink: Boolean = true
+        private set
 
     /**
      * Return true if a Vu is linked.
      */
     fun isLinked(): Boolean {
-        return (_vuRef != null) && (getVu() != null);
+        return (_vuRef != null) && (getVu() != null)
     }
 
     /**
      * Return linked Vu.
      */
     fun getVu(): V? {
-        return if (isLinked()) _vuRef?.get() else  null;
+        return if (isLinked()) _vuRef?.get() else  null
     }
 
     open fun onLinked(vu: V, inState: Bundle?, args: Bundle) {
-        this._vuRef = WeakReference<V>(vu);
+        this._vuRef = WeakReference<V>(vu)
     }
 
     open fun onUnlinked() {
-        this._vuRef = null;
-        firstLink = false;
+        this._vuRef = null
+        firstLink = false
     }
 
     /**

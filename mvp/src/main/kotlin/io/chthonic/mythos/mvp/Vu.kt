@@ -25,7 +25,7 @@ abstract class Vu(layoutInflater: LayoutInflater,
      * The root of the views that the Vu manages. Can be lazily created as soon as Vu is created.
      */
     val rootView : View by lazy {
-        createRootView(layoutInflater);
+        createRootView(layoutInflater)
     }
 
     /** True if Vu is attached to a Presenter */
@@ -36,23 +36,23 @@ abstract class Vu(layoutInflater: LayoutInflater,
      * Called after Vu is detached from Presenter its rootView will no longer be used. Perform any final Vu cleanup.
      */
     open fun onDetached() {
-        attached = false;
+        attached = false
     }
 
     /**
      * Return id of layout resource file that is the rootView of the Vu.
      */
-    abstract fun getRootViewLayoutId() : Int;
+    abstract fun getRootViewLayoutId() : Int
 
     /**
      * Create rootView by inflating getRootViewLayoutId()'s layout.
      */
     open protected fun createRootView(inflater: LayoutInflater) : View {
         if (parentView != null) {
-            return inflater.inflate(getRootViewLayoutId(), parentView, false);
+            return inflater.inflate(getRootViewLayoutId(), parentView, false)
             
         } else {
-            return inflater.inflate(getRootViewLayoutId(), null);
+            return inflater.inflate(getRootViewLayoutId(), null)
         }
     }
 

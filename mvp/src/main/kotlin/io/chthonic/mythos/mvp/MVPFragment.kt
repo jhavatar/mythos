@@ -15,10 +15,10 @@ import android.view.ViewGroup
 abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
 
     val mvpDispatcher: MVPDispatcher<P, V> by lazy {
-        createMVPDispatcher();
+        createMVPDispatcher()
     }
 
-    abstract fun createMVPDispatcher(): MVPDispatcher<P, V>;
+    abstract fun createMVPDispatcher(): MVPDispatcher<P, V>
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -28,8 +28,8 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
         mvpDispatcher.attachVu(inflater,
                 activity = this.activity,
                 fragment = FragmentWrapper(this),
-                parentView = container);
-        return mvpDispatcher.vu!!.rootView;
+                parentView = container)
+        return mvpDispatcher.vu!!.rootView
     }
 
     override fun onActivityCreated (savedInstanceState: Bundle?) {
@@ -37,17 +37,17 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
 
         loaderManager.initLoader(mvpDispatcher.uid,
                 null,
-                mvpDispatcher.presenterCache as LoaderManager.LoaderCallbacks<P>);
+                mvpDispatcher.presenterCache as LoaderManager.LoaderCallbacks<P>)
     }
 
     override fun onResume() {
-        super.onResume();
-        mvpDispatcher.linkPresenter(this.activity.intent.extras, this.arguments);
+        super.onResume()
+        mvpDispatcher.linkPresenter(this.activity.intent.extras, this.arguments)
     }
 
     override fun onPause() {
         mvpDispatcher.unlinkPresenter()
-        super.onPause();
+        super.onPause()
     }
 
     override fun onDestroyView() {
@@ -56,8 +56,8 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
     }
 
     override fun onSaveInstanceState (outState: Bundle) {
-        super.onSaveInstanceState(outState);
-        mvpDispatcher.savePresenterState(outState);
+        super.onSaveInstanceState(outState)
+        mvpDispatcher.savePresenterState(outState)
     }
 
 }
