@@ -3,7 +3,6 @@ package io.chthonic.mythos.kotlinexample.ui.activities
 import android.app.Activity
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.chthonic.mythos.kotlinexample.R
@@ -20,8 +19,7 @@ class FusActivity : MVPActivity<FusPresenter, FusVu>() {
     private var fragment: Fragment? = null
 
     override fun createMVPDispatcher(): MVPDispatcher<FusPresenter, FusVu> {
-        Log.d("mew", "FusActivity.createMVPDispatcher: this = " + this + ", func = " + {FusPresenter()})
-        val disp: MVPDispatcher<FusPresenter, FusVu> = MVPDispatcher(1234,
+        return MVPDispatcher(1234,
                 PresenterCacheLoaderCallback(this, {FusPresenter()}),
                 {layoutInflater: LayoutInflater,
                 activity: Activity,
@@ -29,13 +27,9 @@ class FusActivity : MVPActivity<FusPresenter, FusVu>() {
                 parentView: ViewGroup? ->
             FusVu(layoutInflater, activity, parentView = parentView)
         })
-
-        Log.d("mew", "FusActivity.createMVPDispatcher: disp = " + disp)
-        return disp
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("mew", "FusActivity.onCreate")
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState != null) {

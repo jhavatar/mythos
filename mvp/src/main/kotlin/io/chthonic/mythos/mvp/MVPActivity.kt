@@ -3,7 +3,6 @@ package io.chthonic.mythos.mvp
 import android.os.Bundle
 import android.support.v4.app.LoaderManager
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 
 
 /**
@@ -19,7 +18,6 @@ abstract class MVPActivity<P, V>: AppCompatActivity() where P : Presenter<V>, V 
     protected abstract fun createMVPDispatcher(): MVPDispatcher<P, V>
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("mew", "MVPActivity.onCreate")
         super.onCreate(savedInstanceState)
 
         mvpDispatcher.restorePresenterState(savedInstanceState)
@@ -32,13 +30,11 @@ abstract class MVPActivity<P, V>: AppCompatActivity() where P : Presenter<V>, V 
     }
 
     override fun onStart() {
-        Log.d("mew", "MVPActivity.onStart")
         super.onStart()
         mvpDispatcher.linkPresenter(this.intent.extras)
     }
 
     override fun onStop() {
-        Log.d("mew", "MVPActivity.onStop")
         mvpDispatcher.unlinkPresenter()
         super.onStop()
     }

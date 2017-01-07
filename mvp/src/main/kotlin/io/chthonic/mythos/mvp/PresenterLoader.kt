@@ -2,7 +2,6 @@ package io.chthonic.mythos.mvp
 
 import android.content.Context
 import android.support.v4.content.Loader
-import android.util.Log
 
 
 /**
@@ -13,7 +12,6 @@ class PresenterLoader<P>(context: Context?, val presenterFactory: () -> P) : Loa
     private var presenter: P? = null
 
     override fun onStartLoading() {
-        Log.d("mew", "onStartLoading: presenter = " + presenter)
 
         // If we already own an instance, simply deliver it.
         if (presenter != null) {
@@ -26,7 +24,6 @@ class PresenterLoader<P>(context: Context?, val presenterFactory: () -> P) : Loa
     }
 
     override fun onForceLoad() {
-        Log.d("mew", "onForceLoad")
 
         // Create the Presenter using the Factory
         presenter = presenterFactory()
@@ -36,7 +33,6 @@ class PresenterLoader<P>(context: Context?, val presenterFactory: () -> P) : Loa
     }
 
     override fun onReset() {
-        Log.d("mew", "onReset")
         presenter = null
     }
 

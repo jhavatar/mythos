@@ -2,7 +2,6 @@ package io.chthonic.mythos.mvp
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 
@@ -48,7 +47,6 @@ class MVPDispatcher<P, V> (val uid: Int,
                 activity,
                 fragment,
                 parentView)
-        Log.d("mew", "attachVu, vu = " + vu)
     }
 
 
@@ -59,7 +57,6 @@ class MVPDispatcher<P, V> (val uid: Int,
                 .filterNotNull()
                 .forEach { linkArgs.putAll(it) }
 
-        Log.d("mew", "linkPresenter: presenter = $presenter, vu = $vu, lastPresenterState = $lastPresenterState, linkArgs = $linkArgs")
         presenter!!.onLinked(vu!!, lastPresenterState, linkArgs)
     }
 
