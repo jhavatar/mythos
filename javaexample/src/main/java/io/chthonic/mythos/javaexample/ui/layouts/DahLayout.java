@@ -41,8 +41,8 @@ public class DahLayout extends MVPLayout<DahPresenter, DahVu> {
     @NotNull
     @Override
     protected MVPDispatcher<DahPresenter, DahVu> createMVPDispatcher() {
-        return new MVPDispatcher<DahPresenter, DahVu>(800,
-                new PresenterCacheBasic<DahPresenter>(new DahPresenter()),
+        return new MVPDispatcher<>(800,
+                new PresenterCacheBasic<>(new DahPresenter()),
                 new Function4<LayoutInflater, Activity, FragmentWrapper, ViewGroup, DahVu>() {
                     @Override
                     public DahVu invoke(LayoutInflater layoutInflater, Activity activity, FragmentWrapper fragmentWrapper, ViewGroup parentView) {

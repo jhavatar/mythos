@@ -48,8 +48,8 @@ public class FusActivity extends MVPActivity<FusPresenter, FusVu> {
     @NotNull
     @Override
     public MVPDispatcher<FusPresenter, FusVu> createMVPDispatcher() {
-        return new MVPDispatcher<FusPresenter, FusVu>(1221,
-                new PresenterCacheLoaderCallback<FusPresenter>(this, new Callable<FusPresenter>() {
+        return new MVPDispatcher<>(1221,
+                new PresenterCacheLoaderCallback<>(this, new Callable<FusPresenter>() {
 
                     @Override
                     public FusPresenter call() {
@@ -86,7 +86,7 @@ public class FusActivity extends MVPActivity<FusPresenter, FusVu> {
         }
     }
 
-    protected void restoreInstanceState(Bundle inState){
+    private void restoreInstanceState(Bundle inState){
         if (inState != null) {
             if (inState.containsKey(RoFragment.TAG)) {
                 fragment = getSupportFragmentManager().getFragment(inState, RoFragment.TAG);
