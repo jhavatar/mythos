@@ -30,11 +30,11 @@ abstract class Presenter<V> where V : Vu {
         return if (isLinked()) _vuRef?.get() else  null
     }
 
-    open fun onLinked(vu: V, inState: Bundle?, args: Bundle) {
+    open fun onLink(vu: V, inState: Bundle?, args: Bundle) {
         this._vuRef = WeakReference<V>(vu)
     }
 
-    open fun onUnlinked() {
+    open fun onUnlink() {
         this._vuRef = null
         firstLink = false
     }

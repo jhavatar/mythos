@@ -57,7 +57,7 @@ class MVPDispatcher<P, V> (val uid: Int,
                 .filterNotNull()
                 .forEach { linkArgs.putAll(it) }
 
-        presenter!!.onLinked(vu!!, lastPresenterState, linkArgs)
+        presenter!!.onLink(vu!!, lastPresenterState, linkArgs)
     }
 
     /**
@@ -79,11 +79,11 @@ class MVPDispatcher<P, V> (val uid: Int,
 
 
     fun unlinkPresenter() {
-        presenter!!.onUnlinked()
+        presenter!!.onUnlink()
     }
 
     fun detachVu() {
-        vu!!.onDetached()
+        vu!!.onDetach()
         vu = null
     }
 }

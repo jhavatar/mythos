@@ -27,12 +27,12 @@ Optional prefab implementations of MVPActivity, MVPFragment and MVPLayout are av
 6. savePresenterState()
 
 ### Presenter callbacks
-- onLinked()
-- onUnlinked()
+- onLink()
+- onUnlink()
 - onDestroy()
 
 ### Vu callbacks
-- onDetached()
+- onDetach()
 
 
 

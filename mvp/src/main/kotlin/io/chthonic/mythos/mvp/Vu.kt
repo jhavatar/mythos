@@ -35,7 +35,7 @@ abstract class Vu(layoutInflater: LayoutInflater,
     /**
      * Called after Vu is detached from Presenter its rootView will no longer be used. Perform any final Vu cleanup.
      */
-    open fun onDetached() {
+    open fun onDetach() {
         attached = false
     }
 
