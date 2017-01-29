@@ -8,7 +8,7 @@ import android.view.ViewGroup
 /**
  * Created by jhavatar on 3/9/2016.
  *
- * Coordinates the Presenter and View of a MVP architectural pattern and their lifecycle callbacks.
+ * Coordinates the Presenter and View of a MVP architectural pattern and their callbacks.
  */
 class MVPDispatcher<P, V> (val uid: Int,
                            val presenterCache: PresenterCache<P>,

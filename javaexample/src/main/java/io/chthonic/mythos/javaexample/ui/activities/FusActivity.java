@@ -63,19 +63,6 @@ public class FusActivity extends MVPActivity<FusPresenter, FusVu> {
                         return new FusVu(inflater, activity, fragmentWrapper, parentView);
                     }
                 });
-//        {
-//
-//            @Override
-//            public int getUid() {
-//                return 1221;
-//            }
-//
-//            @NotNull
-//            @Override
-//            protected FusVu createVu(@NotNull LayoutInflater inflater, @NotNull Activity activity, @Nullable FragmentWrapper fragment, @Nullable ViewGroup parentView) {
-//                return new FusVu(inflater, activity, fragment, parentView);
-//            }
-//        };
     }
 
     @Override

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 /**
  * Created by jhavatar on 3/3/2016.
  *
- * Manages the View component of an MVP architectural pattern.
+ * The View component of an MVP architectural pattern.
  *
  * @param activity the Activity that Vu rootView belongs to.
  * @param fragmentWrapper Wraps the Fragment that Vu's rootView is a child of (Optional).

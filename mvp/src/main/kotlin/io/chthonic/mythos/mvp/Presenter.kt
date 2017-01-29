@@ -6,11 +6,11 @@ import java.lang.ref.WeakReference
 /**
  * Created by jhavatar on 3/3/2016.
  *
- * Manages the Presenter component of an MVP architectural pattern.
+ * The Presenter component of an MVP architectural pattern.
  */
 abstract class Presenter<V> where V : Vu {
 
-    /** Memory leak safe reference to attached Vu */
+    /** Memory-leak-safe reference to attached Vu */
     private var _vuRef: WeakReference<V>? = null
 
     var firstLink: Boolean = true
@@ -40,7 +40,7 @@ abstract class Presenter<V> where V : Vu {
     }
 
     /**
-     * Called when presented object is being destroyed. Perform final Presenter cleanup.
+     * Called when presenter object is being destroyed. Perform final Presenter cleanup.
      */
     open fun onDestroy() {
     }
