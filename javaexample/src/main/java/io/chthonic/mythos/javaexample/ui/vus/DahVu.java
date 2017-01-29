@@ -16,8 +16,8 @@ import io.chthonic.mythos.mvp.Vu;
  */
 public class DahVu extends Vu {
 
-    public DahVu(@NotNull LayoutInflater inflater, @NotNull Activity activity, @Nullable FragmentWrapper fragment, @Nullable ViewGroup parentView) {
-        super(inflater, activity, fragment, parentView);
+    public DahVu(@NotNull LayoutInflater layoutInflater, @NotNull Activity activity, @Nullable FragmentWrapper fragmentWrapper, @Nullable ViewGroup parentView) {
+        super(layoutInflater, activity, fragmentWrapper, parentView);
     }
 
     @Override

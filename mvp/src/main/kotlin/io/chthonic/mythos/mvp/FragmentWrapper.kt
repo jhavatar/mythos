@@ -16,21 +16,22 @@ class FragmentWrapper {
     val activity: Activity?
         get() {
             if (isSupport()) {
-                return support!!.activity;
+                return support!!.activity
             } else {
-                return standard!!.activity;
+                return standard!!.activity
             }
         }
 
     val context: Context?
         get() {
             if (isSupport()) {
-                return support!!.context;
+                return support!!.context
+
             } else {
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                    return standard!!.context;
+                    return standard!!.context
                 } else {
-                    return standard!!.activity;
+                    return standard!!.activity
                 }
             }
         }
@@ -38,34 +39,34 @@ class FragmentWrapper {
     val arguments: Bundle?
         get() {
             if (isSupport()) {
-                return support!!.arguments;
+                return support!!.arguments
             } else {
-                return standard!!.arguments;
+                return standard!!.arguments
             }
         }
 
     constructor (fragment: android.app.Fragment) {
-        standard = fragment;
-        support = null;
+        standard = fragment
+        support = null
     }
 
     constructor (fragment: android.support.v4.app.Fragment) {
-        support = fragment;
-        standard = null;
+        support = fragment
+        standard = null
     }
 
     /**
      * Return true if wrapping instance of support Fragment, otherwise wrapping standard fragment.
      */
     fun isSupport(): Boolean {
-        return (support != null);
+        return (support != null)
     }
 
     fun isAdded(): Boolean {
         if (isSupport()) {
-            return support!!.isAdded;
+            return support!!.isAdded
         } else {
-            return standard!!.isAdded;
+            return standard!!.isAdded
         }
     }
 

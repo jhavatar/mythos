@@ -14,27 +14,28 @@ import kotlinx.android.synthetic.main.fragment_ro.view.*
  */
 class RoVu (inflater: LayoutInflater,
             activity: Activity,
-            fragment: FragmentWrapper? = null,
+            fragmentWrapper: FragmentWrapper? = null,
             parentView: ViewGroup? = null) :
         Vu(inflater,
                 activity = activity,
-                fragment = fragment,
+                fragmentWrapper = fragmentWrapper,
                 parentView = parentView) {
 
         init {
             rootView.button_toggle_dah.setOnClickListener { v ->
                 if (rootView.dah_layout != null) {
-                    (rootView as ViewGroup).removeView(rootView.dah_layout);
+                    (rootView as ViewGroup).removeView(rootView.dah_layout)
+
                 } else {
-                    var roLayout = DahLayout(activity, null);
-                    roLayout.id = R.id.dah_layout;
-                    (rootView as ViewGroup).addView(roLayout);
+                    val roLayout = DahLayout(activity, null)
+                    roLayout.id = R.id.dah_layout
+                    (rootView as ViewGroup).addView(roLayout)
                 }
             }
         }
 
     override fun getRootViewLayoutId(): Int {
-        return R.layout.fragment_ro;
+        return R.layout.fragment_ro
     }
 
 

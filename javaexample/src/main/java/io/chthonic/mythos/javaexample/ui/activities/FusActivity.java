@@ -1,14 +1,15 @@
 package io.chthonic.mythos.javaexample.ui.activities;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.concurrent.Callable;
 
 import io.chthonic.mythos.javaexample.R;
 import io.chthonic.mythos.javaexample.ui.fragments.RoFragment;
@@ -17,6 +18,8 @@ import io.chthonic.mythos.javaexample.ui.vus.FusVu;
 import io.chthonic.mythos.mvp.FragmentWrapper;
 import io.chthonic.mythos.mvp.MVPActivity;
 import io.chthonic.mythos.mvp.MVPDispatcher;
+import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback;
+import kotlin.jvm.functions.Function4;
 
 public class FusActivity extends MVPActivity<FusPresenter, FusVu> {
 
@@ -45,19 +48,21 @@ public class FusActivity extends MVPActivity<FusPresenter, FusVu> {
     @NotNull
     @Override
     public MVPDispatcher<FusPresenter, FusVu> createMVPDispatcher() {
-        return new MVPDispatcher<FusPresenter, FusVu>() {
-            @NotNull
-            @Override
-            protected FusPresenter createPresenter() {
-                return new FusPresenter();
-            }
+        return new MVPDispatcher<>(1221,
+                new PresenterCacheLoaderCallback<>(this, new Callable<FusPresenter>() {
 
-            @NotNull
-            @Override
-            protected FusVu createVu(@NotNull LayoutInflater inflater, @NotNull Activity activity, @Nullable FragmentWrapper fragment, @Nullable ViewGroup parentView) {
-                return new FusVu(inflater, activity, fragment, parentView);
-            }
-        };
+                    @Override
+                    public FusPresenter call() {
+                        return new FusPresenter();
+                    }
+                }),
+
+                new Function4<LayoutInflater, Activity, FragmentWrapper, ViewGroup, FusVu>() {
+                    @Override
+                    public FusVu invoke(LayoutInflater inflater, Activity activity, FragmentWrapper fragmentWrapper, ViewGroup parentView) {
+                        return new FusVu(inflater, activity, fragmentWrapper, parentView);
+                    }
+                });
     }
 
     @Override
@@ -68,7 +73,7 @@ public class FusActivity extends MVPActivity<FusPresenter, FusVu> {
         }
     }
 
-    protected void restoreInstanceState(Bundle inState){
+    private void restoreInstanceState(Bundle inState){
         if (inState != null) {
             if (inState.containsKey(RoFragment.TAG)) {
                 fragment = getSupportFragmentManager().getFragment(inState, RoFragment.TAG);

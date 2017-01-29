@@ -6,6 +6,4 @@ import io.chthonic.mythos.mvp.Presenter
 /**
  * Created by jhavatar on 3/22/2016.
  */
-class RoPresenter() : Presenter<RoVu>() {
-
-}
+class RoPresenter : Presenter<RoVu>()
