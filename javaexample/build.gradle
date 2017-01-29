@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "io.cthonic.mythos.javaexample"
-        minSdkVersion 18
+        minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode = mythosProps.getProperty("versionCode")
         versionName = mythosProps.getProperty("versionName")
@@ -31,7 +31,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     compile project(':mvp')
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 repositories {
     mavenCentral()

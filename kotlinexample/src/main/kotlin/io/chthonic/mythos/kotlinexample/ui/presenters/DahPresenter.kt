@@ -6,6 +6,4 @@ import io.chthonic.mythos.mvp.Presenter
 /**
  * Created by jhavatar on 3/22/2016.
  */
-class DahPresenter() : Presenter<DahVu>() {
-
-}
+class DahPresenter : Presenter<DahVu>()

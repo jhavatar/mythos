@@ -1,111 +1,48 @@
 package io.chthonic.mythos.mvp
 
-import android.app.Activity
 import android.os.Bundle
 import java.lang.ref.WeakReference
 
 /**
  * Created by jhavatar on 3/3/2016.
  *
- * Manages the Presenter component of an MVP architectural pattern.
+ * The Presenter component of an MVP architectural pattern.
  */
 abstract class Presenter<V> where V : Vu {
 
-    /** Memory leak safe reference to attached Vu */
-    private var _vuRef: WeakReference<V>? = null;
+    /** Memory-leak-safe reference to attached Vu */
+    private var _vuRef: WeakReference<V>? = null
 
-    /** Memory leak safe reference activity. */
-    private var _activityRef: WeakReference<Activity>? = null;
-
-    /** True if Presenter is attached */
-    var attached: Boolean = true;
+    var firstLink: Boolean = true
+        private set
 
     /**
-     * Attach Vu to Presenter.
-     *
-     * @param vu VU thatis being attached.
+     * Return true if a Vu is linked.
      */
-    open fun attachVu(vu: V) {
-        this._vuRef = WeakReference<V>(vu);
+    fun isLinked(): Boolean {
+        return (_vuRef != null) && (getVu() != null)
     }
 
     /**
-     * Detach Vu from Presenter
-     */
-    open fun detachVu() {
-        this._vuRef = null;
-    }
-
-    /**
-     * Return attached Vu.
+     * Return linked Vu.
      */
     fun getVu(): V? {
-        return _vuRef?.get();
+        return if (isLinked()) _vuRef?.get() else  null
+    }
+
+    open fun onLink(vu: V, inState: Bundle?, args: Bundle) {
+        this._vuRef = WeakReference<V>(vu)
+    }
+
+    open fun onUnlink() {
+        this._vuRef = null
+        firstLink = false
     }
 
     /**
-     * Return true if a Vu is attached.
-     */
-    fun hasVu(): Boolean {
-        return (_vuRef != null) && (getVu() != null);
-    }
-
-    /**
-     * Return true if the activity is still available.
-     */
-    fun hasActivity(): Boolean {
-        return (_activityRef != null) && (getActivity() != null);
-    }
-
-    /** Return activity. */
-    fun getActivity(): Activity? {
-        return _activityRef?.get();
-    }
-
-    /**
-     * Initialize Presenter. Call after passed parameters are initialized.
-     *
-     * @param activity Activity that the Presenter belongs to.
-     * @param args Arguments passed to presented object.
-     * @param inState Data of Presenter's instance last saved in onSaveState call.
-     */
-    open fun initialize(activity: Activity, args: Bundle, inState: Bundle?) {
-        _activityRef = WeakReference<Activity>(activity);
-    }
-
-    /**
-     * Called when Vu is to be displayed. Lifecycle callback.
-     */
-    open fun onStartVu() {
-
-    }
-
-    /**
-     * Called when Vu is moved to screen's foreground. Lifecycle callback.
-     */
-    open fun onResumeVu() {
-
-    }
-
-    /**
-     * Called when Vu is moved from screen's foreground to background. Lifecycle callback.
-     */
-    open fun onPauseVu() {
-
-    }
-
-    /**
-     * Called when Vu is no longer visible. Lifecycle callback.
-     */
-    open fun onStopVu() {
-
-    }
-
-    /**
-     * Called when presented object is being destroyed. Perform final Presenter cleanup. Lifecycle callback.
+     * Called when presenter object is being destroyed. Perform final Presenter cleanup.
      */
     open fun onDestroy() {
-        attached = false;
     }
 
     /**
