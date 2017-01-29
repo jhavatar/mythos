@@ -1,42 +1,38 @@
 # mythos
-A Model-View-Presenter library with lifecycle callbacks for Android apps.
+A simple Model-View-Presenter library for Android apps.
 
 ## Dependency
 ```groovy
 dependencies {
-	compile 'io.chthonic.mythos:mythos:0.8.4'
+    compile 'io.chthonic.mythos:mythos:0.9.0'
 }
 ```
 
 ## Introduction
 Mythos is a tiny library that simplifies managing an Android-UI MVP pattern. Each MVP relationship requires:
 * implementing interface Presenter
-* implementing interface Vu (named to not confuse with all Andorid's "views") 
-* and calling a MVPDispatcher\<Presenter, Vu\> instance from UI callbacks. 
+* implementing interface Vu (named to not confuse with all Andorid's "View" class)
+* and calling a MVPDispatcher\<Presenter, Vu\> instance from basic UI callbacks.
  
 Optional prefab implementations of MVPActivity, MVPFragment and MVPLayout are available.
 
 ## Life cycles
 
 ### MVPDispatcher life cycle
-1. attachPresenter()
+1. restorePresenterState()
 2. attachVu()
-3. startUI()
-4. resumeUI()
-5. pauseUI() -- possibly goto step 4
-6. stopUI() -- possibly goto step 3
-7. destroyVu()  -- possibly goto step 2
-8. destroyPresenter()
+3. linkPresenter()
+4. unlinkPresenter()
+5. detachVu()
+6. savePresenterState()
 
-### Presenter life cycle
-1. initialize()
-2. attachVu()
-3. onStartVu()
-4. onResumeVu()
-5. onPauseVu() -- possibly goto step 4
-6. onStopVu() -- possibly goto step 3
-5. detachVu() -- possibly goto step 2
-6. onDestroy()
+### Presenter callbacks
+- onLink()
+- onUnlink()
+- onDestroy()
+
+### Vu callbacks
+- onDetach()
 
 
 

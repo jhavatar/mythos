@@ -5,13 +5,16 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.concurrent.Callable;
 
 import io.chthonic.mythos.javaexample.ui.presenters.RoPresenter;
 import io.chthonic.mythos.javaexample.ui.vus.RoVu;
 import io.chthonic.mythos.mvp.FragmentWrapper;
 import io.chthonic.mythos.mvp.MVPDispatcher;
 import io.chthonic.mythos.mvp.MVPFragment;
+import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback;
+import kotlin.jvm.functions.Function4;
 
 /**
  * Created by jhavatar on 3/22/2016.
@@ -23,18 +26,18 @@ public class RoFragment extends MVPFragment<RoPresenter, RoVu> {
     @NotNull
     @Override
     public MVPDispatcher<RoPresenter, RoVu> createMVPDispatcher() {
-        return new MVPDispatcher<RoPresenter, RoVu>() {
-            @NotNull
-            @Override
-            protected RoPresenter createPresenter() {
-                return new RoPresenter();
-            }
+        return new MVPDispatcher<>(211,
+                new PresenterCacheLoaderCallback<>(this.getContext(), new Callable<RoPresenter>() {
 
-            @NotNull
+                    @Override
+                    public RoPresenter call() {
+                        return new RoPresenter();
+                    }
+                }), new Function4<LayoutInflater, Activity, FragmentWrapper, ViewGroup, RoVu>() {
             @Override
-            protected RoVu createVu(@NotNull LayoutInflater inflater, @NotNull Activity activity, @Nullable FragmentWrapper fragment, @Nullable ViewGroup parentView) {
-                return new RoVu(inflater, activity, fragment, parentView);
+            public RoVu invoke(LayoutInflater layoutInflater, Activity activity, FragmentWrapper fragmentWrapper, ViewGroup parentView) {
+                return new RoVu(layoutInflater, activity, fragmentWrapper, parentView);
             }
-        };
+        });
     }
 }

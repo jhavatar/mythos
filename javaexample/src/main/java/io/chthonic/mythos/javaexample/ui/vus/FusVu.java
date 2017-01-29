@@ -13,11 +13,11 @@ import io.chthonic.mythos.mvp.Vu;
  */
 public class FusVu extends Vu {
 
-    public FusVu(LayoutInflater inflater,
+    public FusVu(LayoutInflater layoutInflater,
                  Activity activity,
-                 FragmentWrapper fragment,
+                 FragmentWrapper fragmentWrapper,
                  ViewGroup parentView) {
-        super(inflater, activity, fragment, parentView);
+        super(layoutInflater, activity, fragmentWrapper, parentView);
     }
 
     @Override
