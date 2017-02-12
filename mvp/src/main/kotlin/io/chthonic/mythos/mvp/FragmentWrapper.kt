@@ -3,6 +3,7 @@ package io.chthonic.mythos.mvp
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 
 /**
  * Created by jhavatar on 4/18/16.
@@ -45,6 +46,15 @@ class FragmentWrapper {
             }
         }
 
+    val view: View?
+        get() {
+            if (isSupport()) {
+                return support!!.view
+            } else {
+                return standard!!.view
+            }
+        }
+
     constructor (fragment: android.app.Fragment) {
         standard = fragment
         support = null
@@ -69,5 +79,15 @@ class FragmentWrapper {
             return standard!!.isAdded
         }
     }
+
+    fun isDetached(): Boolean {
+        if (isSupport()) {
+            return support!!.isDetached
+        } else {
+            return standard!!.isDetached
+        }
+    }
+
+
 
 }

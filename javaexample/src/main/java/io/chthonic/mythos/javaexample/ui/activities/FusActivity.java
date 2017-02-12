@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.Callable;
 
@@ -57,9 +58,10 @@ public class FusActivity extends MVPActivity<FusPresenter, FusVu> {
                     }
                 }),
 
-                new Function4<LayoutInflater, Activity, FragmentWrapper, ViewGroup, FusVu>() {
+                new MVPDispatcher.CreateVuFunction<FusVu>() {
+                    @NotNull
                     @Override
-                    public FusVu invoke(LayoutInflater inflater, Activity activity, FragmentWrapper fragmentWrapper, ViewGroup parentView) {
+                    public FusVu invoke(@NotNull LayoutInflater inflater, @NotNull Activity activity, @Nullable FragmentWrapper fragmentWrapper, @Nullable ViewGroup parentView) {
                         return new FusVu(inflater, activity, fragmentWrapper, parentView);
                     }
                 });

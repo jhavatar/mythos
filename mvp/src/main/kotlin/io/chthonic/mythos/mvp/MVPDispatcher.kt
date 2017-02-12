@@ -17,6 +17,18 @@ class MVPDispatcher<P, V> (val uid: Int,
                                           fragmentWrapper: FragmentWrapper?,
                                           parentView: ViewGroup?) -> V) where P : Presenter<V>,  V : Vu {
 
+    constructor(uid: Int,
+                presenterCache: PresenterCache<P>,
+                createVu: CreateVuFunction<V>) :
+                    this(uid,
+                            presenterCache,
+                            {inflater: LayoutInflater,
+                             activity: Activity,
+                             fragmentWrapper: FragmentWrapper?,
+                             parentView: ViewGroup? ->
+                        createVu.invoke(inflater, activity, fragmentWrapper, parentView)
+                    })
+
     private val stateKey: String = "presenter_" + uid
 
     /** Reference to Vu instance */
@@ -30,6 +42,8 @@ class MVPDispatcher<P, V> (val uid: Int,
 
     private var lastPresenterState: Bundle? = null
 
+
+
     fun restorePresenterState(inState: Bundle?) {
         if (inState?.containsKey(stateKey) ?: false) {
             lastPresenterState = inState?.get(stateKey) as Bundle
@@ -39,9 +53,9 @@ class MVPDispatcher<P, V> (val uid: Int,
 
     @JvmOverloads
     fun attachVu(inflater: LayoutInflater,
-               activity: Activity,
-               parentView: ViewGroup? = null,
-               fragment: FragmentWrapper? = null) {
+                 activity: Activity,
+                 parentView: ViewGroup? = null,
+                 fragment: FragmentWrapper? = null) {
 
         vu = createVu(inflater,
                 activity,
@@ -85,5 +99,12 @@ class MVPDispatcher<P, V> (val uid: Int,
     fun detachVu() {
         vu!!.onDetach()
         vu = null
+    }
+
+    interface CreateVuFunction<out V> where  V : Vu {
+        fun invoke(inflater: LayoutInflater,
+                   activity: Activity,
+                   fragmentWrapper: FragmentWrapper?,
+                   parentView: ViewGroup?) : V
     }
 }
