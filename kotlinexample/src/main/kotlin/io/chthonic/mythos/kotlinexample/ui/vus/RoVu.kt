@@ -21,18 +21,20 @@ class RoVu (inflater: LayoutInflater,
                 fragmentWrapper = fragmentWrapper,
                 parentView = parentView) {
 
-        init {
-            rootView.button_toggle_dah.setOnClickListener { v ->
-                if (rootView.dah_layout != null) {
-                    (rootView as ViewGroup).removeView(rootView.dah_layout)
+    override fun onCreate() {
+        super.onCreate()
 
-                } else {
-                    val roLayout = DahLayout(activity, null)
-                    roLayout.id = R.id.dah_layout
-                    (rootView as ViewGroup).addView(roLayout)
-                }
+        rootView.button_toggle_dah.setOnClickListener { v ->
+            if (rootView.dah_layout != null) {
+                (rootView as ViewGroup).removeView(rootView.dah_layout)
+
+            } else {
+                val roLayout = DahLayout(activity, null)
+                roLayout.id = R.id.dah_layout
+                (rootView as ViewGroup).addView(roLayout)
             }
         }
+    }
 
     override fun getRootViewLayoutId(): Int {
         return R.layout.fragment_ro

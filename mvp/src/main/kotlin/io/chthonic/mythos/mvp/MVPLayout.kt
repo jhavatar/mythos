@@ -71,7 +71,7 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
     override fun onAttachedToWindow(){
         super.onAttachedToWindow()
 
-        mvpDispatcher.attachVu(LayoutInflater.from(this.context),
+        mvpDispatcher.createVu(LayoutInflater.from(this.context),
                 activity = this.context as Activity,
                 parentView = this)
         this.addView(mvpDispatcher.vu!!.rootView)
@@ -84,7 +84,8 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
         this.removeView(mvpDispatcher.vu!!.rootView)
         mvpDispatcher.unlinkPresenter()
         mvpDispatcher.presenterCache.remove()
-        mvpDispatcher.detachVu()
+        mvpDispatcher.destroyVu()
+        this.removeView(rootView)
 
         (this.context?.applicationContext as? Application)?.unregisterActivityLifecycleCallbacks(appLifecycleCallbacks)
         appLifecycleCallbacks = null

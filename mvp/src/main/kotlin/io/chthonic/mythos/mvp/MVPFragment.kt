@@ -25,7 +25,7 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
                               savedInstanceState: Bundle?) : View? {
 
         mvpDispatcher.restorePresenterState(savedInstanceState)
-        mvpDispatcher.attachVu(inflater,
+        mvpDispatcher.createVu(inflater,
                 activity = this.activity,
                 fragment = FragmentWrapper(this),
                 parentView = container)
@@ -51,7 +51,7 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
     }
 
     override fun onDestroyView() {
-        mvpDispatcher.detachVu()
+        mvpDispatcher.destroyVu()
         super.onDestroyView()
     }
 

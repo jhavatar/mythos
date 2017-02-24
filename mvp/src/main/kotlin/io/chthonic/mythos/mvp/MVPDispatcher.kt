@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import java.util.concurrent.atomic.AtomicInteger
 
 /**
  * Created by jhavatar on 3/9/2016.
@@ -12,26 +13,39 @@ import android.view.ViewGroup
  */
 class MVPDispatcher<P, V> (val uid: Int,
                            val presenterCache: PresenterCache<P>,
-                           val createVu: (inflater: LayoutInflater,
+                           private val createVuFun: (inflater: LayoutInflater,
                                           activity: Activity,
                                           fragmentWrapper: FragmentWrapper?,
                                           parentView: ViewGroup?) -> V) where P : Presenter<V>,  V : Vu {
 
+    companion object {
+        private val uniqueId = AtomicInteger()
+
+        @JvmOverloads
+        fun genUniquePresenterId(exclude: List<Int> = emptyList()): Int {
+            var newId: Int = uniqueId.incrementAndGet();
+            while (exclude.contains(newId)) {
+                newId = uniqueId.incrementAndGet();
+            }
+
+            return newId;
+        }
+    }
+
     constructor(uid: Int,
                 presenterCache: PresenterCache<P>,
-                createVu: CreateVuFunction<V>) :
+                createVuFun: CreateVuFunction<V>) :
                     this(uid,
                             presenterCache,
                             {inflater: LayoutInflater,
                              activity: Activity,
                              fragmentWrapper: FragmentWrapper?,
                              parentView: ViewGroup? ->
-                        createVu.invoke(inflater, activity, fragmentWrapper, parentView)
+                                createVuFun.invoke(inflater, activity, fragmentWrapper, parentView)
                     })
 
     private val stateKey: String = "presenter_" + uid
 
-    /** Reference to Vu instance */
     var vu: V? = null
         private set
 
@@ -52,12 +66,12 @@ class MVPDispatcher<P, V> (val uid: Int,
 
 
     @JvmOverloads
-    fun attachVu(inflater: LayoutInflater,
+    fun createVu(inflater: LayoutInflater,
                  activity: Activity,
                  parentView: ViewGroup? = null,
                  fragment: FragmentWrapper? = null) {
 
-        vu = createVu(inflater,
+        vu = createVuFun(inflater,
                 activity,
                 fragment,
                 parentView)
@@ -96,8 +110,8 @@ class MVPDispatcher<P, V> (val uid: Int,
         presenter!!.onUnlink()
     }
 
-    fun detachVu() {
-        vu!!.onDetach()
+    fun destroyVu() {
+        vu!!.onDestroy()
         vu = null
     }
 

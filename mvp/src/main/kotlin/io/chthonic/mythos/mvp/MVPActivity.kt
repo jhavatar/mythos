@@ -21,7 +21,7 @@ abstract class MVPActivity<P, V>: AppCompatActivity() where P : Presenter<V>, V 
         super.onCreate(savedInstanceState)
 
         mvpDispatcher.restorePresenterState(savedInstanceState)
-        mvpDispatcher.attachVu(this.layoutInflater, this)
+        mvpDispatcher.createVu(this.layoutInflater, this)
         setContentView(mvpDispatcher.vu!!.rootView)
 
         supportLoaderManager.initLoader(mvpDispatcher.uid,
@@ -40,7 +40,7 @@ abstract class MVPActivity<P, V>: AppCompatActivity() where P : Presenter<V>, V 
     }
 
     override fun onDestroy() {
-        mvpDispatcher.detachVu()
+        mvpDispatcher.destroyVu()
         super.onDestroy()
     }
 

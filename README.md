@@ -20,10 +20,10 @@ Optional prefab implementations of MVPActivity, MVPFragment and MVPLayout are av
 
 ### MVPDispatcher life cycle
 1. restorePresenterState()
-2. attachVu()
+2. createVu()
 3. linkPresenter()
 4. unlinkPresenter()
-5. detachVu()
+5. destroyVu()
 6. savePresenterState()
 
 ### Presenter callbacks
@@ -32,7 +32,8 @@ Optional prefab implementations of MVPActivity, MVPFragment and MVPLayout are av
 - onDestroy()
 
 ### Vu callbacks
-- onDetach()
+- onCreate()
+- onDestroy()
 
 
 
