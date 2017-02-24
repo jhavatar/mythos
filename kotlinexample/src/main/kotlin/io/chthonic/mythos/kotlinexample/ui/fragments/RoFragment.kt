@@ -12,11 +12,16 @@ import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback
 class RoFragment : MVPFragment<RoPresenter, RoVu>() {
 
     companion object {
-        val TAG = "RoFragment"
+        val TAG by lazy {
+            RoFragment::class.java.simpleName
+        }
+        private val MVP_UID by lazy {
+            TAG.hashCode()
+        }
     }
 
     override fun createMVPDispatcher(): MVPDispatcher<RoPresenter, RoVu> {
-        return MVPDispatcher(213,
+        return MVPDispatcher(MVP_UID,
                 PresenterCacheLoaderCallback(this.activity, { RoPresenter() }),
                 ::RoVu)
     }

@@ -4,7 +4,6 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import java.util.concurrent.atomic.AtomicInteger
 
 /**
  * Created by jhavatar on 3/9/2016.
@@ -17,20 +16,6 @@ class MVPDispatcher<P, V> (val uid: Int,
                                           activity: Activity,
                                           fragmentWrapper: FragmentWrapper?,
                                           parentView: ViewGroup?) -> V) where P : Presenter<V>,  V : Vu {
-
-    companion object {
-        private val uniqueInt = AtomicInteger()
-
-        @JvmOverloads
-        fun nextUniqueInt(exclude: Collection<Int> = emptyList()): Int {
-            var nextInt: Int = uniqueInt.incrementAndGet()
-            while (exclude.contains(nextInt)) {
-                nextInt = uniqueInt.incrementAndGet()
-            }
-
-            return nextInt
-        }
-    }
 
     constructor(uid: Int,
                 presenterCache: PresenterCache<P>,
