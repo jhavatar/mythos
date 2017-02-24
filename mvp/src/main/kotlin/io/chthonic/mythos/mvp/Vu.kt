@@ -24,11 +24,8 @@ abstract class Vu(layoutInflater: LayoutInflater,
     /**
      * The root of the views that the Vu manages.
      */
-    val rootView : View;
-
-    init {
-        rootView = createRootView(layoutInflater);
-        onCreate();
+    val rootView : View by lazy {
+        createRootView(layoutInflater)
     }
 
     /**
@@ -60,7 +57,7 @@ abstract class Vu(layoutInflater: LayoutInflater,
 
     /**
      * Create rootView.
-     * Note, don't reference rootView since this method creates it.
+     * NB, don't reference rootView since this method creates it.
      * Default implementation creates rootView by inflating getRootViewLayoutId()'s result.
      */
     open protected fun createRootView(inflater: LayoutInflater) : View {

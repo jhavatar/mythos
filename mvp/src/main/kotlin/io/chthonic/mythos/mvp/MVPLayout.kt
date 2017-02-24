@@ -1,14 +1,12 @@
 package io.chthonic.mythos.mvp
 
 import android.app.Activity
-import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.view.WindowId
 import android.widget.FrameLayout
 
 /**

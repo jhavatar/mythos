@@ -23,12 +23,12 @@ class MVPDispatcher<P, V> (val uid: Int,
 
         @JvmOverloads
         fun nextUniqueInt(exclude: Collection<Int> = emptyList()): Int {
-            var nextInt: Int = uniqueInt.incrementAndGet();
+            var nextInt: Int = uniqueInt.incrementAndGet()
             while (exclude.contains(nextInt)) {
-                nextInt = uniqueInt.incrementAndGet();
+                nextInt = uniqueInt.incrementAndGet()
             }
 
-            return nextInt;
+            return nextInt
         }
     }
 
@@ -72,6 +72,8 @@ class MVPDispatcher<P, V> (val uid: Int,
                 activity,
                 fragment,
                 parentView)
+
+        vu!!.onCreate()
     }
 
     fun linkPresenter(vararg args: Bundle?) {
