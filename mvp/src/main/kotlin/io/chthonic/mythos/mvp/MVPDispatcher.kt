@@ -13,35 +13,35 @@ import java.util.concurrent.atomic.AtomicInteger
  */
 class MVPDispatcher<P, V> (val uid: Int,
                            val presenterCache: PresenterCache<P>,
-                           private val createVuFun: (inflater: LayoutInflater,
+                           private val createVuFunction: (inflater: LayoutInflater,
                                           activity: Activity,
                                           fragmentWrapper: FragmentWrapper?,
                                           parentView: ViewGroup?) -> V) where P : Presenter<V>,  V : Vu {
 
     companion object {
-        private val uniqueId = AtomicInteger()
+        private val uniqueInt = AtomicInteger()
 
         @JvmOverloads
-        fun genUniquePresenterId(exclude: List<Int> = emptyList()): Int {
-            var newId: Int = uniqueId.incrementAndGet();
-            while (exclude.contains(newId)) {
-                newId = uniqueId.incrementAndGet();
+        fun nextUniqueInt(exclude: Collection<Int> = emptyList()): Int {
+            var nextInt: Int = uniqueInt.incrementAndGet();
+            while (exclude.contains(nextInt)) {
+                nextInt = uniqueInt.incrementAndGet();
             }
 
-            return newId;
+            return nextInt;
         }
     }
 
     constructor(uid: Int,
                 presenterCache: PresenterCache<P>,
-                createVuFun: CreateVuFunction<V>) :
+                createVuFunction: CreateVuFunction<V>) :
                     this(uid,
                             presenterCache,
                             {inflater: LayoutInflater,
                              activity: Activity,
                              fragmentWrapper: FragmentWrapper?,
                              parentView: ViewGroup? ->
-                                createVuFun.invoke(inflater, activity, fragmentWrapper, parentView)
+                                createVuFunction.invoke(inflater, activity, fragmentWrapper, parentView)
                     })
 
     private val stateKey: String = "presenter_" + uid
@@ -56,14 +56,11 @@ class MVPDispatcher<P, V> (val uid: Int,
 
     private var lastPresenterState: Bundle? = null
 
-
-
     fun restorePresenterState(inState: Bundle?) {
         if (inState?.containsKey(stateKey) ?: false) {
             lastPresenterState = inState?.get(stateKey) as Bundle
         }
     }
-
 
     @JvmOverloads
     fun createVu(inflater: LayoutInflater,
@@ -71,12 +68,11 @@ class MVPDispatcher<P, V> (val uid: Int,
                  parentView: ViewGroup? = null,
                  fragment: FragmentWrapper? = null) {
 
-        vu = createVuFun(inflater,
+        vu = createVuFunction(inflater,
                 activity,
                 fragment,
                 parentView)
     }
-
 
     fun linkPresenter(vararg args: Bundle?) {
 
@@ -104,7 +100,6 @@ class MVPDispatcher<P, V> (val uid: Int,
             lastPresenterState = null
         }
     }
-
 
     fun unlinkPresenter() {
         presenter!!.onUnlink()

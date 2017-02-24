@@ -59,5 +59,4 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
         super.onSaveInstanceState(outState)
         mvpDispatcher.savePresenterState(outState)
     }
-
 }

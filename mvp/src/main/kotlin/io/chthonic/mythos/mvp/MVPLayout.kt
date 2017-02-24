@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.view.WindowId
 import android.widget.FrameLayout
 
@@ -17,18 +18,15 @@ import android.widget.FrameLayout
  */
 abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
 
-    val mvpDispatcher: MVPDispatcher<P, V> by lazy {
-        createMVPDispatcher()
-    }
-    var focusObserver: WindowId.FocusObserver? = null
-    var appLifecycleCallbacks: Application.ActivityLifecycleCallbacks? = null
-
-    var args: Bundle? = null
-
     companion object {
         const val ARGS_KEY = "_args_key"
         const val MVP_STATE_KEY = "_mvp_state_key"
     }
+
+    val mvpDispatcher: MVPDispatcher<P, V> by lazy {
+        createMVPDispatcher()
+    }
+    var args: Bundle? = null
 
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
@@ -58,7 +56,6 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
         mvpDispatcher.savePresenterState(mvpStateNew)
         if (mvpStateNew.size() > 0) {
             outState.putParcelable(MVP_STATE_KEY, mvpStateNew)
-
         }
 
         if (args != null) {
@@ -81,14 +78,11 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
 
 
     override fun onDetachedFromWindow() {
-        this.removeView(mvpDispatcher.vu!!.rootView)
         mvpDispatcher.unlinkPresenter()
         mvpDispatcher.presenterCache.remove()
+        val vuRootView: View = mvpDispatcher.vu!!.rootView
         mvpDispatcher.destroyVu()
-        this.removeView(rootView)
-
-        (this.context?.applicationContext as? Application)?.unregisterActivityLifecycleCallbacks(appLifecycleCallbacks)
-        appLifecycleCallbacks = null
+        this.removeView(vuRootView)
 
         super.onDetachedFromWindow()
     }
