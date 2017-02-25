@@ -9,19 +9,27 @@ import android.support.v7.app.AppCompatActivity
  * Created by jhavatar on 3/5/2016.
  *
  * Implement a MVP pattern using an Activity.
+ * MVPDispatcher requires PresenterCache implement interface LoaderManager.LoaderCallbacks, e.g. provided PresenterCacheLoaderCallback
+ * Presenter is linked from onStart() to onStop() and destroyed when supportLoaderManager calls onLoaderReset().
+ * Vu is created in onCreate() and destroyed in onDestroy().
+ * @param P type of Presenter.
+ * @param V type of Vu.
  */
 abstract class MVPActivity<P, V>: AppCompatActivity() where P : Presenter<V>, V : Vu {
     val mvpDispatcher: MVPDispatcher<P, V> by lazy {
         createMVPDispatcher()
     }
 
+    /**
+     * @return MVPDispatcher instance used to coordinate MVP pattern.
+     */
     protected abstract fun createMVPDispatcher(): MVPDispatcher<P, V>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         mvpDispatcher.restorePresenterState(savedInstanceState)
-        mvpDispatcher.attachVu(this.layoutInflater, this)
+        mvpDispatcher.createVu(this.layoutInflater, this)
         setContentView(mvpDispatcher.vu!!.rootView)
 
         supportLoaderManager.initLoader(mvpDispatcher.uid,
@@ -40,7 +48,7 @@ abstract class MVPActivity<P, V>: AppCompatActivity() where P : Presenter<V>, V 
     }
 
     override fun onDestroy() {
-        mvpDispatcher.detachVu()
+        mvpDispatcher.destroyVu()
         super.onDestroy()
     }
 

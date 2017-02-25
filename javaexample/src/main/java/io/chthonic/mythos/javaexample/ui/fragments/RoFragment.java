@@ -21,12 +21,15 @@ import kotlin.jvm.functions.Function4;
  */
 public class RoFragment extends MVPFragment<RoPresenter, RoVu> {
 
-    public static final String TAG = "RoFragment";
+    public static final String TAG = RoFragment.class.getSimpleName();
+    private static final int MVP_UID = TAG.hashCode();
+
+
 
     @NotNull
     @Override
     public MVPDispatcher<RoPresenter, RoVu> createMVPDispatcher() {
-        return new MVPDispatcher<>(211,
+        return new MVPDispatcher<>(MVP_UID,
                 new PresenterCacheLoaderCallback<>(this.getContext(), new Callable<RoPresenter>() {
 
                     @Override

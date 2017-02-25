@@ -20,8 +20,12 @@ public class RoVu extends Vu {
                 Activity activity,
                 FragmentWrapper fragmentWrapper,
                 ViewGroup parentView) {
-        super(layoutInflater, activity, fragmentWrapper, parentView);
 
+        super(layoutInflater, activity, fragmentWrapper, parentView);
+    }
+
+    @Override
+    public void onCreate() {
         Button toggleButton = (Button) this.getRootView().findViewById(R.id.button_toggle_dah);
         toggleButton.setOnClickListener(new View.OnClickListener() {
             @Override

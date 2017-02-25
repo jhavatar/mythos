@@ -16,10 +16,16 @@ import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback
 
 class FusActivity : MVPActivity<FusPresenter, FusVu>() {
 
+    companion object {
+        private val MVP_UID by lazy {
+            FusActivity::class.java.simpleName.hashCode()
+        }
+    }
+
     private var fragment: Fragment? = null
 
     override fun createMVPDispatcher(): MVPDispatcher<FusPresenter, FusVu> {
-        return MVPDispatcher(1234,
+        return MVPDispatcher(MVP_UID,
                 PresenterCacheLoaderCallback(this, {FusPresenter()}),
                 {layoutInflater: LayoutInflater,
                 activity: Activity,

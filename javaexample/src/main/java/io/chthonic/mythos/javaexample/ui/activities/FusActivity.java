@@ -20,9 +20,10 @@ import io.chthonic.mythos.mvp.FragmentWrapper;
 import io.chthonic.mythos.mvp.MVPActivity;
 import io.chthonic.mythos.mvp.MVPDispatcher;
 import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback;
-import kotlin.jvm.functions.Function4;
 
 public class FusActivity extends MVPActivity<FusPresenter, FusVu> {
+
+    private static final int MVP_UID = FusActivity.class.getSimpleName().hashCode();
 
     private Fragment fragment;
 
@@ -49,7 +50,7 @@ public class FusActivity extends MVPActivity<FusPresenter, FusVu> {
     @NotNull
     @Override
     public MVPDispatcher<FusPresenter, FusVu> createMVPDispatcher() {
-        return new MVPDispatcher<>(1221,
+        return new MVPDispatcher<>(MVP_UID,
                 new PresenterCacheLoaderCallback<>(this, new Callable<FusPresenter>() {
 
                     @Override

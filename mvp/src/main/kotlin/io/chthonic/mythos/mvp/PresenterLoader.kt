@@ -8,6 +8,9 @@ import android.support.v4.content.Loader
  * Created by jhavatar on 12/3/2016.
  *
  * Loader used to keep Presenter instance on configuration and orientation changes.
+ * @param P type of Presenter in "loads".
+ * @param context context required by Loader super class.
+ * @property presenterFactory creates presenter instance.
  */
 class PresenterLoader<P>(context: Context?, val presenterFactory: () -> P) : Loader<P>(context) where P : Presenter<*>{
 
