@@ -8,12 +8,13 @@ import android.view.ViewGroup
 /**
  * Created by jhavatar on 3/3/2016.
  *
- * The View component of an MVP architectural pattern.
+ * The View component of an MVP architectural pattern. Named to not confuse with all Android's "View" class
  *
- * @param activity the Activity that Vu rootView belongs to.
- * @param fragmentWrapper Wraps the Fragment that Vu's rootView is a child of (Optional).
- * @param parentView the ViewGroup that is the direct parent to Vu's rootView (Optional).
- * @constructor Initialize MVP's View. Call when view is attached before it is displayed
+ * @param layoutInflater the Inflater available in createRootView() method
+ * @property activity the Activity that Vu rootView belongs to.
+ * @property fragmentWrapper Wraps the Fragment that Vu's rootView is a child of (Optional).
+ * @property parentView the ViewGroup that is the direct parent to Vu's rootView (Optional).
+ * @constructor Creates MVP's View.
  */
 
 abstract class Vu(layoutInflater: LayoutInflater,
@@ -22,30 +23,45 @@ abstract class Vu(layoutInflater: LayoutInflater,
                   val parentView: ViewGroup? = null) {
 
     /**
-     * The root of the views that the Vu manages. Can be lazily created as soon as Vu is created.
+     * The root of the views that the Vu manages.
      */
     val rootView : View by lazy {
         createRootView(layoutInflater)
     }
 
-    /** True if Vu is attached to a Presenter */
-    var attached: Boolean = true
+    /**
+     * True if Vu has been destroyed, i.e. rootView will no longer be referenced.
+     * */
+    var destroyed: Boolean = false
         private set
 
+
     /**
-     * Called after Vu is detached from Presenter its rootView will no longer be used. Perform any final Vu cleanup.
+     * Called after rootView is created.
      */
-    open fun onDetach() {
-        attached = false
+    open fun onCreate() {
+
     }
 
     /**
-     * Return id of layout resource file that is the rootView of the Vu.
+     * Called when Vu is no longer needed and rootView will no longer be referenced. Perform any final Vu cleanup.
+     */
+    open fun onDestroy() {
+        destroyed = true
+    }
+
+    /**
+     * Layout resource file that by default is inflated to be rootView of the Vu.
+     * Note, If not creating rootView from a layout resource file -- override createRootView().
+     * @return resource-id of a layout resource file.
      */
     abstract fun getRootViewLayoutId() : Int
 
     /**
-     * Create rootView by inflating getRootViewLayoutId()'s layout.
+     * Create rootView.
+     * NB, don't reference rootView since this method creates it.
+     * Default implementation creates rootView by inflating getRootViewLayoutId()'s result.
+     * @return View that becomes property's rootView.
      */
     open protected fun createRootView(inflater: LayoutInflater) : View {
         if (parentView != null) {

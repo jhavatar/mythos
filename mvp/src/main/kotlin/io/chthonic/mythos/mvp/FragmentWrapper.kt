@@ -10,9 +10,19 @@ import android.view.View
  *
  * Helps supporting both Fragment types (standard and support) by wrapping both in one interface which reveals most popular methods.
  */
-class FragmentWrapper {
-    val standard: android.app.Fragment?
-    val support: android.support.v4.app.Fragment?
+class FragmentWrapper private constructor(val standard: android.app.Fragment?, val support: android.support.v4.app.Fragment?){
+
+    /**
+     * @param fragment instance of standard fragment to wrap.
+     * @constructor create wrapper for standard fragment.
+     */
+    constructor (fragment: android.app.Fragment): this(standard = fragment, support = null)
+
+    /**
+     * @param fragment instance of support fragment to wrap.
+     * @constructor create wrapper for support fragment.
+     */
+    constructor (fragment: android.support.v4.app.Fragment): this(standard = null, support = fragment)
 
     val activity: Activity?
         get() {
@@ -55,18 +65,8 @@ class FragmentWrapper {
             }
         }
 
-    constructor (fragment: android.app.Fragment) {
-        standard = fragment
-        support = null
-    }
-
-    constructor (fragment: android.support.v4.app.Fragment) {
-        support = fragment
-        standard = null
-    }
-
     /**
-     * Return true if wrapping instance of support Fragment, otherwise wrapping standard fragment.
+     * @return true if wrapping instance of support Fragment, otherwise wrapping standard fragment.
      */
     fun isSupport(): Boolean {
         return (support != null)

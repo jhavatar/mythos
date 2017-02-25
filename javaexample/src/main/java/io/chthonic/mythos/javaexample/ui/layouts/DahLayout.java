@@ -22,6 +22,8 @@ import kotlin.jvm.functions.Function4;
  */
 public class DahLayout extends MVPLayout<DahPresenter, DahVu> {
 
+    private static final int MVP_UID = DahLayout.class.getSimpleName().hashCode();
+
     public DahLayout(@Nullable Context context) {
         super(context);
     }
@@ -41,7 +43,7 @@ public class DahLayout extends MVPLayout<DahPresenter, DahVu> {
     @NotNull
     @Override
     protected MVPDispatcher<DahPresenter, DahVu> createMVPDispatcher() {
-        return new MVPDispatcher<>(800,
+        return new MVPDispatcher<>(MVP_UID,
                 new PresenterCacheBasic<>(new DahPresenter()),
                 new Function4<LayoutInflater, Activity, FragmentWrapper, ViewGroup, DahVu>() {
                     @Override

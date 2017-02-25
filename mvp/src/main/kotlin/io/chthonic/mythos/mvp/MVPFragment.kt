@@ -10,7 +10,12 @@ import android.view.ViewGroup
 /**
  * Created by jhavatar on 3/4/2016.
  *
- * Implement a MVP pattern using a Fragment.
+ * Implement a MVP pattern using a support Fragment.
+ * MVPDispatcher requires PresenterCache implement interface LoaderManager.LoaderCallbacks, e.g. provided PresenterCacheLoaderCallback
+ * Presenter is linked from onResume() to onPause() and destroyed when loaderManager calls onLoaderReset().
+ * Vu is created in onCreateView() and destroyed in onDestroyView().
+ * @param P type of Presenter.
+ * @param V type of Vu.
  */
 abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
 
@@ -18,6 +23,9 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
         createMVPDispatcher()
     }
 
+    /**
+     * @return MVPDispatcher instance used to coordinate MVP pattern.
+     */
     abstract fun createMVPDispatcher(): MVPDispatcher<P, V>
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -25,9 +33,9 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
                               savedInstanceState: Bundle?) : View? {
 
         mvpDispatcher.restorePresenterState(savedInstanceState)
-        mvpDispatcher.attachVu(inflater,
+        mvpDispatcher.createVu(inflater,
                 activity = this.activity,
-                fragment = FragmentWrapper(this),
+                fragmentWrapper = FragmentWrapper(this),
                 parentView = container)
         return mvpDispatcher.vu!!.rootView
     }
@@ -51,7 +59,7 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
     }
 
     override fun onDestroyView() {
-        mvpDispatcher.detachVu()
+        mvpDispatcher.destroyVu()
         super.onDestroyView()
     }
 
@@ -59,5 +67,4 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
         super.onSaveInstanceState(outState)
         mvpDispatcher.savePresenterState(outState)
     }
-
 }

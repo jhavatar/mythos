@@ -13,8 +13,14 @@ import io.chthonic.mythos.mvp.PresenterCacheBasic
  */
 class DahLayout : MVPLayout<DahPresenter, DahVu> {
 
+    companion object {
+        private val MVP_UID by lazy {
+            DahLayout::class.java.simpleName.hashCode()
+        }
+    }
+
     override fun createMVPDispatcher(): MVPDispatcher<DahPresenter, DahVu> {
-        return MVPDispatcher(33,
+        return MVPDispatcher(MVP_UID,
                 PresenterCacheBasic(DahPresenter()),
                 ::DahVu)
     }

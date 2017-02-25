@@ -9,40 +9,58 @@ import android.view.ViewGroup
  * Created by jhavatar on 3/9/2016.
  *
  * Coordinates the Presenter and View of a MVP architectural pattern and their callbacks.
+ * @param P type of Presenter expected.
+ * @param V type of View expected.
+ * @property uid id that uniquely identifies dispatcher and is used i.a. as key when saving Presenter's state.
+ * @property presenterCache cache that returns Presenter to use.
+ * @property createVuFunction function that creates Vu to use.
+ * @constructor create MVPDispatcher instance.
  */
 class MVPDispatcher<P, V> (val uid: Int,
                            val presenterCache: PresenterCache<P>,
-                           val createVu: (inflater: LayoutInflater,
+                           private val createVuFunction: (layoutInflater: LayoutInflater,
                                           activity: Activity,
                                           fragmentWrapper: FragmentWrapper?,
                                           parentView: ViewGroup?) -> V) where P : Presenter<V>,  V : Vu {
 
+    /**
+     * @param uid id that uniquely identifies dispatcher and is used i.a. as key when saving Presenter's state.
+     * @param presenterCache cache that returns Presenter to use.
+     * @param createVuFunction implements function that creates Vu to use.
+     * @constructor create MVPDispatcher instance.
+     */
     constructor(uid: Int,
                 presenterCache: PresenterCache<P>,
-                createVu: CreateVuFunction<V>) :
+                createVuFunction: CreateVuFunction<V>) :
                     this(uid,
                             presenterCache,
-                            {inflater: LayoutInflater,
+                            {layoutInflater: LayoutInflater,
                              activity: Activity,
                              fragmentWrapper: FragmentWrapper?,
                              parentView: ViewGroup? ->
-                        createVu.invoke(inflater, activity, fragmentWrapper, parentView)
+                                createVuFunction.invoke(layoutInflater, activity, fragmentWrapper, parentView)
                     })
 
     private val stateKey: String = "presenter_" + uid
 
-    /** Reference to Vu instance */
+    /**
+     * MPV's View
+     */
     var vu: V? = null
         private set
 
+    /**
+     * MPV's Presenter
+     */
     val presenter: P?
         get() {
             return presenterCache.get()
         }
 
+    /**
+     * Last retrieved presenter state.
+     */
     private var lastPresenterState: Bundle? = null
-
-
 
     fun restorePresenterState(inState: Bundle?) {
         if (inState?.containsKey(stateKey) ?: false) {
@@ -50,20 +68,31 @@ class MVPDispatcher<P, V> (val uid: Int,
         }
     }
 
-
+    /**
+     * Create View/Vu. Call before linking Presenter. Calls Presenter's onCreate() callback.
+     * @param layoutInflater the Inflater available to inflate Vu's rootView.
+     * @param activity the Activity that Vu's rootView belongs to.
+     * @param fragmentWrapper Wraps the Fragment that Vu's rootView is a child of (Optional).
+     * @param parentView the ViewGroup that is the direct parent to Vu's rootView (Optional).
+     */
     @JvmOverloads
-    fun attachVu(inflater: LayoutInflater,
+    fun createVu(layoutInflater: LayoutInflater,
                  activity: Activity,
-                 parentView: ViewGroup? = null,
-                 fragment: FragmentWrapper? = null) {
+                 fragmentWrapper: FragmentWrapper? = null,
+                 parentView: ViewGroup? = null) {
 
-        vu = createVu(inflater,
+        vu = createVuFunction(layoutInflater,
                 activity,
-                fragment,
+                fragmentWrapper,
                 parentView)
+
+        vu!!.onCreate()
     }
 
-
+    /**
+     * Link Presenter to MVP pattern and its Vu. Assumes CreateVu() has been called. Calls Presenter's onLink() callback.
+     * @param args arguments passed to Presenter's onLink callback.
+     */
     fun linkPresenter(vararg args: Bundle?) {
 
         val linkArgs = Bundle()
@@ -75,9 +104,8 @@ class MVPDispatcher<P, V> (val uid: Int,
     }
 
     /**
-     * Called to allow saving of Presenter's data when presented object is about to be killed.
-     *
-     * @param outState Put Presenter's data to be saved in outState. Data will be available in initialize() call.
+     * Called to allow saving of Presenter's data when object implementing MVP pattern is about to be killed. Calls Presenter's onSaveState() callback.
+     * @param outState Put Presenter's data to be saved in outState. Data will be available in Presenter's onLink() callback.
      */
     fun savePresenterState(outState: Bundle) {
         val newState = Bundle()
@@ -91,18 +119,35 @@ class MVPDispatcher<P, V> (val uid: Int,
         }
     }
 
-
+    /**
+     * Unlink presenter from MVP pattern and Vu. may be linked again later. Calls Presenter's onUnlink() callback.
+     */
     fun unlinkPresenter() {
         presenter!!.onUnlink()
     }
 
-    fun detachVu() {
-        vu!!.onDetach()
+    /**
+     * Remove reference to Vu since will no longer be used/referenced. Calls Vu's onDestroy() callback.
+     */
+    fun destroyVu() {
+        vu!!.onDestroy()
         vu = null
     }
 
+    /**
+     * Implements method that creates Vu.
+     * @param V type of Vu that invoke method returns.
+     */
     interface CreateVuFunction<out V> where  V : Vu {
-        fun invoke(inflater: LayoutInflater,
+
+        /**
+         * @param layoutInflater the Inflater available to inflate Vu's rootView.
+         * @param activity the Activity that Vu's rootView belongs to.
+         * @param fragmentWrapper Wraps the Fragment that Vu's rootView is a child of (Optional).
+         * @param parentView the ViewGroup that is the direct parent to Vu's rootView (Optional).
+         * @return created Vu.
+         */
+        fun invoke(layoutInflater: LayoutInflater,
                    activity: Activity,
                    fragmentWrapper: FragmentWrapper?,
                    parentView: ViewGroup?) : V
