@@ -8,12 +8,13 @@ import android.view.ViewGroup
 /**
  * Created by jhavatar on 3/3/2016.
  *
- * The View component of an MVP architectural pattern.
+ * The View component of an MVP architectural pattern. Named to not confuse with all Android's "View" class
  *
- * @param activity the Activity that Vu rootView belongs to.
- * @param fragmentWrapper Wraps the Fragment that Vu's rootView is a child of (Optional).
- * @param parentView the ViewGroup that is the direct parent to Vu's rootView (Optional).
- * @constructor Initialize MVP's View. Call when view is attached before it is displayed
+ * @param layoutInflater the Inflater available in createRootView() method
+ * @property activity the Activity that Vu rootView belongs to.
+ * @property fragmentWrapper Wraps the Fragment that Vu's rootView is a child of (Optional).
+ * @property parentView the ViewGroup that is the direct parent to Vu's rootView (Optional).
+ * @constructor Creates MVP's View.
  */
 
 abstract class Vu(layoutInflater: LayoutInflater,
@@ -22,7 +23,7 @@ abstract class Vu(layoutInflater: LayoutInflater,
                   val parentView: ViewGroup? = null) {
 
     /**
-     * The root of the views that the Vu manages.
+     * @property The root of the views that the Vu manages.
      */
     val rootView : View by lazy {
         createRootView(layoutInflater)
@@ -50,8 +51,9 @@ abstract class Vu(layoutInflater: LayoutInflater,
     }
 
     /**
-     * Return id of layout resource file that by default is inflated to be rootView of the Vu.
-     * Note, override createRootView() if not creating rootView from getRootViewLayoutId() result.
+     * Layout resource file that by default is inflated to be rootView of the Vu.
+     * Note, If not creating rootView from a layout resource file -- override createRootView().
+     * @return resource-id of a layout resource file.
      */
     abstract fun getRootViewLayoutId() : Int
 
@@ -59,6 +61,7 @@ abstract class Vu(layoutInflater: LayoutInflater,
      * Create rootView.
      * NB, don't reference rootView since this method creates it.
      * Default implementation creates rootView by inflating getRootViewLayoutId()'s result.
+     * @return View that becomes property's rootView.
      */
     open protected fun createRootView(inflater: LayoutInflater) : View {
         if (parentView != null) {

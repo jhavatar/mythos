@@ -11,7 +11,7 @@ dependencies {
 ## Introduction
 Mythos is a tiny library that simplifies managing an Android-UI MVP pattern. Each MVP relationship requires:
 * implementing interface Presenter
-* implementing interface Vu (named to not confuse with all Andorid's "View" class)
+* implementing interface Vu (named to not confuse with all Android's "View" class)
 * and calling a MVPDispatcher\<Presenter, Vu\> instance from basic UI callbacks.
  
 Optional prefab implementations of MVPActivity, MVPFragment and MVPLayout are available.
