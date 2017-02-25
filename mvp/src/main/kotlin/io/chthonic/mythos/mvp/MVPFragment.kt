@@ -10,7 +10,10 @@ import android.view.ViewGroup
 /**
  * Created by jhavatar on 3/4/2016.
  *
- * Implement a MVP pattern using a Fragment.
+ * Implement a MVP pattern using a support Fragment.
+ * MVPDispatcher requires PresenterCache implement interface LoaderManager.LoaderCallbacks, e.g. provided PresenterCacheLoaderCallback
+ * Presenter is linked from onResume() to onPause() and destroyed when loaderManager calls onLoaderReset().
+ * Vu is created in onCreateView() and destroyed in onDestroyView().
  * @param P type of Presenter.
  * @param V type of Vu.
  */

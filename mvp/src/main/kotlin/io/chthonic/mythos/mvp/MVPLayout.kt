@@ -13,6 +13,9 @@ import android.widget.FrameLayout
  * Created by jhavatar on 3/12/2016.
  *
  * Implement a MVP pattern using a FrameLayout.
+ * Presenter is linked from onAttachedToWindow() to onDetachedFromWindow().
+ * Note, removal of Presenter from PresenterCache, which calls Presenter's onDestroy(), still requires implementation.
+ * Vu is created in onAttachedToWindow() and destroyed in onDetachedFromWindow().
  * @param P type of Presenter.
  * @param V type of Vu.
  */
