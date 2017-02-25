@@ -12,7 +12,7 @@ import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback
 class RoFragment : MVPFragment<RoPresenter, RoVu>() {
 
     companion object {
-        val TAG by lazy {
+        val TAG: String by lazy {
             RoFragment::class.java.simpleName
         }
         private val MVP_UID by lazy {
