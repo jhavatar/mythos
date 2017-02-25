@@ -23,7 +23,7 @@ abstract class Vu(layoutInflater: LayoutInflater,
                   val parentView: ViewGroup? = null) {
 
     /**
-     * @property The root of the views that the Vu manages.
+     * The root of the views that the Vu manages.
      */
     val rootView : View by lazy {
         createRootView(layoutInflater)

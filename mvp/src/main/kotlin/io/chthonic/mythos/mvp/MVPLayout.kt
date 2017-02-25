@@ -13,6 +13,8 @@ import android.widget.FrameLayout
  * Created by jhavatar on 3/12/2016.
  *
  * Implement a MVP pattern using a FrameLayout.
+ * @param P type of Presenter.
+ * @param V type of Vu.
  */
 abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
 
@@ -31,6 +33,9 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
 
+    /**
+     * @return MVPDispatcher instance used to coordinate MVP pattern.
+     */
     abstract protected fun createMVPDispatcher(): MVPDispatcher<P, V>
 
     override fun onRestoreInstanceState (inState: Parcelable) {

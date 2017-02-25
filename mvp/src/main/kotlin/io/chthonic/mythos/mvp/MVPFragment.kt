@@ -11,6 +11,8 @@ import android.view.ViewGroup
  * Created by jhavatar on 3/4/2016.
  *
  * Implement a MVP pattern using a Fragment.
+ * @param P type of Presenter.
+ * @param V type of Vu.
  */
 abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
 
@@ -18,6 +20,9 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
         createMVPDispatcher()
     }
 
+    /**
+     * @return MVPDispatcher instance used to coordinate MVP pattern.
+     */
     abstract fun createMVPDispatcher(): MVPDispatcher<P, V>
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -27,7 +32,7 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
         mvpDispatcher.restorePresenterState(savedInstanceState)
         mvpDispatcher.createVu(inflater,
                 activity = this.activity,
-                fragment = FragmentWrapper(this),
+                fragmentWrapper = FragmentWrapper(this),
                 parentView = container)
         return mvpDispatcher.vu!!.rootView
     }
