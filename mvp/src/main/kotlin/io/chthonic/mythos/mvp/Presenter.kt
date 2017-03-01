@@ -14,25 +14,23 @@ abstract class Presenter<V> where V : Vu {
     /** Memory-leak-safe reference to attached Vu */
     private var _vuRef: WeakReference<V>? = null
 
-    /**
-     * True if it is the first time this Presenter is linked.
-     */
-    var firstLink: Boolean = true
-        private set
+    val vu: V?
+        get() {
+            return _vuRef?.get()
+        }
 
     /**
      * @return true if a Vu is linked.
      */
     fun isLinked(): Boolean {
-        return (_vuRef != null) && (getVu() != null)
+        return (this.vu != null)
     }
 
     /**
-     * @return linked Vu.
+     * True if it is the first time this Presenter is linked.
      */
-    fun getVu(): V? {
-        return if (isLinked()) _vuRef?.get() else  null
-    }
+    var firstLink: Boolean = true
+        private set
 
     /**
      * Called when Presenter is linked to object implementing MVP pattern and ([vu]).
