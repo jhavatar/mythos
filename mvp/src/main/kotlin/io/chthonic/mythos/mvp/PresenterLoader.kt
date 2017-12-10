@@ -12,7 +12,7 @@ import android.support.v4.content.Loader
  * @param context context required by Loader super class.
  * @property presenterFactory creates presenter instance.
  */
-class PresenterLoader<P>(context: Context?, val presenterFactory: () -> P) : Loader<P>(context) where P : Presenter<*>{
+class PresenterLoader<P>(context: Context, val presenterFactory: () -> P) : Loader<P>(context) where P : Presenter<*>{
 
     private var presenter: P? = null
 

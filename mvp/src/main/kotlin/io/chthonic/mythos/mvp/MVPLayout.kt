@@ -56,9 +56,9 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
 
     override fun onSaveInstanceState (): Parcelable {
         super.onSaveInstanceState()
-        val outState: Bundle = Bundle()
+        val outState = Bundle()
 
-        val mvpStateNew: Bundle = Bundle()
+        val mvpStateNew = Bundle()
         mvpDispatcher.savePresenterState(mvpStateNew)
         if (mvpStateNew.size() > 0) {
             outState.putParcelable(MVP_STATE_KEY, mvpStateNew)

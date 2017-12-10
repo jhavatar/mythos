@@ -39,7 +39,7 @@ abstract class Presenter<V> where V : Vu {
      * @param args arguments passed to object implementing MVP.
      */
     open fun onLink(vu: V, inState: Bundle?, args: Bundle) {
-        this._vuRef = WeakReference<V>(vu)
+        this._vuRef = WeakReference(vu)
     }
 
     /**

@@ -34,6 +34,8 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     compile project(':mvp')
+
+    compile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
 }
 buildscript {
     ext.kotlin_version = "${rootProject.ext.kotlin_version}"

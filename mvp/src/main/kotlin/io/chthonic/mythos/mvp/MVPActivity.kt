@@ -32,9 +32,11 @@ abstract class MVPActivity<P, V>: AppCompatActivity() where P : Presenter<V>, V 
         mvpDispatcher.createVu(this.layoutInflater, this)
         setContentView(mvpDispatcher.vu!!.rootView)
 
-        supportLoaderManager.initLoader(mvpDispatcher.uid,
-                null,
-                mvpDispatcher.presenterCache as LoaderManager.LoaderCallbacks<P>)
+        if (mvpDispatcher.presenterCache is LoaderManager.LoaderCallbacks<*>) {
+            supportLoaderManager.initLoader(mvpDispatcher.uid,
+                    null,
+                    mvpDispatcher.presenterCache as LoaderManager.LoaderCallbacks<P>)
+        }
     }
 
     override fun onStart() {
