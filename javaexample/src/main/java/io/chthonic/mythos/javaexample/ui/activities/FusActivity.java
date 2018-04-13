@@ -10,8 +10,11 @@ import android.view.ViewGroup;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
+import io.chthonic.mythos.javaexample.App;
 import io.chthonic.mythos.javaexample.R;
 import io.chthonic.mythos.javaexample.ui.fragments.RoFragment;
 import io.chthonic.mythos.javaexample.ui.presenters.FusPresenter;
@@ -20,12 +23,15 @@ import io.chthonic.mythos.mvp.FragmentWrapper;
 import io.chthonic.mythos.mvp.MVPActivity;
 import io.chthonic.mythos.mvp.MVPDispatcher;
 import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback;
+import io.chthonic.mythos.mvp.SupportFragmentLifecycleDispatcher;
 
 public class FusActivity extends MVPActivity<FusPresenter, FusVu> {
 
     private static final int MVP_UID = FusActivity.class.getSimpleName().hashCode();
 
     private Fragment fragment;
+
+    private SupportFragmentLifecycleDispatcher fragmentLifecycleDispatcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +40,13 @@ public class FusActivity extends MVPActivity<FusPresenter, FusVu> {
         if (savedInstanceState != null) {
             restoreInstanceState(savedInstanceState);
         }
+
+        Map<Class<? extends Fragment>, String> lifecycleKeyMap = new HashMap();
+        lifecycleKeyMap.put(RoFragment.class, RoFragment.lIFECYCLE_KEY);
+        fragmentLifecycleDispatcher = new SupportFragmentLifecycleDispatcher(lifecycleKeyMap);
+        App.lifecycleManager.registerDispatcher(fragmentLifecycleDispatcher);
+        getSupportFragmentManager().registerFragmentLifecycleCallbacks(fragmentLifecycleDispatcher, false);
+
         if (fragment == null) {
             Fragment tempFragment = getSupportFragmentManager().findFragmentByTag(RoFragment.TAG);
             if (tempFragment != null) {
@@ -45,6 +58,14 @@ public class FusActivity extends MVPActivity<FusPresenter, FusVu> {
                     .add(R.id.child_container, fragment, RoFragment.TAG)
                     .commit();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // do after super.onDestory() to still get the onDestroy call
+        App.lifecycleManager.unregisterDispatcher(fragmentLifecycleDispatcher);
     }
 
     @NotNull

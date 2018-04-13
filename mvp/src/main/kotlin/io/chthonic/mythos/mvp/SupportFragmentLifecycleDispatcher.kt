@@ -19,6 +19,7 @@ class SupportFragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, St
     val registrations: MutableMap<String, MutableSet<MVPLifecycleCallback>> = mutableMapOf()
 
     override fun registerCallback(key: String, callback: MVPLifecycleCallback) {
+        Log.d(LOG_TAG, "registerCallback: key = $key, callback = $callback")
         val keyRegs = registrations[key] ?: mutableSetOf()
         keyRegs.add(callback)
         registrations[key] = keyRegs
@@ -41,7 +42,9 @@ class SupportFragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, St
 
     private fun getCallbacks(fragment: Fragment?): Set<MVPLifecycleCallback>? {
         return if (fragment != null) {
+            Log.d(LOG_TAG, "getCallbacks: fragment = $fragment, registrations = $registrations")
             val key = getKey(fragment)
+            Log.d(LOG_TAG, "getCallbacks: key = $key")
             if (key != null) {
                 registrations[key]
 
