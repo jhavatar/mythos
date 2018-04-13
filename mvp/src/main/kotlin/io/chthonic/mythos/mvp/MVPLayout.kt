@@ -51,7 +51,7 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
     abstract protected fun registerLifecycleCallback()
     abstract protected fun unregisterLifecycleCallback()
 
-    val lifecycleCallback: MVPLifecycleCallback by lazy {
+    protected val lifecycleCallback: MVPLifecycleCallback by lazy {
         object:MVPLifecycleCallback {
             private var created: Boolean = false
             private var resumed: Boolean = false

@@ -3,7 +3,6 @@ package io.chthonic.mythos.kotlinexample.ui.activities
 import android.app.Activity
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.chthonic.mythos.kotlinexample.App
@@ -44,7 +43,6 @@ class FusActivity : MVPActivity<FusPresenter, FusVu>() {
             restoreInstanceState(savedInstanceState)
         }
 
-        Log.d("MEW", "onCreate: fragmentLifecycleDispatcher = $fragmentLifecycleDispatcher")
         App.lifecycleManager.registerDispatcher(fragmentLifecycleDispatcher)
         supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentLifecycleDispatcher, false)
 
