@@ -3,16 +3,15 @@ package io.chthonic.mythos.kotlinexample.ui.activities
 import android.app.Activity
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import io.chthonic.mythos.kotlinexample.App
 import io.chthonic.mythos.kotlinexample.R
 import io.chthonic.mythos.kotlinexample.ui.fragments.RoFragment
 import io.chthonic.mythos.kotlinexample.ui.presenters.FusPresenter
 import io.chthonic.mythos.kotlinexample.ui.vus.FusVu
-import io.chthonic.mythos.mvp.FragmentWrapper
-import io.chthonic.mythos.mvp.MVPActivity
-import io.chthonic.mythos.mvp.MVPDispatcher
-import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback
+import io.chthonic.mythos.mvp.*
 
 class FusActivity : MVPActivity<FusPresenter, FusVu>() {
 
@@ -23,6 +22,9 @@ class FusActivity : MVPActivity<FusPresenter, FusVu>() {
     }
 
     private var fragment: Fragment? = null
+    private val fragmentLifecycleDispatcher: SupportFragmentLifecycleDispatcher by lazy {
+        SupportFragmentLifecycleDispatcher(mapOf(Pair(RoFragment::class.java, RoFragment.lIFECYCLE_KEY)))
+    }
 
     override fun createMVPDispatcher(): MVPDispatcher<FusPresenter, FusVu> {
         return MVPDispatcher(MVP_UID,
@@ -41,32 +43,43 @@ class FusActivity : MVPActivity<FusPresenter, FusVu>() {
         if (savedInstanceState != null) {
             restoreInstanceState(savedInstanceState)
         }
+
+        Log.d("MEW", "onCreate: fragmentLifecycleDispatcher = $fragmentLifecycleDispatcher")
+        App.lifecycleManager.registerDispatcher(fragmentLifecycleDispatcher)
+        supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentLifecycleDispatcher, false)
+
         if (fragment == null) {
 
-            val tempFragment: Fragment? = supportFragmentManager.findFragmentByTag(RoFragment.Companion.TAG)
+            val tempFragment: Fragment? = supportFragmentManager.findFragmentByTag(RoFragment.TAG)
             if (tempFragment != null) {
                 supportFragmentManager.beginTransaction().remove(tempFragment).commit()
             }
 
             fragment = RoFragment()
             supportFragmentManager.beginTransaction()
-                    .add(R.id.child_container, fragment, RoFragment.Companion.TAG)
+                    .add(R.id.child_container, fragment, RoFragment.TAG)
                     .commit()
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        // do after super.onDestory() to still get the onDestroy call
+        App.lifecycleManager.unregisterDispatcher(fragmentLifecycleDispatcher)
+    }
 
     override fun onSaveInstanceState (outState: Bundle) {
         super.onSaveInstanceState(outState)
         if (fragment != null) {
-            supportFragmentManager.putFragment(outState, RoFragment.Companion.TAG, fragment)
+            supportFragmentManager.putFragment(outState, RoFragment.TAG, fragment)
         }
     }
 
     fun restoreInstanceState(inState: Bundle?){
         if (inState != null) {
-            if (inState.containsKey(RoFragment.Companion.TAG)) {
-                fragment = supportFragmentManager.getFragment(inState, RoFragment.Companion.TAG)
+            if (inState.containsKey(RoFragment.TAG)) {
+                fragment = supportFragmentManager.getFragment(inState, RoFragment.TAG)
             }
         }
     }

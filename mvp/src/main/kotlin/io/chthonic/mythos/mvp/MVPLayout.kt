@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.support.annotation.RequiresApi
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
@@ -26,6 +27,10 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
     companion object {
         const val ARGS_KEY = "_args_key"
         const val MVP_STATE_KEY = "_mvp_state_key"
+
+        val lOG_TAG: String by lazy {
+            MVPLayout::class.java.simpleName
+        }
     }
 
     val mvpDispatcher: MVPDispatcher<P, V> by lazy {
@@ -43,6 +48,69 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
      * @return MVPDispatcher instance used to coordinate MVP pattern.
      */
     abstract protected fun createMVPDispatcher(): MVPDispatcher<P, V>
+
+    abstract protected fun registerLifecycleCallback()
+    abstract protected fun unregisterLifecycleCallback()
+
+    val lifecycleCallback: LifecycleCallback by lazy {
+        object:LifecycleCallback {
+            private var created: Boolean = false
+            private var resumed: Boolean = false
+
+            override fun onCreated(savedInstance: Bundle?) {
+                Log.d(lOG_TAG, "onCreated, created = $created")
+                if (!created) {
+                    created = true
+
+                    mvpDispatcher.createVu(LayoutInflater.from(context),
+                            activity = context as Activity,
+                            parentView = this@MVPLayout)
+                    addView(mvpDispatcher.vu!!.rootView)
+                }
+
+            }
+
+            override fun onResumed() {
+                Log.d(lOG_TAG, "onResumed, resumed = $resumed")
+                if (!resumed) {
+                    resumed = true
+
+                    mvpDispatcher.linkPresenter(if (args != null) args!! else Bundle())
+                }
+            }
+
+            override fun onPaused() {
+                Log.d(lOG_TAG, "onPaused, resumed = $resumed")
+                if (resumed) {
+                    resumed = false
+
+                    mvpDispatcher.unlinkPresenter()
+                }
+            }
+
+
+            override fun onDestroyed() {
+                Log.d(lOG_TAG, "onDestroyed, created = $created")
+                if (created) {
+                    created = false
+
+                    mvpDispatcher.presenterCache.remove()
+                    val vuRootView = mvpDispatcher.vu?.rootView
+                    mvpDispatcher.destroyVu()
+                    if (vuRootView != null) {
+                        removeView(vuRootView)
+                    }
+
+                    unregisterLifecycleCallback()
+                }
+            }
+
+            override fun onSaveInstanceState(outState: Bundle?) {
+                // Do not need lifecycle callback for saving state
+            }
+        }
+    }
+
 
     override fun onRestoreInstanceState (inState: Parcelable) {
         super.onRestoreInstanceState(null)
@@ -76,22 +144,18 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
 
     override fun onAttachedToWindow(){
         super.onAttachedToWindow()
+        Log.d(lOG_TAG, "onAttachedToWindow")
 
-        mvpDispatcher.createVu(LayoutInflater.from(this.context),
-                activity = this.context as Activity,
-                parentView = this)
-        this.addView(mvpDispatcher.vu!!.rootView)
-
-        mvpDispatcher.linkPresenter(if (args != null) args!! else Bundle())
+        registerLifecycleCallback()
+        lifecycleCallback.onCreated(if (args != null) args!! else Bundle())
+        lifecycleCallback.onResumed()
     }
 
 
     override fun onDetachedFromWindow() {
-        mvpDispatcher.unlinkPresenter()
-        mvpDispatcher.presenterCache.remove()
-        val vuRootView: View = mvpDispatcher.vu!!.rootView
-        mvpDispatcher.destroyVu()
-        this.removeView(vuRootView)
+        Log.d(lOG_TAG, "onDetachedFromWindow")
+        lifecycleCallback.onPaused()
+        lifecycleCallback.onDestroyed()
 
         super.onDetachedFromWindow()
     }

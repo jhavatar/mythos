@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.util.AttributeSet
+import io.chthonic.mythos.kotlinexample.App
+import io.chthonic.mythos.kotlinexample.ui.fragments.RoFragment
 import io.chthonic.mythos.kotlinexample.ui.presenters.DahPresenter
 import io.chthonic.mythos.kotlinexample.ui.vus.DahVu
 import io.chthonic.mythos.mvp.MVPDispatcher
@@ -25,6 +27,14 @@ class DahLayout : MVPLayout<DahPresenter, DahVu> {
         return MVPDispatcher(MVP_UID,
                 PresenterCacheBasic(DahPresenter()),
                 ::DahVu)
+    }
+
+    override fun registerLifecycleCallback() {
+        App.lifecycleManager.registerCallback(RoFragment.lIFECYCLE_KEY, lifecycleCallback)
+    }
+
+    override fun unregisterLifecycleCallback() {
+        App.lifecycleManager.unregisterCallback(RoFragment.lIFECYCLE_KEY, lifecycleCallback)
     }
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)

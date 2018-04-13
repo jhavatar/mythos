@@ -1,12 +1,18 @@
 package io.chthonic.mythos.mvp
 
-import android.app.Activity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
+import android.util.Log
 import android.view.View
 
-class SupportFragmentLifecycleDispatcher(val keyMap: Map<Class<Fragment>, String>): FragmentManager.FragmentLifecycleCallbacks(), LifecycleCallbackDispatcher {
+class SupportFragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, String>): FragmentManager.FragmentLifecycleCallbacks(), LifecycleCallbackDispatcher {
+
+    companion object {
+        val LOG_TAG: String by lazy {
+            SupportFragmentLifecycleDispatcher::class.java.simpleName
+        }
+    }
 
     override val supportedKeys: Set<String> = keyMap.values.toSet()
 
@@ -49,40 +55,45 @@ class SupportFragmentLifecycleDispatcher(val keyMap: Map<Class<Fragment>, String
     }
 
 
-    override fun onFragmentViewCreated(fm: FragmentManager, f: Fragment, v: View,
-                              savedInstanceState: Bundle) {
+    override fun onFragmentViewCreated(fm: FragmentManager?, f: Fragment?, v: View?,
+                              savedInstanceState: Bundle?) {
         val callbacks = getCallbacks(f)
+        Log.d(LOG_TAG, "onFragmentViewCreated: callbacks = $callbacks")
         callbacks?.toList()?.forEach {
             it.onCreated(savedInstanceState)
         }
     }
 
 
-    override fun onFragmentResumed(fm: FragmentManager, f: Fragment) {
+    override fun onFragmentResumed(fm: FragmentManager?, f: Fragment?) {
         val callbacks = getCallbacks(f)
+        Log.d(LOG_TAG, "onFragmentResumed: callbacks = $callbacks")
         callbacks?.toList()?.forEach {
             it.onResumed()
         }
     }
 
 
-    override fun onFragmentPaused(fm: FragmentManager, f: Fragment) {
+    override fun onFragmentPaused(fm: FragmentManager?, f: Fragment?) {
         val callbacks = getCallbacks(f)
+        Log.d(LOG_TAG, "onFragmentPaused: callbacks = $callbacks")
         callbacks?.toList()?.forEach {
             it.onPaused()
         }
     }
 
-    override fun onFragmentViewDestroyed(fm: FragmentManager, f: Fragment) {
+    override fun onFragmentViewDestroyed(fm: FragmentManager?, f: Fragment?) {
         val callbacks = getCallbacks(f)
+        Log.d(LOG_TAG, "onFragmentViewDestroyed: callbacks = $callbacks")
         callbacks?.toList()?.forEach {
             it.onDestroyed()
         }
     }
 
 
-    override fun onFragmentSaveInstanceState(fm: FragmentManager, f: Fragment, outState: Bundle) {
+    override fun onFragmentSaveInstanceState(fm: FragmentManager?, f: Fragment?, outState: Bundle?) {
         val callbacks = getCallbacks(f)
+        Log.d(LOG_TAG, "onFragmentSaveInstanceState: callbacks = $callbacks")
         callbacks?.toList()?.forEach {
             it.onSaveInstanceState(outState)
         }
