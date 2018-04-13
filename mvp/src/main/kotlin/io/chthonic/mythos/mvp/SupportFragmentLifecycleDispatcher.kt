@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager
 import android.util.Log
 import android.view.View
 
-class SupportFragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, String>): FragmentManager.FragmentLifecycleCallbacks(), LifecycleCallbackDispatcher {
+class SupportFragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, String>): FragmentManager.FragmentLifecycleCallbacks(), MVPLifecycleCallbackDispatcher {
 
     companion object {
         val LOG_TAG: String by lazy {
@@ -16,15 +16,15 @@ class SupportFragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, St
 
     override val supportedKeys: Set<String> = keyMap.values.toSet()
 
-    val registrations: MutableMap<String, MutableSet<LifecycleCallback>> = mutableMapOf()
+    val registrations: MutableMap<String, MutableSet<MVPLifecycleCallback>> = mutableMapOf()
 
-    override fun registerCallback(key: String, callback: LifecycleCallback) {
+    override fun registerCallback(key: String, callback: MVPLifecycleCallback) {
         val keyRegs = registrations[key] ?: mutableSetOf()
         keyRegs.add(callback)
         registrations[key] = keyRegs
     }
 
-    override fun unregisterCallback(key: String, callback: LifecycleCallback) {
+    override fun unregisterCallback(key: String, callback: MVPLifecycleCallback) {
         registrations[key]?.remove(callback)
     }
 
@@ -39,7 +39,7 @@ class SupportFragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, St
         } else null
     }
 
-    private fun getCallbacks(fragment: Fragment?): Set<LifecycleCallback>? {
+    private fun getCallbacks(fragment: Fragment?): Set<MVPLifecycleCallback>? {
         return if (fragment != null) {
             val key = getKey(fragment)
             if (key != null) {

@@ -9,7 +9,6 @@ import android.support.annotation.RequiresApi
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.FrameLayout
 
 /**
@@ -52,8 +51,8 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
     abstract protected fun registerLifecycleCallback()
     abstract protected fun unregisterLifecycleCallback()
 
-    val lifecycleCallback: LifecycleCallback by lazy {
-        object:LifecycleCallback {
+    val lifecycleCallback: MVPLifecycleCallback by lazy {
+        object:MVPLifecycleCallback {
             private var created: Boolean = false
             private var resumed: Boolean = false
 
@@ -67,7 +66,6 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
                             parentView = this@MVPLayout)
                     addView(mvpDispatcher.vu!!.rootView)
                 }
-
             }
 
             override fun onResumed() {

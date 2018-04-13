@@ -2,7 +2,7 @@ package io.chthonic.mythos.mvp
 
 import android.os.Bundle
 
-interface LifecycleCallback {
+interface MVPLifecycleCallback {
 
     fun onCreated(savedInstance: Bundle?)
 

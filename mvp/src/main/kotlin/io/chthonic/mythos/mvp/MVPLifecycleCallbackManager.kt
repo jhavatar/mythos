@@ -1,27 +1,27 @@
 package io.chthonic.mythos.mvp
 
 class MVPLifecycleCallbackManager {
-    val dispatcherMap: MutableMap<String, LifecycleCallbackDispatcher> = mutableMapOf()
+    val dispatcherMap: MutableMap<String, MVPLifecycleCallbackDispatcher> = mutableMapOf()
 
-    fun registerDispatcher(dispatcher: LifecycleCallbackDispatcher) {
+    fun registerDispatcher(dispatcher: MVPLifecycleCallbackDispatcher) {
         dispatcher.supportedKeys.forEach({
             dispatcherMap[it] = dispatcher
         })
     }
 
-    fun unregisterDispatcher(dispatcher: LifecycleCallbackDispatcher) {
+    fun unregisterDispatcher(dispatcher: MVPLifecycleCallbackDispatcher) {
         dispatcher.clear()
         dispatcher.supportedKeys.forEach({
             dispatcherMap.remove(it)
         })
     }
 
-    fun registerCallback(key: String, callback: LifecycleCallback) {
+    fun registerCallback(key: String, callback: MVPLifecycleCallback) {
         val dispatcher = dispatcherMap[key]
         dispatcher?.registerCallback(key, callback)
     }
 
-    fun unregisterCallback(key: String, callback: LifecycleCallback) {
+    fun unregisterCallback(key: String, callback: MVPLifecycleCallback) {
         val dispatcher = dispatcherMap[key]
         dispatcher?.unregisterCallback(key, callback)
     }

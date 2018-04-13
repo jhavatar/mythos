@@ -4,19 +4,19 @@ import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 
-class ActivityLifecycleDispatcher(val keyMap: Map<Class<Activity>, String>): Application.ActivityLifecycleCallbacks, LifecycleCallbackDispatcher {
+class ActivityLifecycleDispatcher(val keyMap: Map<Class<Activity>, String>): Application.ActivityLifecycleCallbacks, MVPLifecycleCallbackDispatcher {
 
     override val supportedKeys: Set<String> = keyMap.values.toSet()
 
-    val registrations: MutableMap<String, MutableSet<LifecycleCallback>> = mutableMapOf()
+    val registrations: MutableMap<String, MutableSet<MVPLifecycleCallback>> = mutableMapOf()
 
-    override fun registerCallback(key: String, callback: LifecycleCallback) {
+    override fun registerCallback(key: String, callback: MVPLifecycleCallback) {
         val keyRegs = registrations[key] ?: mutableSetOf()
         keyRegs.add(callback)
         registrations[key] = keyRegs
     }
 
-    override fun unregisterCallback(key: String, callback: LifecycleCallback) {
+    override fun unregisterCallback(key: String, callback: MVPLifecycleCallback) {
         registrations[key]?.remove(callback)
     }
 
@@ -30,7 +30,7 @@ class ActivityLifecycleDispatcher(val keyMap: Map<Class<Activity>, String>): App
         } else null
     }
 
-    private fun getCallbacks(activity: Activity?): Set<LifecycleCallback>? {
+    private fun getCallbacks(activity: Activity?): Set<MVPLifecycleCallback>? {
         return if (activity != null) {
             val key = getKey(activity)
             if (key != null) {
