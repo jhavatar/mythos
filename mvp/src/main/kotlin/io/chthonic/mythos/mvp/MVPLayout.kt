@@ -37,19 +37,47 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
     }
     var args: Bundle? = null
 
-    constructor(context: Context?) : super(context)
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    @JvmOverloads
+    constructor(context: Context?, lifecycleCallbackKeyAttrib: String? = null) : super(context) {
+        this.lifecycleCallbackKeyAttr = lifecycleCallbackKeyAttrib
+    }
+
+    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
+        initAttrs(context, attrs)
+    }
+
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        initAttrs(context, attrs, defStyleAttr = defStyleAttr)
+    }
+
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
+        initAttrs(context, attrs, defStyleAttr = defStyleAttr, defStyleRes = defStyleRes)
+    }
+
 
     /**
      * @return MVPDispatcher instance used to coordinate MVP pattern.
      */
     abstract protected fun createMVPDispatcher(): MVPDispatcher<P, V>
 
+    protected var lifecycleCallbackKeyAttr: String? = null
     abstract protected fun registerLifecycleCallback()
     abstract protected fun unregisterLifecycleCallback()
+
+    fun initAttrs(context: Context?, attrs: AttributeSet?, defStyleAttr: Int = 0, defStyleRes: Int = 0) {
+        if (attrs != null) {
+            val ta = context?.obtainStyledAttributes(
+                    attrs,
+                    R.styleable.MVPLayout,
+                    defStyleAttr,
+                    defStyleRes)
+
+            lifecycleCallbackKeyAttr = ta?.getString(R.styleable.MVPLayout_mvplayout_callback_key) ?: lifecycleCallbackKeyAttr
+            ta?.recycle()
+        }
+    }
+
 
     protected val lifecycleCallback: MVPLifecycleCallback by lazy {
         object:MVPLifecycleCallback {
