@@ -6,7 +6,6 @@ import android.support.annotation.RequiresApi
 import android.util.AttributeSet
 import android.util.Log
 import io.chthonic.mythos.kotlinexample.App
-import io.chthonic.mythos.kotlinexample.R
 import io.chthonic.mythos.kotlinexample.ui.presenters.DahPresenter
 import io.chthonic.mythos.kotlinexample.ui.vus.DahVu
 import io.chthonic.mythos.mvp.MVPDispatcher
@@ -22,10 +21,6 @@ class DahLayout : MVPLayout<DahPresenter, DahVu> {
         private val MVP_UID by lazy {
             DahLayout::class.java.simpleName.hashCode()
         }
-
-//        val TAG: String by lazy {
-//            App.app.resources.getString(R.string.dah_tag)
-//        }
     }
 
     override fun createMVPDispatcher(): MVPDispatcher<DahPresenter, DahVu> {
