@@ -45,7 +45,7 @@ class FusActivity : MVPActivity<FusPresenter, FusVu>() {
     override fun onDestroy() {
         super.onDestroy()
 
-        // do after super.onDestory() to still get the onDestroy call
+        // do after super.onDestroy() to still get the onDestroy call
         App.lifecycleManager.unregisterDispatcher(fragmentLifecycleDispatcher)
     }
 

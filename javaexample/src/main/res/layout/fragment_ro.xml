@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button_toggle_dah"
-        android:layout_gravity="center"
+        android:layout_gravity="right"
         android:gravity="center"
         android:text="toggle dah"/>
 
@@ -29,7 +29,7 @@
         android:id="@+id/dah_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin">
-    </io.chthonic.mythos.javaexample.ui.layouts.DahLayout>
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        app:mvplayout_callback_key="@string/ro_lifecycle_key"/>
 
 </LinearLayout>

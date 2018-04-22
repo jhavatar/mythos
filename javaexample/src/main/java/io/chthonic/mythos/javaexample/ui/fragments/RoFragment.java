@@ -24,10 +24,6 @@ public class RoFragment extends MVPFragment<RoPresenter, RoVu> {
     public static final String TAG = RoFragment.class.getSimpleName();
     private static final int MVP_UID = TAG.hashCode();
 
-    public static String lIFECYCLE_KEY = "ro";
-
-
-
     @NotNull
     @Override
     public MVPDispatcher<RoPresenter, RoVu> createMVPDispatcher() {

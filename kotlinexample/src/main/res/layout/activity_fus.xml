@@ -56,7 +56,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:mvplayout_callback_key="@string/fus_lifecycle_key"
-            android:tag="@string/dah_tag"
             />
 
     </LinearLayout>

@@ -32,6 +32,10 @@ public class DahLayout extends MVPLayout<DahPresenter, DahVu> {
         super(context);
     }
 
+    public DahLayout(@Nullable Context context, String lifecycleCallbackKey) {
+        super(context, lifecycleCallbackKey);
+    }
+
     public DahLayout(@Nullable Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
@@ -61,11 +65,11 @@ public class DahLayout extends MVPLayout<DahPresenter, DahVu> {
 
     @Override
     protected void registerLifecycleCallback() {
-        App.lifecycleManager.registerCallback(RoFragment.lIFECYCLE_KEY, this.getLifecycleCallback());
+        App.lifecycleManager.registerCallback(getLifecycleCallbackKey(), this.getLifecycleCallback());
     }
 
     @Override
     protected void unregisterLifecycleCallback() {
-        App.lifecycleManager.unregisterCallback(RoFragment.lIFECYCLE_KEY, this.getLifecycleCallback());
+        App.lifecycleManager.unregisterCallback(getLifecycleCallbackKey(), this.getLifecycleCallback());
     }
 }

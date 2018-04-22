@@ -2,7 +2,6 @@ package io.chthonic.mythos.javaexample.ui.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -29,42 +28,24 @@ public class FusActivity extends MVPActivity<FusPresenter, FusVu> {
 
     private static final int MVP_UID = FusActivity.class.getSimpleName().hashCode();
 
-    private Fragment fragment;
-
     private SupportFragmentLifecycleDispatcher fragmentLifecycleDispatcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (savedInstanceState != null) {
-            restoreInstanceState(savedInstanceState);
-        }
-
         Map<Class<? extends Fragment>, String> lifecycleKeyMap = new HashMap();
-        lifecycleKeyMap.put(RoFragment.class, RoFragment.lIFECYCLE_KEY);
+        lifecycleKeyMap.put(RoFragment.class, getResources().getString(R.string.ro_lifecycle_key));
         fragmentLifecycleDispatcher = new SupportFragmentLifecycleDispatcher(lifecycleKeyMap);
         App.lifecycleManager.registerDispatcher(fragmentLifecycleDispatcher);
         getSupportFragmentManager().registerFragmentLifecycleCallbacks(fragmentLifecycleDispatcher, false);
-
-        if (fragment == null) {
-            Fragment tempFragment = getSupportFragmentManager().findFragmentByTag(RoFragment.TAG);
-            if (tempFragment != null) {
-                getSupportFragmentManager().beginTransaction().remove(tempFragment).commit();
-            }
-
-            fragment = new RoFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.child_container, fragment, RoFragment.TAG)
-                    .commit();
-        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        // do after super.onDestory() to still get the onDestroy call
+        // do after super.onDestroy() to still get the onDestroy call
         App.lifecycleManager.unregisterDispatcher(fragmentLifecycleDispatcher);
     }
 
@@ -88,21 +69,4 @@ public class FusActivity extends MVPActivity<FusPresenter, FusVu> {
                     }
                 });
     }
-
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (fragment != null) {
-            getSupportFragmentManager().putFragment(outState, RoFragment.TAG, fragment);
-        }
-    }
-
-    private void restoreInstanceState(Bundle inState){
-        if (inState != null) {
-            if (inState.containsKey(RoFragment.TAG)) {
-                fragment = getSupportFragmentManager().getFragment(inState, RoFragment.TAG);
-            }
-        }
-    }
-
 }
