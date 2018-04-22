@@ -4,7 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 
-class ActivityLifecycleDispatcher(val keyMap: Map<Class<Activity>, String>): Application.ActivityLifecycleCallbacks, MVPLifecycleCallbackDispatcher {
+class ActivityLifecycleDispatcher(val keyMap: Map<Class<out Activity>, String>): Application.ActivityLifecycleCallbacks, MVPLifecycleCallbackDispatcher {
 
     override val supportedKeys: Set<String> = keyMap.values.toSet()
 

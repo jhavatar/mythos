@@ -1,11 +1,18 @@
 package io.chthonic.mythos.kotlinexample.ui.vus
 
+//import kotlinx.android.synthetic.main.activity_fus
 import android.app.Activity
+import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.chthonic.mythos.kotlinexample.R
+import io.chthonic.mythos.kotlinexample.ui.fragments.RoFragment
+import io.chthonic.mythos.kotlinexample.ui.layouts.DahLayout
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.chthonic.mythos.mvp.Vu
+import kotlinx.android.synthetic.main.activity_fus.view.*
 
 /**
  * Created by jhavatar on 3/3/2016.
@@ -19,7 +26,61 @@ class FusVu(inflater: LayoutInflater,
                 fragmentWrapper = fragmentWrapper,
                 parentView = parentView) {
 
+    var toggleRoListener: (() -> Unit)? = null
+    var toggleDahListener: (() -> Unit)? = null
+
+
     override fun getRootViewLayoutId(): Int {
         return R.layout.activity_fus
     }
+
+    override fun onCreate() {
+        super.onCreate()
+
+        rootView.button_toggle_ro.setOnClickListener { v ->
+            toggleRoListener?.invoke()
+        }
+
+        rootView.button_toggle_dah.setOnClickListener { v ->
+           toggleDahListener?.invoke()
+        }
+    }
+
+    fun updateRoDisplay(show: Boolean) {
+        val supportFragmentManager = (activity as AppCompatActivity).supportFragmentManager
+        val rohFragment: Fragment? = supportFragmentManager.findFragmentByTag(RoFragment.TAG)
+
+        if (show and (rohFragment == null)) {
+            val fragment = RoFragment()
+            supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, fragment, RoFragment.TAG)
+                    .commit()
+
+        } else if (!show && (rohFragment != null)) {
+            supportFragmentManager.beginTransaction().remove(rohFragment).commit()
+        }
+    }
+
+    fun updateDahDisplay(show: Boolean) {
+        val dah = rootView.child_container.dah_layout
+        Log.d("FusVu", "updateDahDisplay: show = $show, dah_layout = ${dah}")
+
+        if (show && (dah == null)) {
+            Log.d("FusVu", "updateDahDisplay: add dah")
+            val roLayout = DahLayout(activity, activity.resources.getString(R.string.fus_lifecycle_key))
+            roLayout.id = R.id.dah_layout
+            rootView.child_container.addView(roLayout)
+            Log.d("FusVu", "updateDahDisplay: after add dah")
+
+        } else if (!show && (dah != null)) {
+            Log.d("FusVu", "updateDahDisplay: remove dah")
+            (dah.parent as ViewGroup).removeView(dah)
+            rootView.invalidate()
+            Log.d("FusVu", "updateDahDisplay: after remove dah")
+
+        } else {
+            Log.d("FusVu", "updateDahDisplay: do nothing")
+        }
+    }
+
 }

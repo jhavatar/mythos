@@ -2,6 +2,8 @@ package io.chthonic.mythos.kotlinexample
 
 import android.app.Application
 import com.squareup.leakcanary.LeakCanary
+import io.chthonic.mythos.kotlinexample.ui.activities.FusActivity
+import io.chthonic.mythos.mvp.ActivityLifecycleDispatcher
 import io.chthonic.mythos.mvp.MVPLifecycleCallbackManager
 
 /**
@@ -24,5 +26,10 @@ class App : android.app.Application() {
         app = this
 
         LeakCanary.isInAnalyzerProcess(this)
+
+        // register lifecycle callbacks for activities
+        val activityLifecycleDispatcher = ActivityLifecycleDispatcher(mapOf(Pair(FusActivity::class.java, resources.getString(R.string.fus_lifecycle_key))))
+        lifecycleManager.registerDispatcher(activityLifecycleDispatcher)
+        this.registerActivityLifecycleCallbacks(activityLifecycleDispatcher)
     }
 }

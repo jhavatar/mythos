@@ -4,8 +4,9 @@ import android.content.Context
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.util.AttributeSet
+import android.util.Log
 import io.chthonic.mythos.kotlinexample.App
-import io.chthonic.mythos.kotlinexample.ui.fragments.RoFragment
+import io.chthonic.mythos.kotlinexample.R
 import io.chthonic.mythos.kotlinexample.ui.presenters.DahPresenter
 import io.chthonic.mythos.kotlinexample.ui.vus.DahVu
 import io.chthonic.mythos.mvp.MVPDispatcher
@@ -21,6 +22,10 @@ class DahLayout : MVPLayout<DahPresenter, DahVu> {
         private val MVP_UID by lazy {
             DahLayout::class.java.simpleName.hashCode()
         }
+
+//        val TAG: String by lazy {
+//            App.app.resources.getString(R.string.dah_tag)
+//        }
     }
 
     override fun createMVPDispatcher(): MVPDispatcher<DahPresenter, DahVu> {
@@ -30,13 +35,20 @@ class DahLayout : MVPLayout<DahPresenter, DahVu> {
     }
 
     override fun registerLifecycleCallback() {
-        App.lifecycleManager.registerCallback(RoFragment.lIFECYCLE_KEY, lifecycleCallback)
+        Log.d("DahLayout", "registerLifecycleCallback: lifecycleCallbackKeyAttr = $lifecycleCallbackKey")
+        lifecycleCallbackKey?.let {
+            App.lifecycleManager.registerCallback(it, lifecycleCallback)
+        }
     }
 
     override fun unregisterLifecycleCallback() {
-        App.lifecycleManager.unregisterCallback(RoFragment.lIFECYCLE_KEY, lifecycleCallback)
+        Log.d("DahLayout", "unregisterLifecycleCallback: lifecycleCallbackKeyAttr = $lifecycleCallbackKey")
+        lifecycleCallbackKey?.let {
+            App.lifecycleManager.unregisterCallback(it, lifecycleCallback)
+        }
     }
 
+    constructor(context: Context?, lifecycleCallbackKeyAttrib: String? = null) : super(context, lifecycleCallbackKeyAttrib)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MythosKotlinExample</string>
+    <string name="fus_lifecycle_key">fus_lifecycle_key</string>
+    <string name="ro_lifecycle_key">ro_lifecycle_key</string>
 </resources>

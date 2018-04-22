@@ -6,10 +6,13 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.annotation.RequiresApi
+import android.support.v4.view.ViewCompat
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import kotlin.properties.ObservableProperty
+import kotlin.reflect.KProperty
 
 /**
  * Created by jhavatar on 3/12/2016.
@@ -37,9 +40,29 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
     }
     var args: Bundle? = null
 
+    /**
+     * key to optionally access a ui lifecycle. e.g. from previously registered with, same key, activity or fragment.
+     * Note, will auto re-register when key is changed.
+     */
+    var lifecycleCallbackKey: String? by object:ObservableProperty<String?>(null) {
+
+        override fun beforeChange(property: KProperty<*>, oldValue: String?, newValue: String?): Boolean {
+            if ((oldValue != newValue) && ViewCompat.isAttachedToWindow(this@MVPLayout)) {
+                unregisterLifecycleCallback()
+            }
+            return true
+        }
+
+        override fun afterChange(property: KProperty<*>, oldValue: String?, newValue: String?) {
+            if ((newValue != null) && (oldValue != newValue) && ViewCompat.isAttachedToWindow(this@MVPLayout)) {
+                registerLifecycleCallback()
+            }
+        }
+    }
+
     @JvmOverloads
-    constructor(context: Context?, lifecycleCallbackKeyAttrib: String? = null) : super(context) {
-        this.lifecycleCallbackKeyAttr = lifecycleCallbackKeyAttrib
+    constructor(context: Context?, lifecycleCallbackKey: String? = null) : super(context) {
+        this.lifecycleCallbackKey = lifecycleCallbackKey
     }
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
@@ -61,8 +84,16 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
      */
     abstract protected fun createMVPDispatcher(): MVPDispatcher<P, V>
 
-    protected var lifecycleCallbackKeyAttr: String? = null
+    /**
+     * Register MVPLayout instance for a lifecycle callback, if desired.
+     * Note, property lifecycleCallbackKey (mvplayout_callback_key in xml) is available for storing lifecycle key.
+     */
     abstract protected fun registerLifecycleCallback()
+
+    /**
+     * Unregister instance if previously registered to a lifecycle callback.
+     * Note, property lifecycleCallbackKey (mvplayout_callback_key in xml) is available for storing lifecycle key.
+     */
     abstract protected fun unregisterLifecycleCallback()
 
     fun initAttrs(context: Context?, attrs: AttributeSet?, defStyleAttr: Int = 0, defStyleRes: Int = 0) {
@@ -73,7 +104,7 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
                     defStyleAttr,
                     defStyleRes)
 
-            lifecycleCallbackKeyAttr = ta?.getString(R.styleable.MVPLayout_mvplayout_callback_key) ?: lifecycleCallbackKeyAttr
+            lifecycleCallbackKey = ta?.getString(R.styleable.MVPLayout_mvplayout_callback_key) ?: lifecycleCallbackKey
             ta?.recycle()
         }
     }

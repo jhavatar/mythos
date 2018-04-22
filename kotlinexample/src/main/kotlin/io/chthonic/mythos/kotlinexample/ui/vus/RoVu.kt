@@ -1,6 +1,7 @@
 package io.chthonic.mythos.kotlinexample.ui.vus
 
 import android.app.Activity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.chthonic.mythos.kotlinexample.R
@@ -21,18 +22,13 @@ class RoVu (inflater: LayoutInflater,
                 fragmentWrapper = fragmentWrapper,
                 parentView = parentView) {
 
+    var toggleDahListener: (() -> Unit)? = null
+
     override fun onCreate() {
         super.onCreate()
 
         rootView.button_toggle_dah.setOnClickListener { v ->
-            if (rootView.dah_layout != null) {
-                (rootView as ViewGroup).removeView(rootView.dah_layout)
-
-            } else {
-                val roLayout = DahLayout(activity, null)
-                roLayout.id = R.id.dah_layout
-                (rootView as ViewGroup).addView(roLayout)
-            }
+            toggleDahListener?.invoke()
         }
     }
 
@@ -40,5 +36,25 @@ class RoVu (inflater: LayoutInflater,
         return R.layout.fragment_ro
     }
 
+    fun updateDahDisplay(show: Boolean) {
+        val dah = rootView.dah_layout
+        Log.d("RoVu", "updateDahDisplay: show = $show, dah_layout = ${dah}")
+
+        if (show && (dah == null)) {
+            Log.d("RoVu", "updateDahDisplay: add dah")
+            val roLayout = DahLayout(activity, activity.resources.getString(R.string.ro_lifecycle_key))
+            roLayout.id = R.id.dah_layout
+            (rootView as ViewGroup).addView(roLayout)
+            Log.d("RoVu", "updateDahDisplay: after add dah")
+
+        } else if (!show && (dah != null)) {
+            Log.d("RoVu", "updateDahDisplay: remove dah")
+            (rootView as ViewGroup).removeView(dah)
+            Log.d("RoVu", "updateDahDisplay: after remove dah")
+
+        } else {
+            Log.d("RoVu", "updateDahDisplay: do nothing")
+        }
+    }
 
 }

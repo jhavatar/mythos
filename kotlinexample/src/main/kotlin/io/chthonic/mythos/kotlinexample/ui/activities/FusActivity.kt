@@ -2,7 +2,6 @@ package io.chthonic.mythos.kotlinexample.ui.activities
 
 import android.app.Activity
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.chthonic.mythos.kotlinexample.App
@@ -20,9 +19,8 @@ class FusActivity : MVPActivity<FusPresenter, FusVu>() {
         }
     }
 
-    private var fragment: Fragment? = null
     private val fragmentLifecycleDispatcher: SupportFragmentLifecycleDispatcher by lazy {
-        SupportFragmentLifecycleDispatcher(mapOf(Pair(RoFragment::class.java, RoFragment.lIFECYCLE_KEY)))
+        SupportFragmentLifecycleDispatcher(mapOf(Pair(RoFragment::class.java, resources.getString(R.string.ro_lifecycle_key))))
     }
 
     override fun createMVPDispatcher(): MVPDispatcher<FusPresenter, FusVu> {
@@ -39,25 +37,9 @@ class FusActivity : MVPActivity<FusPresenter, FusVu>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (savedInstanceState != null) {
-            restoreInstanceState(savedInstanceState)
-        }
-
+        // register fragment lifecycle distpatcher for this activity
         App.lifecycleManager.registerDispatcher(fragmentLifecycleDispatcher)
         supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentLifecycleDispatcher, false)
-
-        if (fragment == null) {
-
-            val tempFragment: Fragment? = supportFragmentManager.findFragmentByTag(RoFragment.TAG)
-            if (tempFragment != null) {
-                supportFragmentManager.beginTransaction().remove(tempFragment).commit()
-            }
-
-            fragment = RoFragment()
-            supportFragmentManager.beginTransaction()
-                    .add(R.id.child_container, fragment, RoFragment.TAG)
-                    .commit()
-        }
     }
 
     override fun onDestroy() {
@@ -67,18 +49,4 @@ class FusActivity : MVPActivity<FusPresenter, FusVu>() {
         App.lifecycleManager.unregisterDispatcher(fragmentLifecycleDispatcher)
     }
 
-    override fun onSaveInstanceState (outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        if (fragment != null) {
-            supportFragmentManager.putFragment(outState, RoFragment.TAG, fragment)
-        }
-    }
-
-    fun restoreInstanceState(inState: Bundle?){
-        if (inState != null) {
-            if (inState.containsKey(RoFragment.TAG)) {
-                fragment = supportFragmentManager.getFragment(inState, RoFragment.TAG)
-            }
-        }
-    }
 }
