@@ -21,11 +21,12 @@ class PresenterLoader<P>(context: Context, val presenterFactory: () -> P) : Load
         // If we already own an instance, simply deliver it.
         if (presenter != null) {
             deliverResult(presenter)
-            return
-        }
 
-        // Otherwise, force a load
-        forceLoad()
+        } else {
+
+            // Otherwise, force a load
+            forceLoad()
+        }
     }
 
     override fun onForceLoad() {

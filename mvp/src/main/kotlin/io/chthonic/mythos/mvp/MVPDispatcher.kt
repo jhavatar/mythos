@@ -81,12 +81,13 @@ class MVPDispatcher<P, V> (val uid: Int,
                  fragmentWrapper: FragmentWrapper? = null,
                  parentView: ViewGroup? = null) {
 
-        vu = createVuFunction(layoutInflater,
+        val nuVu = createVuFunction(layoutInflater,
                 activity,
                 fragmentWrapper,
                 parentView)
+        vu = nuVu
 
-        vu!!.onCreate()
+        nuVu.onCreate()
     }
 
     /**
@@ -130,7 +131,7 @@ class MVPDispatcher<P, V> (val uid: Int,
      * Remove reference to Vu since will no longer be used/referenced. Calls Vu's onDestroy() callback.
      */
     fun destroyVu() {
-        vu!!.onDestroy()
+        vu?.onDestroy()
         vu = null
     }
 

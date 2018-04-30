@@ -16,6 +16,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode = mythosProps.getProperty("versionCode")
         versionName = mythosProps.getProperty("versionName")
+        flavorDimensions "default"
     }
     buildTypes {
         release {
