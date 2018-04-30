@@ -18,6 +18,7 @@ class DahVu(inflater: LayoutInflater,
                 activity = activity,
                 fragmentWrapper = fragmentWrapper,
                 parentView = parentView) {
+
     override fun getRootViewLayoutId(): Int {
         return R.layout.layout_dah
     }

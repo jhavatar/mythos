@@ -21,18 +21,13 @@ class RoVu (inflater: LayoutInflater,
                 fragmentWrapper = fragmentWrapper,
                 parentView = parentView) {
 
+    var toggleDahListener: (() -> Unit)? = null
+
     override fun onCreate() {
         super.onCreate()
 
         rootView.button_toggle_dah.setOnClickListener { v ->
-            if (rootView.dah_layout != null) {
-                (rootView as ViewGroup).removeView(rootView.dah_layout)
-
-            } else {
-                val roLayout = DahLayout(activity, null)
-                roLayout.id = R.id.dah_layout
-                (rootView as ViewGroup).addView(roLayout)
-            }
+            toggleDahListener?.invoke()
         }
     }
 
@@ -40,5 +35,17 @@ class RoVu (inflater: LayoutInflater,
         return R.layout.fragment_ro
     }
 
+    fun updateDahDisplay(show: Boolean) {
+        val dah = rootView.dah_layout
+
+        if (show && (dah == null)) {
+            val roLayout = DahLayout(activity, activity.resources.getString(R.string.ro_lifecycle_key))
+            roLayout.id = R.id.dah_layout
+            (rootView as ViewGroup).addView(roLayout)
+
+        } else if (!show && (dah != null)) {
+            (rootView as ViewGroup).removeView(dah)
+        }
+    }
 
 }

@@ -19,6 +19,7 @@ class RoFragment : MVPFragment<RoPresenter, RoVu>() {
         val TAG: String by lazy {
             RoFragment::class.java.simpleName
         }
+
         private val MVP_UID by lazy {
             TAG.hashCode()
         }

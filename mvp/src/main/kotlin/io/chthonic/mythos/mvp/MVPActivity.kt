@@ -39,14 +39,14 @@ abstract class MVPActivity<P, V>: AppCompatActivity() where P : Presenter<V>, V 
         }
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         mvpDispatcher.linkPresenter(this.intent.extras)
     }
 
-    override fun onStop() {
+    override fun onPause() {
         mvpDispatcher.unlinkPresenter()
-        super.onStop()
+        super.onPause()
     }
 
     override fun onDestroy() {
