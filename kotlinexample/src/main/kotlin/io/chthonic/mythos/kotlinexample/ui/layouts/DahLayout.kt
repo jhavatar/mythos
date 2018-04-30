@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.util.AttributeSet
-import android.util.Log
 import io.chthonic.mythos.kotlinexample.App
 import io.chthonic.mythos.kotlinexample.ui.presenters.DahPresenter
 import io.chthonic.mythos.kotlinexample.ui.vus.DahVu

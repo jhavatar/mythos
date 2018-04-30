@@ -1,7 +1,6 @@
 package io.chthonic.mythos.kotlinexample.ui.vus
 
 import android.app.Activity
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.chthonic.mythos.kotlinexample.R

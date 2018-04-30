@@ -11,7 +11,7 @@ import io.chthonic.mythos.mvp.ActivityLifecycleDispatcher;
 import io.chthonic.mythos.mvp.MVPLifecycleCallbackManager;
 
 public class App extends Application {
-    public static MVPLifecycleCallbackManager lifecycleManager = new MVPLifecycleCallbackManager();
+    public static final MVPLifecycleCallbackManager lifecycleManager = new MVPLifecycleCallbackManager();
 
     @Override
     public void onCreate() {

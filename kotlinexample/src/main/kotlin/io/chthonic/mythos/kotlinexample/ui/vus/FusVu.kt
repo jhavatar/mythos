@@ -4,7 +4,6 @@ package io.chthonic.mythos.kotlinexample.ui.vus
 import android.app.Activity
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.chthonic.mythos.kotlinexample.R
