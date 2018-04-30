@@ -63,23 +63,15 @@ class FusVu(inflater: LayoutInflater,
 
     fun updateDahDisplay(show: Boolean) {
         val dah = rootView.child_container.dah_layout
-        Log.d("FusVu", "updateDahDisplay: show = $show, dah_layout = ${dah}")
 
         if (show && (dah == null)) {
-            Log.d("FusVu", "updateDahDisplay: add dah")
             val roLayout = DahLayout(activity, activity.resources.getString(R.string.fus_lifecycle_key))
             roLayout.id = R.id.dah_layout
             rootView.child_container.addView(roLayout)
-            Log.d("FusVu", "updateDahDisplay: after add dah")
 
         } else if (!show && (dah != null)) {
-            Log.d("FusVu", "updateDahDisplay: remove dah")
             (dah.parent as ViewGroup).removeView(dah)
             rootView.invalidate()
-            Log.d("FusVu", "updateDahDisplay: after remove dah")
-
-        } else {
-            Log.d("FusVu", "updateDahDisplay: do nothing")
         }
     }
 

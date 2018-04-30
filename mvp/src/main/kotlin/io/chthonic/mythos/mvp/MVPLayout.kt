@@ -116,7 +116,6 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
             private var resumed: Boolean = false
 
             override fun onCreated(savedInstance: Bundle?) {
-                Log.d(lOG_TAG, "onCreated, created = $created")
                 if (!created) {
                     created = true
 
@@ -128,7 +127,6 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
             }
 
             override fun onResumed() {
-                Log.d(lOG_TAG, "onResumed, resumed = $resumed")
                 if (!resumed) {
                     resumed = true
 
@@ -137,7 +135,6 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
             }
 
             override fun onPaused() {
-                Log.d(lOG_TAG, "onPaused, resumed = $resumed")
                 if (resumed) {
                     resumed = false
 
@@ -147,7 +144,6 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
 
 
             override fun onDestroyed() {
-                Log.d(lOG_TAG, "onDestroyed, created = $created")
                 if (created) {
                     created = false
 
@@ -201,7 +197,6 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
 
     override fun onAttachedToWindow(){
         super.onAttachedToWindow()
-        Log.d(lOG_TAG, "onAttachedToWindow")
 
         registerLifecycleCallback()
         lifecycleCallback.onCreated(if (args != null) args!! else Bundle())
@@ -210,7 +205,6 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
 
 
     override fun onDetachedFromWindow() {
-        Log.d(lOG_TAG, "onDetachedFromWindow")
         lifecycleCallback.onPaused()
         lifecycleCallback.onDestroyed()
 

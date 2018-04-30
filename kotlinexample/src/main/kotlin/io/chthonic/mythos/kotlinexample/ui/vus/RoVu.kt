@@ -38,22 +38,14 @@ class RoVu (inflater: LayoutInflater,
 
     fun updateDahDisplay(show: Boolean) {
         val dah = rootView.dah_layout
-        Log.d("RoVu", "updateDahDisplay: show = $show, dah_layout = ${dah}")
 
         if (show && (dah == null)) {
-            Log.d("RoVu", "updateDahDisplay: add dah")
             val roLayout = DahLayout(activity, activity.resources.getString(R.string.ro_lifecycle_key))
             roLayout.id = R.id.dah_layout
             (rootView as ViewGroup).addView(roLayout)
-            Log.d("RoVu", "updateDahDisplay: after add dah")
 
         } else if (!show && (dah != null)) {
-            Log.d("RoVu", "updateDahDisplay: remove dah")
             (rootView as ViewGroup).removeView(dah)
-            Log.d("RoVu", "updateDahDisplay: after remove dah")
-
-        } else {
-            Log.d("RoVu", "updateDahDisplay: do nothing")
         }
     }
 

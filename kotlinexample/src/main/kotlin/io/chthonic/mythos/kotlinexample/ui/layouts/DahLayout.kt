@@ -30,14 +30,12 @@ class DahLayout : MVPLayout<DahPresenter, DahVu> {
     }
 
     override fun registerLifecycleCallback() {
-        Log.d("DahLayout", "registerLifecycleCallback: lifecycleCallbackKeyAttr = $lifecycleCallbackKey")
         lifecycleCallbackKey?.let {
             App.lifecycleManager.registerCallback(it, lifecycleCallback)
         }
     }
 
     override fun unregisterLifecycleCallback() {
-        Log.d("DahLayout", "unregisterLifecycleCallback: lifecycleCallbackKeyAttr = $lifecycleCallbackKey")
         lifecycleCallbackKey?.let {
             App.lifecycleManager.unregisterCallback(it, lifecycleCallback)
         }

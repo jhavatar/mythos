@@ -19,7 +19,6 @@ class SupportFragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, St
     val registrations: MutableMap<String, MutableSet<MVPLifecycleCallback>> = mutableMapOf()
 
     override fun registerCallback(key: String, callback: MVPLifecycleCallback) {
-        Log.d(LOG_TAG, "registerCallback: key = $key, callback = $callback")
         val keyRegs = registrations[key] ?: mutableSetOf()
         keyRegs.add(callback)
         registrations[key] = keyRegs
@@ -42,9 +41,7 @@ class SupportFragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, St
 
     private fun getCallbacks(fragment: Fragment?): Set<MVPLifecycleCallback>? {
         return if (fragment != null) {
-            Log.d(LOG_TAG, "getCallbacks: fragment = $fragment, registrations = $registrations")
             val key = getKey(fragment)
-            Log.d(LOG_TAG, "getCallbacks: key = $key")
             if (key != null) {
                 registrations[key]
 
@@ -61,7 +58,6 @@ class SupportFragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, St
     override fun onFragmentViewCreated(fm: FragmentManager?, f: Fragment?, v: View?,
                               savedInstanceState: Bundle?) {
         val callbacks = getCallbacks(f)
-        Log.d(LOG_TAG, "onFragmentViewCreated: callbacks = $callbacks")
         callbacks?.toList()?.forEach {
             it.onCreated(savedInstanceState)
         }
@@ -70,7 +66,6 @@ class SupportFragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, St
 
     override fun onFragmentResumed(fm: FragmentManager?, f: Fragment?) {
         val callbacks = getCallbacks(f)
-        Log.d(LOG_TAG, "onFragmentResumed: callbacks = $callbacks")
         callbacks?.toList()?.forEach {
             it.onResumed()
         }
@@ -79,7 +74,6 @@ class SupportFragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, St
 
     override fun onFragmentPaused(fm: FragmentManager?, f: Fragment?) {
         val callbacks = getCallbacks(f)
-        Log.d(LOG_TAG, "onFragmentPaused: callbacks = $callbacks")
         callbacks?.toList()?.forEach {
             it.onPaused()
         }
@@ -87,7 +81,6 @@ class SupportFragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, St
 
     override fun onFragmentViewDestroyed(fm: FragmentManager?, f: Fragment?) {
         val callbacks = getCallbacks(f)
-        Log.d(LOG_TAG, "onFragmentViewDestroyed: callbacks = $callbacks")
         callbacks?.toList()?.forEach {
             it.onDestroyed()
         }
@@ -96,7 +89,6 @@ class SupportFragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, St
 
     override fun onFragmentSaveInstanceState(fm: FragmentManager?, f: Fragment?, outState: Bundle?) {
         val callbacks = getCallbacks(f)
-        Log.d(LOG_TAG, "onFragmentSaveInstanceState: callbacks = $callbacks")
         callbacks?.toList()?.forEach {
             it.onSaveInstanceState(outState)
         }
