@@ -29,13 +29,13 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    compile project(':mvp')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    implementation project(':mvp')
 
-    compile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    implementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
 }
 buildscript {
     ext.kotlin_version = "${rootProject.ext.kotlin_version}"

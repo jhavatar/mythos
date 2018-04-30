@@ -3,16 +3,9 @@ package io.chthonic.mythos.mvp
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.util.Log
 import android.view.View
 
 class SupportFragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, String>): FragmentManager.FragmentLifecycleCallbacks(), MVPLifecycleCallbackDispatcher {
-
-    companion object {
-        val LOG_TAG: String by lazy {
-            SupportFragmentLifecycleDispatcher::class.java.simpleName
-        }
-    }
 
     override val supportedKeys: Set<String> = keyMap.values.toSet()
 

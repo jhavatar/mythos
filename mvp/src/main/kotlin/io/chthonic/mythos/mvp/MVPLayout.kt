@@ -8,7 +8,6 @@ import android.os.Parcelable
 import android.support.annotation.RequiresApi
 import android.support.v4.view.ViewCompat
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import kotlin.properties.ObservableProperty
@@ -29,10 +28,6 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
     companion object {
         const val ARGS_KEY = "_args_key"
         const val MVP_STATE_KEY = "_mvp_state_key"
-
-        val lOG_TAG: String by lazy {
-            MVPLayout::class.java.simpleName
-        }
     }
 
     val mvpDispatcher: MVPDispatcher<P, V> by lazy {

@@ -1,7 +1,5 @@
 package io.chthonic.mythos.mvp
 
-import android.util.Log
-
 class MVPLifecycleCallbackManager {
     val dispatcherMap: MutableMap<String, MVPLifecycleCallbackDispatcher> = mutableMapOf()
 

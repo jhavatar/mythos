@@ -53,10 +53,10 @@ sourceSets {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
-    compile "org.jetbrains.kotlin:kotlin-stdlib:${rootProject.ext.kotlin_version}"
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    api "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
+    api "org.jetbrains.kotlin:kotlin-stdlib:${rootProject.ext.kotlin_version}"
 }
 
 if (project.hasProperty("android")) { // Android libraries
