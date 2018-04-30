@@ -34,8 +34,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    implementation "com.github.jhavatar:mythos:1.0.0"
-//    implementation project(':mvp')
+//    implementation "com.github.jhavatar:mythos:1.0.0"
+    implementation project(':mvp')
 
     implementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
 }
@@ -51,4 +51,7 @@ buildscript {
 repositories {
     mavenCentral()
     maven { url "https://jitpack.io" }
+}
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }

@@ -5,7 +5,8 @@ buildscript {
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${rootProject.ext.kotlin_version}"
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+//        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.13"
     }
 }
@@ -15,8 +16,9 @@ buildscript {
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
+//apply plugin: 'maven'
 apply plugin: 'org.jetbrains.dokka'
-apply plugin: 'maven'
+
 
 
 Properties mythosProps = new Properties()
