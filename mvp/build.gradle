@@ -9,20 +9,22 @@ buildscript {
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.13"
     }
 }
-plugins {
-    id "com.jfrog.bintray" version "1.6"
-}
+//plugins {
+//    id "com.jfrog.bintray" version "1.6"
+//}
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'org.jetbrains.dokka'
+apply plugin: 'maven'
 
 
 Properties mythosProps = new Properties()
 mythosProps.load(project.rootProject.file('mythos.properties').newDataInputStream())
 version = mythosProps.getProperty("versionName")
-group = 'io.chthonic.mythos'
-archivesBaseName = 'mythos'
+//group = 'io.chthonic.mythos'
+group = 'com.github.jhavatar'
+//archivesBaseName = 'mythos'
 def siteUrl = 'https://github.com/jhavatar/mythos'
 def gitUrl = 'https://github.com/jhavatar/mythos.git'
 
@@ -119,30 +121,30 @@ install {
     }
 }
 
-Properties bintrayProps = new Properties()
-bintrayProps.load(project.rootProject.file('local.properties').newDataInputStream())
-bintray {
-    user = bintrayProps.getProperty("bintray.user")
-    key = bintrayProps.getProperty("bintray.apikey")
-    configurations = ['archives']
-    pkg {
-        repo = 'maven'
-        name = archivesBaseName
-        desc = "A Model-View-Presenter library for Android apps."
-        websiteUrl = siteUrl
-        issueTrackerUrl = 'https://github.com/jhavatar/mythos/issues'
-        vcsUrl = gitUrl
-        licenses = ['Apache-2.0']
-        publicDownloadNumbers = true
-        version {
-            name = version
-            gpg {
-                sign = true //Determines whether to GPG sign the files. The default is false
-                passphrase =  bintrayProps.getProperty("bintray.gpg.passphrase") //Optional. The passphrase for GPG signing'
-            }
-        }
-    }
-}
+//Properties bintrayProps = new Properties()
+//bintrayProps.load(project.rootProject.file('local.properties').newDataInputStream())
+//bintray {
+//    user = bintrayProps.getProperty("bintray.user")
+//    key = bintrayProps.getProperty("bintray.apikey")
+//    configurations = ['archives']
+//    pkg {
+//        repo = 'maven'
+//        name = archivesBaseName
+//        desc = "A Model-View-Presenter library for Android apps."
+//        websiteUrl = siteUrl
+//        issueTrackerUrl = 'https://github.com/jhavatar/mythos/issues'
+//        vcsUrl = gitUrl
+//        licenses = ['Apache-2.0']
+//        publicDownloadNumbers = true
+//        version {
+//            name = version
+//            gpg {
+//                sign = true //Determines whether to GPG sign the files. The default is false
+//                passphrase =  bintrayProps.getProperty("bintray.gpg.passphrase") //Optional. The passphrase for GPG signing'
+//            }
+//        }
+//    }
+//}
 repositories {
     mavenCentral()
 }
