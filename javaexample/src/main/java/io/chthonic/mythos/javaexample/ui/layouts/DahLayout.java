@@ -2,6 +2,8 @@ package io.chthonic.mythos.javaexample.ui.layouts;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -9,6 +11,8 @@ import android.view.ViewGroup;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import io.chthonic.mythos.javaexample.App;
+import io.chthonic.mythos.javaexample.ui.fragments.RoFragment;
 import io.chthonic.mythos.javaexample.ui.presenters.DahPresenter;
 import io.chthonic.mythos.javaexample.ui.vus.DahVu;
 import io.chthonic.mythos.mvp.FragmentWrapper;
@@ -28,6 +32,10 @@ public class DahLayout extends MVPLayout<DahPresenter, DahVu> {
         super(context);
     }
 
+    public DahLayout(@Nullable Context context, String lifecycleCallbackKey) {
+        super(context, lifecycleCallbackKey);
+    }
+
     public DahLayout(@Nullable Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
@@ -36,6 +44,7 @@ public class DahLayout extends MVPLayout<DahPresenter, DahVu> {
         super(context, attrs, defStyleAttr);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public DahLayout(@Nullable Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
@@ -51,5 +60,16 @@ public class DahLayout extends MVPLayout<DahPresenter, DahVu> {
                         return new DahVu(layoutInflater, activity, fragmentWrapper, parentView);
                     }
                 });
+    }
+
+
+    @Override
+    protected void registerLifecycleCallback() {
+        App.lifecycleManager.registerCallback(getLifecycleCallbackKey(), this.getLifecycleCallback());
+    }
+
+    @Override
+    protected void unregisterLifecycleCallback() {
+        App.lifecycleManager.unregisterCallback(getLifecycleCallbackKey(), this.getLifecycleCallback());
     }
 }

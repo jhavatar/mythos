@@ -34,7 +34,7 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
 
         mvpDispatcher.restorePresenterState(savedInstanceState)
         mvpDispatcher.createVu(inflater,
-                activity = this.activity,
+                activity = this.activity!!,
                 fragmentWrapper = FragmentWrapper(this),
                 parentView = container)
         return mvpDispatcher.vu!!.rootView
@@ -43,14 +43,17 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
     override fun onActivityCreated (savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        loaderManager.initLoader(mvpDispatcher.uid,
-                null,
-                mvpDispatcher.presenterCache as LoaderManager.LoaderCallbacks<P>)
+        if (mvpDispatcher.presenterCache is LoaderManager.LoaderCallbacks<*>) {
+            loaderManager.initLoader(mvpDispatcher.uid,
+                    null,
+                    @Suppress("UNCHECKED_CAST") // unable to fully check generics in kotlin
+                    mvpDispatcher.presenterCache as LoaderManager.LoaderCallbacks<P>)
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        mvpDispatcher.linkPresenter(this.activity.intent.extras, this.arguments)
+        mvpDispatcher.linkPresenter(this.activity?.intent?.extras, this.arguments)
     }
 
     override fun onPause() {

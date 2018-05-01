@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MVPLayout">
+        <!-- key to lifecycle callback in a MVPLiceCycleDispatcher -->
+        <attr name="mvplayout_callback_key" format="string" />
+    </declare-styleable>
+
+
+
+</resources>

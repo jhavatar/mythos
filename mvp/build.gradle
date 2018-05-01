@@ -5,12 +5,9 @@ buildscript {
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${rootProject.ext.kotlin_version}"
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
-        classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.13"
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.16"
     }
-}
-plugins {
-    id "com.jfrog.bintray" version "1.6"
 }
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
@@ -18,11 +15,11 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'org.jetbrains.dokka'
 
 
+
 Properties mythosProps = new Properties()
 mythosProps.load(project.rootProject.file('mythos.properties').newDataInputStream())
 version = mythosProps.getProperty("versionName")
-group = 'io.chthonic.mythos'
-archivesBaseName = 'mythos'
+group = 'com.github.jhavatar'
 def siteUrl = 'https://github.com/jhavatar/mythos'
 def gitUrl = 'https://github.com/jhavatar/mythos.git'
 
@@ -33,7 +30,7 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode = mythosProps.getProperty("versionCode")
+        versionCode = mythosProps.getProperty("versionCode") as Integer
         versionName version
     }
     buildTypes {
@@ -52,11 +49,15 @@ sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
 }
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
-    compile "org.jetbrains.kotlin:kotlin-stdlib:${rootProject.ext.kotlin_version}"
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    api "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
+    api "org.jetbrains.kotlin:kotlin-stdlib:${rootProject.ext.kotlin_version}"
 }
 
 if (project.hasProperty("android")) { // Android libraries
@@ -92,9 +93,8 @@ install {
             name = "mythos"
             description 'A Model-View-Presenter library for Android apps.'
             url siteUrl
-
             packaging 'aar'
-//            groupId archivesBaseName
+            groupId group
             artifactId = "mythos"
             version version
 
@@ -117,32 +117,4 @@ install {
             }
         }
     }
-}
-
-Properties bintrayProps = new Properties()
-bintrayProps.load(project.rootProject.file('local.properties').newDataInputStream())
-bintray {
-    user = bintrayProps.getProperty("bintray.user")
-    key = bintrayProps.getProperty("bintray.apikey")
-    configurations = ['archives']
-    pkg {
-        repo = 'maven'
-        name = archivesBaseName
-        desc = "A Model-View-Presenter library for Android apps."
-        websiteUrl = siteUrl
-        issueTrackerUrl = 'https://github.com/jhavatar/mythos/issues'
-        vcsUrl = gitUrl
-        licenses = ['Apache-2.0']
-        publicDownloadNumbers = true
-        version {
-            name = version
-            gpg {
-                sign = true //Determines whether to GPG sign the files. The default is false
-                passphrase =  bintrayProps.getProperty("bintray.gpg.passphrase") //Optional. The passphrase for GPG signing'
-            }
-        }
-    }
-}
-repositories {
-    mavenCentral()
 }

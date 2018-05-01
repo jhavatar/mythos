@@ -32,19 +32,22 @@ abstract class MVPActivity<P, V>: AppCompatActivity() where P : Presenter<V>, V 
         mvpDispatcher.createVu(this.layoutInflater, this)
         setContentView(mvpDispatcher.vu!!.rootView)
 
-        supportLoaderManager.initLoader(mvpDispatcher.uid,
-                null,
-                mvpDispatcher.presenterCache as LoaderManager.LoaderCallbacks<P>)
+        if (mvpDispatcher.presenterCache is LoaderManager.LoaderCallbacks<*>) {
+            supportLoaderManager.initLoader(mvpDispatcher.uid,
+                    null,
+                    @Suppress("UNCHECKED_CAST") // unable to fully check generics in kotlin
+                    mvpDispatcher.presenterCache as LoaderManager.LoaderCallbacks<P>)
+        }
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         mvpDispatcher.linkPresenter(this.intent.extras)
     }
 
-    override fun onStop() {
+    override fun onPause() {
         mvpDispatcher.unlinkPresenter()
-        super.onStop()
+        super.onPause()
     }
 
     override fun onDestroy() {
