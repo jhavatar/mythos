@@ -12,7 +12,7 @@ android {
         applicationId "io.cthonic.mythos.javaexample"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode = mythosProps.getProperty("versionCode")
+        versionCode = mythosProps.getProperty("versionCode") as Integer
         versionName = mythosProps.getProperty("versionName")
     }
     buildTypes {
@@ -30,8 +30,12 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
-    implementation project(':mvp')
+    implementation "com.github.jhavatar:mythos:${mythosProps.getProperty("versionName")}"
 }
 repositories {
     mavenCentral()
+    maven { url "https://jitpack.io" }
+}
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }

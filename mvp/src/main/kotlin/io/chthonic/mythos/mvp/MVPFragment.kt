@@ -46,6 +46,7 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
         if (mvpDispatcher.presenterCache is LoaderManager.LoaderCallbacks<*>) {
             loaderManager.initLoader(mvpDispatcher.uid,
                     null,
+                    @Suppress("UNCHECKED_CAST") // unable to fully check generics in kotlin
                     mvpDispatcher.presenterCache as LoaderManager.LoaderCallbacks<P>)
         }
     }
