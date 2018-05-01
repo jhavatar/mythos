@@ -1,10 +1,16 @@
+[![Release](https://jitpack.io/v/jhavatar/mythos.svg)]
+(https://jitpack.io/#jhavatar/mythos)
+
 # mythos
 A simple Model-View-Presenter library for Android apps.
 
-## Dependency
+## Setup
 ```groovy
+repositories {
+    maven { url "https://jitpack.io" }
+}
 dependencies {
-    compile 'io.chthonic.mythos:mythos:0.9.2'
+    implementation "com.github.jhavatar:mythos:1.0.4"
 }
 ```
 
