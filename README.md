@@ -9,7 +9,7 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 dependencies {
-    implementation "com.github.jhavatar:mythos:1.0.4"
+    implementation "com.github.jhavatar:mythos:1.0.5"
 }
 ```
 
