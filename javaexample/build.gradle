@@ -30,8 +30,12 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
-    implementation project(':mvp')
+    implementation "com.github.jhavatar:mythos:1.0.0"
 }
 repositories {
     mavenCentral()
+    maven { url "https://jitpack.io" }
+}
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
