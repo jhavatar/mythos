@@ -30,7 +30,7 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode = mythosProps.getProperty("versionCode")
+        versionCode = mythosProps.getProperty("versionCode") as Integer
         versionName version
     }
     buildTypes {
