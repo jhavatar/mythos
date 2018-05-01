@@ -1,5 +1,4 @@
-[![Release](https://jitpack.io/v/jhavatar/mythos.svg)]
-(https://jitpack.io/#jhavatar/mythos)
+[![Release](https://jitpack.io/v/jhavatar/mythos.svg)](https://jitpack.io/#jhavatar/mythos)
 
 # mythos
 A simple Model-View-Presenter library for Android apps.
