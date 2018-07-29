@@ -1,10 +1,15 @@
 package io.chthonic.mythos.mvp
 
+import java.util.concurrent.Callable
+
 /**
  * Created by jhavatar on 7/29/2018.
  */
-class PresenterCacheLazy<P>(oneTimePresenterCreator: ()->P) : PresenterCache<P>() where P : Presenter<*>{
-    private var presenterCreator: (()->P)? = oneTimePresenterCreator
+class PresenterCacheLazy<P>(oneTimeCreatePresenterFunction: ()->P) : PresenterCache<P>() where P : Presenter<*>{
+
+    constructor(oneTimeCreatePresenterCallable: Callable<P>) : this({ oneTimeCreatePresenterCallable.call()})
+
+    private var presenterCreator: (()->P)? = oneTimeCreatePresenterFunction
 
     override var presenter: P? = null
         get() {
