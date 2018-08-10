@@ -9,14 +9,6 @@ class PesenterCacheViewModel<PC> : ViewModel() where PC : PresenterCache<*>{
 
     var cache: PC? = null
 
-    fun start(initCache: PC) {
-        cache = initCache
-    }
-
-    fun get(): PC? {
-        return cache
-    }
-
     override fun onCleared() {
         cache?.clear()
         cache = null

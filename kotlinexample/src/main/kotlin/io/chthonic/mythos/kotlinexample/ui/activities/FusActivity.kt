@@ -26,16 +26,19 @@ class FusActivity : MVPActivity<FusPresenter, FusVu>() {
     }
 
     override fun createMVPDispatcher(): MVPDispatcher<FusPresenter, FusVu> {
-//        ViewModelProviders.of(this)
-//        val type = TypeToken<PesenterCacheViewModel<FusPresenter>>(){}.getType();
-//        val type = Types(ViewModelProviders::class.java, FusPresenter::class.java)
-//        val cls =  PesenterCacheViewModel::class.java as Class<PesenterCacheViewModel<FusPresenter>>
-
         @Suppress("UNCHECKED_CAST")
         val viewModel = ViewModelProviders.of(this).get(MVP_UID.toString(), PesenterCacheViewModel::class.java)
                 as PesenterCacheViewModel<PresenterCacheBasicLazy<FusPresenter>>
-        val presenterCache = PresenterCacheBasicLazy<FusPresenter>({ FusPresenter() })
-        viewModel.start(presenterCache)
+        val cache = viewModel.cache
+        val presenterCache = if (cache != null) {
+            cache
+
+        } else {
+            val presenterCache = PresenterCacheBasicLazy<FusPresenter>({ FusPresenter() })
+            viewModel.cache = presenterCache
+            presenterCache
+        }
+
         return MVPDispatcher(MVP_UID,
                 presenterCache,
                 { layoutInflater: LayoutInflater,
