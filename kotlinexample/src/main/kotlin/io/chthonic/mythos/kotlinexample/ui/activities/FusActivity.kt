@@ -21,8 +21,8 @@ class FusActivity : MVPActivity<FusPresenter, FusVu>() {
         }
     }
 
-    private val fragmentLifecycleDispatcher: SupportFragmentLifecycleDispatcher by lazy {
-        SupportFragmentLifecycleDispatcher(mapOf(Pair(RoFragment::class.java, resources.getString(R.string.ro_lifecycle_key))))
+    private val fragmentLifecycleDispatcher: FragmentLifecycleDispatcher by lazy {
+        FragmentLifecycleDispatcher(mapOf(Pair(RoFragment::class.java, resources.getString(R.string.ro_lifecycle_key))))
     }
 
     override fun createMVPDispatcher(): MVPDispatcher<FusPresenter, FusVu> {

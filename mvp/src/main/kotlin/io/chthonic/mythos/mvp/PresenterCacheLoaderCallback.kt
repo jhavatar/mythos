@@ -15,6 +15,7 @@ import java.util.concurrent.Callable
  * @property createPresenterFunction function that is used to create Presenter.
  * @constructor create PresenterCacheLoaderCallback instance.
  */
+@Deprecated("Presenter existence in onSaveState no longer guaranteed, rather use PresenterCacheViewModel.")
 class PresenterCacheLoaderCallback<P>(context: Context, val createPresenterFunction: () -> P) : PresenterCache<P>, LoaderManager.LoaderCallbacks<P> where P : Presenter<*>{
 
     /**

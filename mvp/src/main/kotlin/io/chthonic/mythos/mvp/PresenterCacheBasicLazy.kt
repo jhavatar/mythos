@@ -27,6 +27,7 @@ class PresenterCacheBasicLazy<out P>(oneTimeCreatePresenterFunction: ()->P) : Pr
     }
 
     override fun clear() {
+        presenterCreator = null
         presenter?.onDestroy()
         presenter = null
     }

@@ -17,7 +17,6 @@ import android.view.ViewGroup
  * @property parentView the ViewGroup that is the direct parent to Vu's rootView (Optional).
  * @constructor Creates MVP's View.
  */
-
 abstract class Vu(layoutInflater: LayoutInflater,
                   val activity: Activity,
                   val fragment: Fragment? = null,

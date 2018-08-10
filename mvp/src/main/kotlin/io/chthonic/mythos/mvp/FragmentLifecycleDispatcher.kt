@@ -11,7 +11,7 @@ import android.view.View
  * When a lifecycle event occurs, for all callbacks registered to lifecycle's key, call corresponding method.
  * @property keyMap maps key to support fragments class that represents the fragment's lifecycle
  */
-class SupportFragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, String>): FragmentManager.FragmentLifecycleCallbacks(), MVPLifecycleCallbackDispatcher {
+class FragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, String>): FragmentManager.FragmentLifecycleCallbacks(), MVPLifecycleCallbackDispatcher {
 
     /**
      *  List of keys that dispatcher supports where each key maps to a unique lifecycle flow.
