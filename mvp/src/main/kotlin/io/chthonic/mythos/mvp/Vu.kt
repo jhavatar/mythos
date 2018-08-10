@@ -1,6 +1,7 @@
 package io.chthonic.mythos.mvp
 
 import android.app.Activity
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,14 +13,14 @@ import android.view.ViewGroup
  *
  * @param layoutInflater the Inflater available in createRootView() method
  * @property activity the Activity that Vu rootView belongs to.
- * @property fragmentWrapper Wraps the Fragment that Vu's rootView is a child of (Optional).
+ * @property fragment the Fragment that Vu's rootView is a child of (Optional).
  * @property parentView the ViewGroup that is the direct parent to Vu's rootView (Optional).
  * @constructor Creates MVP's View.
  */
 
 abstract class Vu(layoutInflater: LayoutInflater,
                   val activity: Activity,
-                  val fragmentWrapper: FragmentWrapper? = null,
+                  val fragment: Fragment? = null,
                   val parentView: ViewGroup? = null) {
 
     /**

@@ -2,6 +2,7 @@ package io.chthonic.mythos.mvp
 
 import android.app.Activity
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.ViewGroup
 
@@ -19,9 +20,9 @@ import android.view.ViewGroup
 class MVPDispatcher<P, V> (val uid: Int,
                            val presenterCache: PresenterCache<P>,
                            private val createVuFunction: (layoutInflater: LayoutInflater,
-                                          activity: Activity,
-                                          fragmentWrapper: FragmentWrapper?,
-                                          parentView: ViewGroup?) -> V) where P : Presenter<V>,  V : Vu {
+                                                          activity: Activity,
+                                                          fragment: Fragment?,
+                                                          parentView: ViewGroup?) -> V) where P : Presenter<V>,  V : Vu {
 
     /**
      * @param uid id that uniquely identifies dispatcher and is used i.a. as key when saving Presenter's state.
@@ -36,9 +37,9 @@ class MVPDispatcher<P, V> (val uid: Int,
                             presenterCache,
                             {layoutInflater: LayoutInflater,
                              activity: Activity,
-                             fragmentWrapper: FragmentWrapper?,
+                             fragment: Fragment?,
                              parentView: ViewGroup? ->
-                                createVuFunction.invoke(layoutInflater, activity, fragmentWrapper, parentView)
+                                createVuFunction.invoke(layoutInflater, activity, fragment, parentView)
                     })
 
     private val stateKey: String = "presenter_" + uid
@@ -72,18 +73,18 @@ class MVPDispatcher<P, V> (val uid: Int,
      * Create View/Vu. Call before linking Presenter. Calls Presenter's onCreate() callback.
      * @param layoutInflater the Inflater available to inflate Vu's rootView.
      * @param activity the Activity that Vu's rootView belongs to.
-     * @param fragmentWrapper Wraps the Fragment that Vu's rootView is a child of (Optional).
+     * @param fragment the Fragment that Vu's rootView is a child of (Optional).
      * @param parentView the ViewGroup that is the direct parent to Vu's rootView (Optional).
      */
     @JvmOverloads
     fun createVu(layoutInflater: LayoutInflater,
                  activity: Activity,
-                 fragmentWrapper: FragmentWrapper? = null,
+                 fragment: Fragment? = null,
                  parentView: ViewGroup? = null) {
 
         val nuVu = createVuFunction(layoutInflater,
                 activity,
-                fragmentWrapper,
+                fragment,
                 parentView)
         vu = nuVu
 
@@ -144,13 +145,13 @@ class MVPDispatcher<P, V> (val uid: Int,
         /**
          * @param layoutInflater the Inflater available to inflate Vu's rootView.
          * @param activity the Activity that Vu's rootView belongs to.
-         * @param fragmentWrapper Wraps the Fragment that Vu's rootView is a child of (Optional).
+         * @param fragment the Fragment that Vu's rootView is a child of (Optional).
          * @param parentView the ViewGroup that is the direct parent to Vu's rootView (Optional).
          * @return created Vu.
          */
         fun invoke(layoutInflater: LayoutInflater,
                    activity: Activity,
-                   fragmentWrapper: FragmentWrapper?,
+                   fragment: Fragment?,
                    parentView: ViewGroup?) : V
     }
 }

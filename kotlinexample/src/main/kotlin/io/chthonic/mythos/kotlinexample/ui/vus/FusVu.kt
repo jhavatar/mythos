@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import io.chthonic.mythos.kotlinexample.R
 import io.chthonic.mythos.kotlinexample.ui.fragments.RoFragment
 import io.chthonic.mythos.kotlinexample.ui.layouts.DahLayout
-import io.chthonic.mythos.mvp.FragmentWrapper
 import io.chthonic.mythos.mvp.Vu
 import kotlinx.android.synthetic.main.activity_fus.view.*
 
@@ -18,11 +17,11 @@ import kotlinx.android.synthetic.main.activity_fus.view.*
  */
 class FusVu(inflater: LayoutInflater,
             activity: Activity,
-            fragmentWrapper: FragmentWrapper? = null,
+            fragment: Fragment? = null,
             parentView: ViewGroup? = null) :
         Vu(inflater,
                 activity = activity,
-                fragmentWrapper = fragmentWrapper,
+                fragment = fragment,
                 parentView = parentView) {
 
     var toggleRoListener: (() -> Unit)? = null

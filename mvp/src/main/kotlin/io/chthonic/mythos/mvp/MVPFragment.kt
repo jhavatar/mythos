@@ -35,7 +35,7 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
         mvpDispatcher.restorePresenterState(savedInstanceState)
         mvpDispatcher.createVu(inflater,
                 activity = this.activity!!,
-                fragmentWrapper = FragmentWrapper(this),
+                fragment = this,
                 parentView = container)
         return mvpDispatcher.vu!!.rootView
     }

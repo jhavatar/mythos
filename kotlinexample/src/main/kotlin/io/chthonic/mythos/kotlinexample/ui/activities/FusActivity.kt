@@ -3,6 +3,7 @@ package io.chthonic.mythos.kotlinexample.ui.activities
 import android.app.Activity
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.chthonic.mythos.kotlinexample.App
@@ -37,10 +38,10 @@ class FusActivity : MVPActivity<FusPresenter, FusVu>() {
         viewModel.start(presenterCache)
         return MVPDispatcher(MVP_UID,
                 presenterCache,
-                {layoutInflater: LayoutInflater,
-                activity: Activity,
-                fragmentWrapper: FragmentWrapper?,
-                parentView: ViewGroup? ->
+                { layoutInflater: LayoutInflater,
+                  activity: Activity,
+                  fragment: Fragment?,
+                  parentView: ViewGroup? ->
             FusVu(layoutInflater, activity, parentView = parentView)
         })
     }
