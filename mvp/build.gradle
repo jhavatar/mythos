@@ -58,6 +58,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     api "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     api "org.jetbrains.kotlin:kotlin-stdlib:${rootProject.ext.kotlin_version}"
+    implementation "android.arch.lifecycle:viewmodel:${rootProject.ext.lifecycle_version}"
+    implementation "android.arch.lifecycle:extensions:${rootProject.ext.lifecycle_version}"
 }
 
 if (project.hasProperty("android")) { // Android libraries

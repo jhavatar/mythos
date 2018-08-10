@@ -15,8 +15,7 @@ import java.util.concurrent.Callable
  * @property createPresenterFunction function that is used to create Presenter.
  * @constructor create PresenterCacheLoaderCallback instance.
  */
-class PresenterCacheLoaderCallback<P>(context: Context, val createPresenterFunction: () -> P) : PresenterCache<P>(), LoaderManager.LoaderCallbacks<P> where P : Presenter<*>{
-
+class PresenterCacheLoaderCallback<P>(context: Context, val createPresenterFunction: () -> P) : PresenterCache<P>, LoaderManager.LoaderCallbacks<P> where P : Presenter<*>{
 
     /**
      * @param context Context used to create PresenterLoader. Note, a weak reference is kept to this presenter.
@@ -27,7 +26,7 @@ class PresenterCacheLoaderCallback<P>(context: Context, val createPresenterFunct
     /**
      * Presenter returned by get() method.
      */
-    override var presenter: P? = null
+     protected var presenter: P? = null
 
     /**
      * Weak reference to context used to create PresenterLoader.
@@ -44,6 +43,16 @@ class PresenterCacheLoaderCallback<P>(context: Context, val createPresenterFunct
     }
 
     override fun onLoaderReset(loader: android.support.v4.content.Loader<P>) {
-        remove()
+        clear()
     }
+
+    override fun get(): P? {
+        return presenter
+    }
+
+    override fun clear() {
+        presenter?.onDestroy()
+        presenter = null
+    }
+
 }

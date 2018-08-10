@@ -38,6 +38,8 @@ abstract class MVPActivity<P, V>: AppCompatActivity() where P : Presenter<V>, V 
                     @Suppress("UNCHECKED_CAST") // unable to fully check generics in kotlin
                     mvpDispatcher.presenterCache as LoaderManager.LoaderCallbacks<P>)
         }
+
+//        ViewModelProviders.of(this).get(PesenterCacheViewModel.class)
     }
 
     override fun onResume() {

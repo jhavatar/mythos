@@ -5,13 +5,13 @@ import java.util.concurrent.Callable
 /**
  * Created by jhavatar on 7/29/2018.
  */
-class PresenterCacheLazy<P>(oneTimeCreatePresenterFunction: ()->P) : PresenterCache<P>() where P : Presenter<*>{
+class PresenterCacheBasicLazy<out P>(oneTimeCreatePresenterFunction: ()->P) : PresenterCache<P> where P : Presenter<*>{
 
     constructor(oneTimeCreatePresenterCallable: Callable<P>) : this({ oneTimeCreatePresenterCallable.call()})
 
     private var presenterCreator: (()->P)? = oneTimeCreatePresenterFunction
 
-    override var presenter: P? = null
+    private var presenter: P? = null
         get() {
             if (field == null) {
                 presenterCreator?.let{
@@ -21,4 +21,13 @@ class PresenterCacheLazy<P>(oneTimeCreatePresenterFunction: ()->P) : PresenterCa
             }
             return field
         }
+
+    override fun get(): P? {
+        return presenter
+    }
+
+    override fun clear() {
+        presenter?.onDestroy()
+        presenter = null
+    }
 }

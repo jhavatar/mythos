@@ -7,4 +7,13 @@ package io.chthonic.mythos.mvp
  * @param P type Of Presenter returned.
  * @param presenter presenter returned with get() call.
  */
-class PresenterCacheBasic<P>(override var presenter: P?) : PresenterCache<P>() where P : Presenter<*>
+class PresenterCacheBasic<P>(protected var presenter: P?) : PresenterCache<P> where P : Presenter<*> {
+    override fun get(): P? {
+        return presenter
+    }
+
+    override fun clear() {
+        presenter?.onDestroy()
+        presenter = null
+    }
+}
