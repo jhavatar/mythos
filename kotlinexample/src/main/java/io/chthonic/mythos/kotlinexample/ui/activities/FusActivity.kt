@@ -12,6 +12,7 @@ import io.chthonic.mythos.kotlinexample.ui.fragments.RoFragment
 import io.chthonic.mythos.kotlinexample.ui.presenters.FusPresenter
 import io.chthonic.mythos.kotlinexample.ui.vus.FusVu
 import io.chthonic.mythos.mvp.*
+import io.chthonic.mythos.viewmodel.PesenterCacheViewModel
 
 class FusActivity : MVPActivity<FusPresenter, FusVu>() {
 

@@ -69,7 +69,7 @@ class FragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, String>):
     }
 
 
-    override fun onFragmentViewCreated(fm: FragmentManager?, f: Fragment?, v: View?,
+    override fun onFragmentViewCreated(fm: FragmentManager, f: Fragment, v: View,
                               savedInstanceState: Bundle?) {
         val callbacks = getCallbacks(f)
         callbacks?.toList()?.forEach {
@@ -78,7 +78,7 @@ class FragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, String>):
     }
 
 
-    override fun onFragmentResumed(fm: FragmentManager?, f: Fragment?) {
+    override fun onFragmentResumed(fm: FragmentManager, f: Fragment) {
         val callbacks = getCallbacks(f)
         callbacks?.toList()?.forEach {
             it.onResumed()
@@ -86,14 +86,14 @@ class FragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, String>):
     }
 
 
-    override fun onFragmentPaused(fm: FragmentManager?, f: Fragment?) {
+    override fun onFragmentPaused(fm: FragmentManager, f: Fragment) {
         val callbacks = getCallbacks(f)
         callbacks?.toList()?.forEach {
             it.onPaused()
         }
     }
 
-    override fun onFragmentViewDestroyed(fm: FragmentManager?, f: Fragment?) {
+    override fun onFragmentViewDestroyed(fm: FragmentManager, f: Fragment) {
         val callbacks = getCallbacks(f)
         callbacks?.toList()?.forEach {
             it.onDestroyed()
@@ -101,7 +101,7 @@ class FragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, String>):
     }
 
 
-    override fun onFragmentSaveInstanceState(fm: FragmentManager?, f: Fragment?, outState: Bundle?) {
+    override fun onFragmentSaveInstanceState(fm: FragmentManager, f: Fragment, outState: Bundle) {
         val callbacks = getCallbacks(f)
         callbacks?.toList()?.forEach {
             it.onSaveInstanceState(outState)

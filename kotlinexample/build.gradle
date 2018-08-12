@@ -17,7 +17,6 @@ android {
         versionCode = mythosProps.getProperty("versionCode") as Integer
         versionName = mythosProps.getProperty("versionName")
         flavorDimensions "default"
-        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -33,15 +32,13 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 //    implementation "com.github.jhavatar:mythos:${mythosProps.getProperty("versionName")}"
-//    implementation project(':mvp')
+    implementation project(':mvp')
+    implementation project(':mvp-viewmodel')
 
     implementation "android.arch.lifecycle:viewmodel:${rootProject.ext.lifecycle_version}"
     implementation "android.arch.lifecycle:extensions:${rootProject.ext.lifecycle_version}"
 
-    implementation 'com.android.support:multidex:1.0.3'
-
     implementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-    implementation project(path: ':mvp')
 }
 buildscript {
     ext.kotlin_version = "${rootProject.ext.kotlin_version}"

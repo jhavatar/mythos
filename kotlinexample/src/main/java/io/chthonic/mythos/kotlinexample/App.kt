@@ -9,7 +9,7 @@ import io.chthonic.mythos.mvp.MVPLifecycleCallbackManager
 /**
  * Created by jhavatar on 12/10/2017.
  */
-class App : android.support.multidex.MultiDexApplication() {
+class App : Application() {
 
     companion object {
         lateinit var app: Application

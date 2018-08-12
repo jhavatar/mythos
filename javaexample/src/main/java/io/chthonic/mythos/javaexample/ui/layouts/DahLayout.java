@@ -3,14 +3,12 @@ package io.chthonic.mythos.javaexample.ui.layouts;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import io.chthonic.mythos.javaexample.App;
 import io.chthonic.mythos.javaexample.ui.presenters.DahPresenter;
@@ -27,28 +25,28 @@ public class DahLayout extends MVPLayout<DahPresenter, DahVu> {
 
     private static final int MVP_UID = DahLayout.class.getSimpleName().hashCode();
 
-    public DahLayout(@Nullable Context context) {
+    public DahLayout(@NonNull Context context) {
         super(context);
     }
 
-    public DahLayout(@Nullable Context context, String lifecycleCallbackKey) {
+    public DahLayout(@NonNull Context context, String lifecycleCallbackKey) {
         super(context, lifecycleCallbackKey);
     }
 
-    public DahLayout(@Nullable Context context, @Nullable AttributeSet attrs) {
+    public DahLayout(@NonNull Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public DahLayout(@Nullable Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public DahLayout(@NonNull Context context, @NonNull AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public DahLayout(@Nullable Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public DahLayout(@NonNull Context context, @NonNull AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    @NotNull
+    @NonNull
     @Override
     protected MVPDispatcher<DahPresenter, DahVu> createMVPDispatcher() {
         return new MVPDispatcher<>(MVP_UID,

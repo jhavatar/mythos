@@ -9,8 +9,8 @@ import io.chthonic.mythos.kotlinexample.ui.presenters.RoPresenter
 import io.chthonic.mythos.kotlinexample.ui.vus.RoVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
-import io.chthonic.mythos.mvp.PesenterCacheViewModel
 import io.chthonic.mythos.mvp.PresenterCacheBasicLazy
+import io.chthonic.mythos.viewmodel.PesenterCacheViewModel
 
 /**
  * Created by jhavatar on 3/22/2016.

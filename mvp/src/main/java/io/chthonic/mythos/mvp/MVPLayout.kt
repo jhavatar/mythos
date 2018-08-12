@@ -56,20 +56,20 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
     }
 
     @JvmOverloads
-    constructor(context: Context?, lifecycleCallbackKey: String? = null) : super(context) {
+    constructor(context: Context, lifecycleCallbackKey: String? = null) : super(context) {
         this.lifecycleCallbackKey = lifecycleCallbackKey
     }
 
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         initAttrs(context, attrs)
     }
 
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         initAttrs(context, attrs, defStyleAttr = defStyleAttr)
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
         initAttrs(context, attrs, defStyleAttr = defStyleAttr, defStyleRes = defStyleRes)
     }
 
@@ -168,7 +168,7 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
             args = inBundle.getBundle(ARGS_KEY)
         }
         if (inBundle.containsKey(MVP_STATE_KEY)) {
-            val mvpState: Bundle = inBundle.getBundle(MVP_STATE_KEY)
+            val mvpState: Bundle? = inBundle.getBundle(MVP_STATE_KEY)
             mvpDispatcher.restorePresenterState(mvpState)
         }
     }

@@ -14,8 +14,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'org.jetbrains.dokka'
 
-
-
 Properties mythosProps = new Properties()
 mythosProps.load(project.rootProject.file('mythos.properties').newDataInputStream())
 version = mythosProps.getProperty("versionName")
@@ -32,24 +30,29 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode = mythosProps.getProperty("versionCode") as Integer
         versionName version
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-}
 
-repositories {
-    mavenCentral()
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.android.support:appcompat-v7:${rootProject.ext.lifecycle_version}"
+    implementation project(':mvp')
+
+    implementation "android.arch.lifecycle:viewmodel:${rootProject.ext.lifecycle_version}"
+    implementation "android.arch.lifecycle:extensions:${rootProject.ext.lifecycle_version}"
+
     testImplementation 'junit:junit:4.12'
-    api "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
-    api "org.jetbrains.kotlin:kotlin-stdlib:${rootProject.ext.kotlin_version}"
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
 }
 
 if (project.hasProperty("android")) { // Android libraries
@@ -82,12 +85,12 @@ artifacts {
 install {
     repositories.mavenInstaller {
         pom.project {
-            name = "mythos"
+            name = "mythos-viewmodel"
             description 'A Model-View-Presenter library for Android apps.'
             url siteUrl
             packaging 'aar'
             groupId group
-            artifactId = "mythos"
+            artifactId = "mythos-viewmodel"
             version version
 
             licenses {

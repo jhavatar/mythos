@@ -3,12 +3,11 @@ package io.chthonic.mythos.javaexample.ui.activities;
 import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,9 +21,9 @@ import io.chthonic.mythos.javaexample.ui.vus.FusVu;
 import io.chthonic.mythos.mvp.FragmentLifecycleDispatcher;
 import io.chthonic.mythos.mvp.MVPActivity;
 import io.chthonic.mythos.mvp.MVPDispatcher;
-import io.chthonic.mythos.mvp.PesenterCacheViewModel;
 import io.chthonic.mythos.mvp.PresenterCache;
 import io.chthonic.mythos.mvp.PresenterCacheBasicLazy;
+import io.chthonic.mythos.viewmodel.PesenterCacheViewModel;
 
 public class FusActivity extends MVPActivity<FusPresenter, FusVu> {
 
@@ -51,7 +50,7 @@ public class FusActivity extends MVPActivity<FusPresenter, FusVu> {
         App.lifecycleManager.unregisterDispatcher(fragmentLifecycleDispatcher);
     }
 
-    @NotNull
+    @NonNull
     @Override
     public MVPDispatcher<FusPresenter, FusVu> createMVPDispatcher() {
         PesenterCacheViewModel<FusPresenter> viewModel = (PesenterCacheViewModel<FusPresenter>) ViewModelProviders.of(this).get(String.valueOf(MVP_UID), PesenterCacheViewModel.class);
@@ -69,9 +68,9 @@ public class FusActivity extends MVPActivity<FusPresenter, FusVu> {
         return new MVPDispatcher<>(MVP_UID,
                 presenterCache,
                 new MVPDispatcher.CreateVuFunction<FusVu>() {
-                    @NotNull
+                    @NonNull
                     @Override
-                    public FusVu invoke(@NotNull LayoutInflater inflater, @NotNull Activity activity, @Nullable Fragment fragment, @Nullable ViewGroup parentView) {
+                    public FusVu invoke(@NonNull LayoutInflater inflater, @NonNull Activity activity, @Nullable Fragment fragment, @Nullable ViewGroup parentView) {
                         return new FusVu(inflater, activity, fragment, parentView);
                     }
                 });
