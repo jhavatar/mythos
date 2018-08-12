@@ -1,14 +1,15 @@
 package io.chthonic.mythos.kotlinexample.ui.fragments
 
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
 import io.chthonic.mythos.kotlinexample.App
+import io.chthonic.mythos.kotlinexample.ui.activities.FusActivity
+import io.chthonic.mythos.kotlinexample.ui.presenters.FusPresenter
 import io.chthonic.mythos.kotlinexample.ui.presenters.RoPresenter
 import io.chthonic.mythos.kotlinexample.ui.vus.RoVu
-import io.chthonic.mythos.mvp.MVPDispatcher
-import io.chthonic.mythos.mvp.MVPFragment
-import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback
+import io.chthonic.mythos.mvp.*
 
 /**
  * Created by jhavatar on 3/22/2016.
@@ -33,8 +34,16 @@ class RoFragment : MVPFragment<RoPresenter, RoVu>() {
     }
 
     override fun createMVPDispatcher(): MVPDispatcher<RoPresenter, RoVu> {
+        @Suppress("UNCHECKED_CAST")
+        val viewModel = ViewModelProviders.of(this).get(RoFragment.MVP_UID.toString(), PesenterCacheViewModel::class.java)
+                as PesenterCacheViewModel<RoPresenter>
+        val presenterCache = viewModel.cache ?: run {
+            val cache = PresenterCacheBasicLazy<RoPresenter>({ RoPresenter() }, false)
+            viewModel.cache = cache
+            cache
+        }
         return MVPDispatcher(MVP_UID,
-                PresenterCacheLoaderCallback(this.activity!!, { RoPresenter() }),
+                presenterCache,
                 ::RoVu)
     }
 

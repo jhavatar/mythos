@@ -55,7 +55,7 @@ class MVPDispatcher<P, V> (val uid: Int,
      */
     val presenter: P?
         get() {
-            return presenterCache.get()
+            return presenterCache.getCached()
         }
 
     /**
@@ -102,6 +102,7 @@ class MVPDispatcher<P, V> (val uid: Int,
                 .filterNotNull()
                 .forEach { linkArgs.putAll(it) }
 
+        // presenter should exist here
         presenter!!.onLink(vu!!, lastPresenterState, linkArgs)
     }
 
@@ -111,6 +112,8 @@ class MVPDispatcher<P, V> (val uid: Int,
      */
     fun savePresenterState(outState: Bundle) {
         val newState = Bundle()
+
+        // presenter should exist here
         presenter!!.onSaveState(newState)
         if (newState.size() > 0) {
             lastPresenterState = newState
@@ -125,6 +128,8 @@ class MVPDispatcher<P, V> (val uid: Int,
      * Unlink presenter from MVP pattern and Vu. may be linked again later. Calls Presenter's onUnlink() callback.
      */
     fun unlinkPresenter() {
+
+        // presenter should exist here
         presenter!!.onUnlink()
     }
 
@@ -134,6 +139,12 @@ class MVPDispatcher<P, V> (val uid: Int,
     fun destroyVu() {
         vu?.onDestroy()
         vu = null
+    }
+
+    fun destroyPresenterIfRequired() {
+        if (presenterCache.mvpDispatcherShouldDestroy) {
+            presenterCache.destroyCached()
+        }
     }
 
     /**

@@ -5,9 +5,9 @@ import java.util.concurrent.Callable
 /**
  * Created by jhavatar on 7/29/2018.
  */
-class PresenterCacheBasicLazy<out P>(oneTimeCreatePresenterFunction: ()->P) : PresenterCache<P> where P : Presenter<*>{
+class PresenterCacheBasicLazy<out P>(oneTimeCreatePresenterFunction: ()->P, override val mvpDispatcherShouldDestroy: Boolean) : PresenterCache<P> where P : Presenter<*>{
 
-    constructor(oneTimeCreatePresenterCallable: Callable<P>) : this({ oneTimeCreatePresenterCallable.call()})
+    constructor(oneTimeCreatePresenterCallable: Callable<P>, mvpDispatcherShouldDestroy: Boolean) : this({ oneTimeCreatePresenterCallable.call()}, mvpDispatcherShouldDestroy)
 
     private var presenterCreator: (()->P)? = oneTimeCreatePresenterFunction
 
@@ -22,11 +22,11 @@ class PresenterCacheBasicLazy<out P>(oneTimeCreatePresenterFunction: ()->P) : Pr
             return field
         }
 
-    override fun get(): P? {
+    override fun getCached(): P? {
         return presenter
     }
 
-    override fun clear() {
+    override fun destroyCached() {
         presenterCreator = null
         presenter?.onDestroy()
         presenter = null

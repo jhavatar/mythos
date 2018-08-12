@@ -5,14 +5,15 @@ package io.chthonic.mythos.mvp
  *
  * Most basic implementation of PresenterCache that returns Presenter passed to constructor and Presenter does not survive rotation.
  * @param P type Of Presenter returned.
- * @param presenter presenter returned with get() call.
+ * @param getCached presenter returned with getCached() call.
  */
-class PresenterCacheBasic<P>(protected var presenter: P?) : PresenterCache<P> where P : Presenter<*> {
-    override fun get(): P? {
+class PresenterCacheBasic<P>(protected var presenter: P?, override val mvpDispatcherShouldDestroy: Boolean) : PresenterCache<P> where P : Presenter<*> {
+
+    override fun getCached(): P? {
         return presenter
     }
 
-    override fun clear() {
+    override fun destroyCached() {
         presenter?.onDestroy()
         presenter = null
     }

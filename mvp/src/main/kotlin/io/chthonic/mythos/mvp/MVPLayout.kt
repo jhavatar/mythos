@@ -142,7 +142,7 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
                 if (created) {
                     created = false
 
-                    mvpDispatcher.presenterCache.clear()
+                    mvpDispatcher.destroyPresenterIfRequired()
                     val vuRootView = mvpDispatcher.vu?.rootView
                     mvpDispatcher.destroyVu()
                     if (vuRootView != null) {

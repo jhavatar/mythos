@@ -43,6 +43,7 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
     override fun onActivityCreated (savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        // Note, implementation using Loader has been deprecated, try PesenterCacheViewModel
         if (mvpDispatcher.presenterCache is LoaderManager.LoaderCallbacks<*>) {
             loaderManager.initLoader(mvpDispatcher.uid,
                     null,
@@ -64,6 +65,11 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
     override fun onDestroyView() {
         mvpDispatcher.destroyVu()
         super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        mvpDispatcher.destroyPresenterIfRequired()
+        super.onDestroy()
     }
 
     override fun onSaveInstanceState (outState: Bundle) {

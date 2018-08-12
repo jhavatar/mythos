@@ -18,6 +18,8 @@ import java.util.concurrent.Callable
 @Deprecated("Presenter existence in onSaveState no longer guaranteed, rather use PresenterCacheViewModel.")
 class PresenterCacheLoaderCallback<P>(context: Context, val createPresenterFunction: () -> P) : PresenterCache<P>, LoaderManager.LoaderCallbacks<P> where P : Presenter<*>{
 
+    override val mvpDispatcherShouldDestroy: Boolean = false
+
     /**
      * @param context Context used to create PresenterLoader. Note, a weak reference is kept to this presenter.
      * @param createPresenterCallable callable that is used to create Presenter.
@@ -25,7 +27,7 @@ class PresenterCacheLoaderCallback<P>(context: Context, val createPresenterFunct
     constructor(context: Context, createPresenterCallable: Callable<P>) : this(context, {createPresenterCallable.call()})
 
     /**
-     * Presenter returned by get() method.
+     * Presenter returned by getCached() method.
      */
      protected var presenter: P? = null
 
@@ -44,14 +46,14 @@ class PresenterCacheLoaderCallback<P>(context: Context, val createPresenterFunct
     }
 
     override fun onLoaderReset(loader: android.support.v4.content.Loader<P>) {
-        clear()
+        destroyCached()
     }
 
-    override fun get(): P? {
+    override fun getCached(): P? {
         return presenter
     }
 
-    override fun clear() {
+    override fun destroyCached() {
         presenter?.onDestroy()
         presenter = null
     }

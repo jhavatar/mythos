@@ -8,13 +8,15 @@ package io.chthonic.mythos.mvp
  */
 interface PresenterCache<out P> where P : Presenter<*>{
 
+    val mvpDispatcherShouldDestroy: Boolean
+
     /**
      * @return cached presenter instance
      */
-    fun get(): P?
+    fun getCached(): P?
 
     /**
      * Remove presenter instance and call Presenters onDestroy() callback.
      */
-    fun clear()
+    fun destroyCached()
 }

@@ -32,14 +32,13 @@ abstract class MVPActivity<P, V>: AppCompatActivity() where P : Presenter<V>, V 
         mvpDispatcher.createVu(this.layoutInflater, this)
         setContentView(mvpDispatcher.vu!!.rootView)
 
+        // Note, implementation using Loader has been deprecated, try PesenterCacheViewModel
         if (mvpDispatcher.presenterCache is LoaderManager.LoaderCallbacks<*>) {
             supportLoaderManager.initLoader(mvpDispatcher.uid,
                     null,
                     @Suppress("UNCHECKED_CAST") // unable to fully check generics in kotlin
                     mvpDispatcher.presenterCache as LoaderManager.LoaderCallbacks<P>)
         }
-
-//        ViewModelProviders.of(this).get(PesenterCacheViewModel.class)
     }
 
     override fun onResume() {
@@ -54,6 +53,7 @@ abstract class MVPActivity<P, V>: AppCompatActivity() where P : Presenter<V>, V 
 
     override fun onDestroy() {
         mvpDispatcher.destroyVu()
+        mvpDispatcher.destroyPresenterIfRequired()
         super.onDestroy()
     }
 

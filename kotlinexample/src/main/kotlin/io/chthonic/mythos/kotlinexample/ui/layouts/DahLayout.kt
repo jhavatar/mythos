@@ -9,7 +9,7 @@ import io.chthonic.mythos.kotlinexample.ui.presenters.DahPresenter
 import io.chthonic.mythos.kotlinexample.ui.vus.DahVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPLayout
-import io.chthonic.mythos.mvp.PresenterCacheBasic
+import io.chthonic.mythos.mvp.PresenterCacheBasicLazy
 
 /**
  * Created by jhavatar on 3/12/2016.
@@ -24,7 +24,7 @@ class DahLayout : MVPLayout<DahPresenter, DahVu> {
 
     override fun createMVPDispatcher(): MVPDispatcher<DahPresenter, DahVu> {
         return MVPDispatcher(MVP_UID,
-                PresenterCacheBasic(DahPresenter()),
+                PresenterCacheBasicLazy({DahPresenter()}, true),
                 ::DahVu)
     }
 

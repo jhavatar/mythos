@@ -28,25 +28,21 @@ class FusActivity : MVPActivity<FusPresenter, FusVu>() {
     override fun createMVPDispatcher(): MVPDispatcher<FusPresenter, FusVu> {
         @Suppress("UNCHECKED_CAST")
         val viewModel = ViewModelProviders.of(this).get(MVP_UID.toString(), PesenterCacheViewModel::class.java)
-                as PesenterCacheViewModel<PresenterCacheBasicLazy<FusPresenter>>
-        val cache = viewModel.cache
-        val presenterCache = if (cache != null) {
+                as PesenterCacheViewModel<FusPresenter>
+        val presenterCache = viewModel.cache ?: run {
+            val cache = PresenterCacheBasicLazy<FusPresenter>({ FusPresenter() }, false)
+            viewModel.cache = cache
             cache
-
-        } else {
-            val presenterCache = PresenterCacheBasicLazy<FusPresenter>({ FusPresenter() })
-            viewModel.cache = presenterCache
-            presenterCache
         }
 
-        return MVPDispatcher(MVP_UID,
-                presenterCache,
-                { layoutInflater: LayoutInflater,
-                  activity: Activity,
-                  fragment: Fragment?,
-                  parentView: ViewGroup? ->
+        return MVPDispatcher (MVP_UID,
+                presenterCache
+        ) { layoutInflater: LayoutInflater,
+            activity: Activity,
+            fragment: Fragment?,
+            parentView: ViewGroup? ->
             FusVu(layoutInflater, activity, parentView = parentView)
-        })
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +56,7 @@ class FusActivity : MVPActivity<FusPresenter, FusVu>() {
     override fun onDestroy() {
         super.onDestroy()
 
-        // do after super.onDestroy() to still get the onDestroy call
+        // do after super.onDestroy() to still getCached the onDestroy call
         App.lifecycleManager.unregisterDispatcher(fragmentLifecycleDispatcher)
     }
 
