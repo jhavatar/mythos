@@ -31,7 +31,7 @@ dependencies {
     implementation "com.github.jhavatar.mythos:mvp:${mythosProps.getProperty("versionName")}"
     implementation "com.github.jhavatar.mythos:viewmodel:${mythosProps.getProperty("versionName")}"
 //    implementation project(':mvp')
-//    implementation project(':mvp-viewmodel')
+//    implementation project(':viewmodel')
 
     implementation "android.arch.lifecycle:viewmodel:${rootProject.ext.lifecycle_version}"
     implementation "android.arch.lifecycle:extensions:${rootProject.ext.lifecycle_version}"
