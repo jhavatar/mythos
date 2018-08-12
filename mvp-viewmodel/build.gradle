@@ -86,7 +86,7 @@ install {
     repositories.mavenInstaller {
         pom.project {
             name = "mythos-viewmodel"
-            description 'A Model-View-Presenter library for Android apps.'
+            description 'ViewModel PresenterCache implementation for Mytos.'
             url siteUrl
             packaging 'aar'
             groupId group
