@@ -17,7 +17,7 @@ apply plugin: 'org.jetbrains.dokka'
 Properties mythosProps = new Properties()
 mythosProps.load(project.rootProject.file('mythos.properties').newDataInputStream())
 version = mythosProps.getProperty("versionName")
-group = 'com.github.jhavatar'
+group = 'com.github.jhavatar.mythos'
 def siteUrl = 'https://github.com/jhavatar/mythos'
 def gitUrl = 'https://github.com/jhavatar/mythos.git'
 
@@ -85,7 +85,7 @@ install {
     repositories.mavenInstaller {
         pom.project {
             name = "viewmodel"
-            description 'ViewModel PresenterCache implementation for Mytos.'
+            description 'ViewModel PresenterCache implementation for Mythos.'
             url siteUrl
             packaging 'aar'
             groupId group
