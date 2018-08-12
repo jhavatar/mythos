@@ -82,12 +82,12 @@ artifacts {
 install {
     repositories.mavenInstaller {
         pom.project {
-            name = "mythos"
+            name = "core"
             description 'A Model-View-Presenter library for Android apps.'
             url siteUrl
             packaging 'aar'
             groupId group
-            artifactId = "mythos"
+            artifactId = "core"
             version version
 
             licenses {

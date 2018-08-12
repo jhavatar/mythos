@@ -45,7 +45,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "com.android.support:appcompat-v7:${rootProject.ext.lifecycle_version}"
     implementation project(':mvp')
 
     implementation "android.arch.lifecycle:viewmodel:${rootProject.ext.lifecycle_version}"
@@ -85,12 +84,12 @@ artifacts {
 install {
     repositories.mavenInstaller {
         pom.project {
-            name = "mythos-viewmodel"
+            name = "viewmodel"
             description 'ViewModel PresenterCache implementation for Mytos.'
             url siteUrl
             packaging 'aar'
             groupId group
-            artifactId = "mythos-viewmodel"
+            artifactId = "viewmodel"
             version version
 
             licenses {
