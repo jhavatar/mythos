@@ -28,7 +28,7 @@ public class RoVu extends Vu {
 
     @Override
     public void onCreate() {
-        Button toggleButton = (Button) this.getRootView().findViewById(R.id.button_toggle_dah);
+        Button toggleButton = this.getRootView().findViewById(R.id.button_toggle_dah);
         toggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
