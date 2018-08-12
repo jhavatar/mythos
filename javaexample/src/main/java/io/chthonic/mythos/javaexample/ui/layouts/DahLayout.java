@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.Fragment;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -12,10 +13,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import io.chthonic.mythos.javaexample.App;
-import io.chthonic.mythos.javaexample.ui.fragments.RoFragment;
 import io.chthonic.mythos.javaexample.ui.presenters.DahPresenter;
 import io.chthonic.mythos.javaexample.ui.vus.DahVu;
-import io.chthonic.mythos.mvp.FragmentWrapper;
 import io.chthonic.mythos.mvp.MVPDispatcher;
 import io.chthonic.mythos.mvp.MVPLayout;
 import io.chthonic.mythos.mvp.PresenterCacheBasic;
@@ -53,11 +52,11 @@ public class DahLayout extends MVPLayout<DahPresenter, DahVu> {
     @Override
     protected MVPDispatcher<DahPresenter, DahVu> createMVPDispatcher() {
         return new MVPDispatcher<>(MVP_UID,
-                new PresenterCacheBasic<>(new DahPresenter()),
-                new Function4<LayoutInflater, Activity, FragmentWrapper, ViewGroup, DahVu>() {
+                new PresenterCacheBasic<>(new DahPresenter(), true),
+                new Function4<LayoutInflater, Activity, Fragment, ViewGroup, DahVu>() {
                     @Override
-                    public DahVu invoke(LayoutInflater layoutInflater, Activity activity, FragmentWrapper fragmentWrapper, ViewGroup parentView) {
-                        return new DahVu(layoutInflater, activity, fragmentWrapper, parentView);
+                    public DahVu invoke(LayoutInflater layoutInflater, Activity activity, Fragment fragment, ViewGroup parentView) {
+                        return new DahVu(layoutInflater, activity, fragment, parentView);
                     }
                 });
     }

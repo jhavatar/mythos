@@ -1,6 +1,7 @@
 package io.chthonic.mythos.javaexample.ui.vus;
 
 import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -8,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import io.chthonic.mythos.javaexample.R;
-import io.chthonic.mythos.mvp.FragmentWrapper;
 import io.chthonic.mythos.mvp.Vu;
 
 /**
@@ -16,8 +16,8 @@ import io.chthonic.mythos.mvp.Vu;
  */
 public class DahVu extends Vu {
 
-    public DahVu(@NotNull LayoutInflater layoutInflater, @NotNull Activity activity, @Nullable FragmentWrapper fragmentWrapper, @Nullable ViewGroup parentView) {
-        super(layoutInflater, activity, fragmentWrapper, parentView);
+    public DahVu(@NotNull LayoutInflater layoutInflater, @NotNull Activity activity, @Nullable Fragment fragment, @Nullable ViewGroup parentView) {
+        super(layoutInflater, activity, fragment, parentView);
     }
 
     @Override

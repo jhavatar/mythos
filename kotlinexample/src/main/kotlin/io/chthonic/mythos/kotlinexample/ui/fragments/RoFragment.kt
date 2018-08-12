@@ -5,11 +5,12 @@ import android.os.Bundle
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
 import io.chthonic.mythos.kotlinexample.App
-import io.chthonic.mythos.kotlinexample.ui.activities.FusActivity
-import io.chthonic.mythos.kotlinexample.ui.presenters.FusPresenter
 import io.chthonic.mythos.kotlinexample.ui.presenters.RoPresenter
 import io.chthonic.mythos.kotlinexample.ui.vus.RoVu
-import io.chthonic.mythos.mvp.*
+import io.chthonic.mythos.mvp.MVPDispatcher
+import io.chthonic.mythos.mvp.MVPFragment
+import io.chthonic.mythos.mvp.PesenterCacheViewModel
+import io.chthonic.mythos.mvp.PresenterCacheBasicLazy
 
 /**
  * Created by jhavatar on 3/22/2016.

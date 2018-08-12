@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import io.chthonic.mythos.javaexample.R;
 import io.chthonic.mythos.javaexample.ui.fragments.RoFragment;
 import io.chthonic.mythos.javaexample.ui.layouts.DahLayout;
-import io.chthonic.mythos.mvp.FragmentWrapper;
 import io.chthonic.mythos.mvp.Vu;
 
 /**
@@ -25,9 +23,9 @@ public class FusVu extends Vu {
 
     public FusVu(LayoutInflater layoutInflater,
                  Activity activity,
-                 FragmentWrapper fragmentWrapper,
+                 Fragment fragment,
                  ViewGroup parentView) {
-        super(layoutInflater, activity, fragmentWrapper, parentView);
+        super(layoutInflater, activity, fragment, parentView);
     }
 
     @Override

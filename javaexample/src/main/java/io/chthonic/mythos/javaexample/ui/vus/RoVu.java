@@ -1,6 +1,7 @@
 package io.chthonic.mythos.javaexample.ui.vus;
 
 import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +9,6 @@ import android.widget.Button;
 
 import io.chthonic.mythos.javaexample.R;
 import io.chthonic.mythos.javaexample.ui.layouts.DahLayout;
-import io.chthonic.mythos.mvp.FragmentWrapper;
 import io.chthonic.mythos.mvp.Vu;
 
 /**
@@ -20,10 +20,10 @@ public class RoVu extends Vu {
 
     public RoVu(LayoutInflater layoutInflater,
                 Activity activity,
-                FragmentWrapper fragmentWrapper,
+                Fragment fragment,
                 ViewGroup parentView) {
 
-        super(layoutInflater, activity, fragmentWrapper, parentView);
+        super(layoutInflater, activity, fragment, parentView);
     }
 
     @Override

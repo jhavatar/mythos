@@ -1,6 +1,8 @@
 package io.chthonic.mythos.javaexample.ui.fragments;
 
 import android.app.Activity;
+import android.arch.lifecycle.ViewModelProviders;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -10,10 +12,11 @@ import java.util.concurrent.Callable;
 
 import io.chthonic.mythos.javaexample.ui.presenters.RoPresenter;
 import io.chthonic.mythos.javaexample.ui.vus.RoVu;
-import io.chthonic.mythos.mvp.FragmentWrapper;
 import io.chthonic.mythos.mvp.MVPDispatcher;
 import io.chthonic.mythos.mvp.MVPFragment;
-import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback;
+import io.chthonic.mythos.mvp.PesenterCacheViewModel;
+import io.chthonic.mythos.mvp.PresenterCache;
+import io.chthonic.mythos.mvp.PresenterCacheBasicLazy;
 import kotlin.jvm.functions.Function4;
 
 /**
@@ -27,17 +30,23 @@ public class RoFragment extends MVPFragment<RoPresenter, RoVu> {
     @NotNull
     @Override
     public MVPDispatcher<RoPresenter, RoVu> createMVPDispatcher() {
-        return new MVPDispatcher<>(MVP_UID,
-                new PresenterCacheLoaderCallback<>(this.getContext(), new Callable<RoPresenter>() {
+        PesenterCacheViewModel<RoPresenter> viewModel = (PesenterCacheViewModel<RoPresenter>) ViewModelProviders.of(this).get(String.valueOf(MVP_UID), PesenterCacheViewModel.class);
+        PresenterCache presenterCache = viewModel.getCache();
+        if (presenterCache == null) {
+            presenterCache = new PresenterCacheBasicLazy<RoPresenter>(new Callable<RoPresenter>() {
+                @Override
+                public RoPresenter call() throws Exception {
+                    return new RoPresenter();
+                }
+            }, false);
 
-                    @Override
-                    public RoPresenter call() {
-                        return new RoPresenter();
-                    }
-                }), new Function4<LayoutInflater, Activity, FragmentWrapper, ViewGroup, RoVu>() {
+            viewModel.setCache(presenterCache);
+        }
+        return new MVPDispatcher<>(MVP_UID,
+                presenterCache, new Function4<LayoutInflater, Activity, Fragment, ViewGroup, RoVu>() {
             @Override
-            public RoVu invoke(LayoutInflater layoutInflater, Activity activity, FragmentWrapper fragmentWrapper, ViewGroup parentView) {
-                return new RoVu(layoutInflater, activity, fragmentWrapper, parentView);
+            public RoVu invoke(LayoutInflater layoutInflater, Activity activity, Fragment fragment, ViewGroup parentView) {
+                return new RoVu(layoutInflater, activity, fragment, parentView);
             }
         });
     }
