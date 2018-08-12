@@ -1,14 +1,15 @@
 package io.chthonic.mythos.javaexample.ui.vus;
 
 import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import io.chthonic.mythos.javaexample.R;
 import io.chthonic.mythos.javaexample.ui.layouts.DahLayout;
-import io.chthonic.mythos.mvp.FragmentWrapper;
 import io.chthonic.mythos.mvp.Vu;
 
 /**
@@ -20,15 +21,15 @@ public class RoVu extends Vu {
 
     public RoVu(LayoutInflater layoutInflater,
                 Activity activity,
-                FragmentWrapper fragmentWrapper,
+                Fragment fragment,
                 ViewGroup parentView) {
 
-        super(layoutInflater, activity, fragmentWrapper, parentView);
+        super(layoutInflater, activity, fragment, parentView);
     }
 
     @Override
     public void onCreate() {
-        Button toggleButton = (Button) this.getRootView().findViewById(R.id.button_toggle_dah);
+        Button toggleButton = this.getRootView().findViewById(R.id.button_toggle_dah);
         toggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +65,10 @@ public class RoVu extends Vu {
         } else if (!showDah && (dahLayout != null)) {
             rootLayout.removeView(dahLayout);
         }
+    }
+
+    public void setText(String text) {
+        ((TextView) getRootView().findViewById(R.id.ro_text)).setText(text);
     }
 
 }

@@ -1,14 +1,14 @@
 package io.chthonic.mythos.javaexample.ui.presenters;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 import io.chthonic.mythos.javaexample.ui.vus.FusVu;
-import io.chthonic.mythos.mvp.Presenter;
 
 /**
  * Created by jhavatar on 3/3/2016.
  */
-public class FusPresenter extends Presenter<FusVu> {
+public class FusPresenter extends BasePresenter<FusVu> {
 
     private boolean showRo = true;
     private boolean showDah = true;
@@ -18,7 +18,7 @@ public class FusPresenter extends Presenter<FusVu> {
     }
 
     @Override
-    public void onLink(FusVu vu, Bundle inState, Bundle args) {
+    public void onLink(@NonNull FusVu vu, Bundle inState, @NonNull Bundle args) {
         super.onLink(vu, inState, args);
 
         vu.updateRoDisplay(showRo);
@@ -47,5 +47,7 @@ public class FusPresenter extends Presenter<FusVu> {
                 }
             }
         });
+
+        vu.setText(getText("FUS"));
     }
 }
