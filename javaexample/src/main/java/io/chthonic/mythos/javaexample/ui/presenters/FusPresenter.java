@@ -4,12 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import io.chthonic.mythos.javaexample.ui.vus.FusVu;
-import io.chthonic.mythos.mvp.Presenter;
 
 /**
  * Created by jhavatar on 3/3/2016.
  */
-public class FusPresenter extends Presenter<FusVu> {
+public class FusPresenter extends BasePresenter<FusVu> {
 
     private boolean showRo = true;
     private boolean showDah = true;
@@ -48,5 +47,7 @@ public class FusPresenter extends Presenter<FusVu> {
                 }
             }
         });
+
+        vu.setText(getText("FUS"));
     }
 }

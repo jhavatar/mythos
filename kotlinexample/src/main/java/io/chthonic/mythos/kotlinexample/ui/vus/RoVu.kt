@@ -48,4 +48,7 @@ class RoVu (inflater: LayoutInflater,
         }
     }
 
+    fun setText(text: String) {
+        rootView.ro_text.text = text
+    }
 }

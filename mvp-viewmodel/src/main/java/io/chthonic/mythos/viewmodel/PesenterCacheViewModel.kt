@@ -12,7 +12,7 @@ class PesenterCacheViewModel<P> : ViewModel() where P : Presenter<*> {
     var cache: PresenterCache<P>? = null
         set(value) {
             value?.let{
-                assert(!it.mvpDispatcherShouldDestroy, {"mvpDispatcherShouldDestroy should be false for this implementation."})
+                assert(!it.mvpDispatcherShouldDestroy) {"mvpDispatcherShouldDestroy should be false for this implementation."}
             }
             field = value
         }

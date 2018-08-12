@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import io.chthonic.mythos.javaexample.R;
 import io.chthonic.mythos.javaexample.ui.fragments.RoFragment;
@@ -101,5 +102,9 @@ public class FusVu extends Vu {
         } else if (!showDah && (dahLayout != null)) {
             childLayout.removeView(dahLayout);
         }
+    }
+
+    public void setText(String text) {
+        ((TextView) getRootView().findViewById(R.id.fus_text)).setText(text);
     }
 }

@@ -77,19 +77,19 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
     /**
      * @return MVPDispatcher instance used to coordinate MVP pattern.
      */
-    abstract protected fun createMVPDispatcher(): MVPDispatcher<P, V>
+    protected abstract fun createMVPDispatcher(): MVPDispatcher<P, V>
 
     /**
      * Register MVPLayout instance for a lifecycle callback, if desired.
      * Note, property lifecycleCallbackKey (mvplayout_callback_key in xml) is available for storing lifecycle key.
      */
-    abstract protected fun registerLifecycleCallback()
+    protected abstract fun registerLifecycleCallback()
 
     /**
      * Unregister instance if previously registered to a lifecycle callback.
      * Note, property lifecycleCallbackKey (mvplayout_callback_key in xml) is available for storing lifecycle key.
      */
-    abstract protected fun unregisterLifecycleCallback()
+    protected abstract fun unregisterLifecycleCallback()
 
     fun initAttrs(context: Context?, attrs: AttributeSet?, defStyleAttr: Int = 0, defStyleRes: Int = 0) {
         if (attrs != null) {

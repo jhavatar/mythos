@@ -8,7 +8,7 @@ package io.chthonic.mythos.mvp
  * @param presenter Presenter returned by getCached()
  * @param mvpDispatcherShouldDestroy should MVPDispatcher call destroyCached().
  */
-class PresenterCacheBasic<P>(protected var presenter: P?, override val mvpDispatcherShouldDestroy: Boolean) : PresenterCache<P> where P : Presenter<*> {
+open class PresenterCacheBasic<P>(protected var presenter: P?, override val mvpDispatcherShouldDestroy: Boolean) : PresenterCache<P> where P : Presenter<*> {
 
     override fun getCached(): P? {
         return presenter

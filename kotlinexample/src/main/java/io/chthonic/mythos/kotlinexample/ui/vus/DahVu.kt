@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.chthonic.mythos.kotlinexample.R
 import io.chthonic.mythos.mvp.Vu
+import kotlinx.android.synthetic.main.layout_dah.view.*
 
 /**
  * Created by jhdev on 3/30/2016.
@@ -21,5 +22,9 @@ class DahVu(inflater: LayoutInflater,
 
     override fun getRootViewLayoutId(): Int {
         return R.layout.layout_dah
+    }
+
+    fun setText(text: String) {
+        rootView.dah_text.text = text
     }
 }

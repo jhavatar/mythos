@@ -42,7 +42,7 @@ class MVPDispatcher<P, V> (val uid: Int,
                                 createVuFunction.invoke(layoutInflater, activity, fragment, parentView)
                     })
 
-    private val stateKey: String = "presenter_" + uid
+    private val stateKey: String = "presenter_$uid"
 
     /**
      * MPV's View
@@ -64,7 +64,7 @@ class MVPDispatcher<P, V> (val uid: Int,
     private var lastPresenterState: Bundle? = null
 
     fun restorePresenterState(inState: Bundle?) {
-        if (inState?.containsKey(stateKey) ?: false) {
+        if (inState?.containsKey(stateKey) == true) {
             lastPresenterState = inState?.get(stateKey) as Bundle
         }
     }

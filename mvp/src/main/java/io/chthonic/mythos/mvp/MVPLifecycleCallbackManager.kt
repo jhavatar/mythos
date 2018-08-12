@@ -13,9 +13,9 @@ class MVPLifecycleCallbackManager {
      * @param dispatcher type of MVPLifecycleCallbackDispatcher expected
      */
     fun registerDispatcher(dispatcher: MVPLifecycleCallbackDispatcher) {
-        dispatcher.supportedKeys.forEach({
+        dispatcher.supportedKeys.forEach{
             dispatcherMap[it] = dispatcher
-        })
+        }
     }
 
     /**
@@ -24,9 +24,9 @@ class MVPLifecycleCallbackManager {
      */
     fun unregisterDispatcher(dispatcher: MVPLifecycleCallbackDispatcher) {
         dispatcher.clear()
-        dispatcher.supportedKeys.forEach({
+        dispatcher.supportedKeys.forEach{
             dispatcherMap.remove(it)
-        })
+        }
     }
 
     /**

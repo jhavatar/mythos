@@ -73,4 +73,8 @@ class FusVu(inflater: LayoutInflater,
         }
     }
 
+    fun setText(text: String) {
+        rootView.fus_text.text = text
+    }
+
 }

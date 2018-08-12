@@ -16,7 +16,7 @@ import java.util.concurrent.Callable
  * @constructor create PresenterCacheLoaderCallback instance.
  */
 @Deprecated("Presenter existence in onSaveState no longer guaranteed, rather use PresenterCacheViewModel.")
-class PresenterCacheLoaderCallback<P>(context: Context, val createPresenterFunction: () -> P) : PresenterCache<P>, LoaderManager.LoaderCallbacks<P> where P : Presenter<*>{
+open class PresenterCacheLoaderCallback<P>(context: Context, val createPresenterFunction: () -> P) : PresenterCache<P>, LoaderManager.LoaderCallbacks<P> where P : Presenter<*>{
 
     override val mvpDispatcherShouldDestroy: Boolean = false
 

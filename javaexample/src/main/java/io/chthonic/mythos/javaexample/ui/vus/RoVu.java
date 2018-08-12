@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import io.chthonic.mythos.javaexample.R;
 import io.chthonic.mythos.javaexample.ui.layouts.DahLayout;
@@ -64,6 +65,10 @@ public class RoVu extends Vu {
         } else if (!showDah && (dahLayout != null)) {
             rootLayout.removeView(dahLayout);
         }
+    }
+
+    public void setText(String text) {
+        ((TextView) getRootView().findViewById(R.id.ro_text)).setText(text);
     }
 
 }
