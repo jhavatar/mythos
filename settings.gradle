@@ -1,1 +1,1 @@
-include ':mvp', ':mvp', ':kotlinexample', ':javaexample'
+include ':mvp', ':mvp', ':kotlinexample', ':javaexample', ':mvp-viewmodel'

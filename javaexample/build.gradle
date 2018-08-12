@@ -21,17 +21,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-    }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
-    implementation "com.github.jhavatar:mythos:${mythosProps.getProperty("versionName")}"
-//    implementation project(':mvp')
+//    implementation "com.github.jhavatar:mythos:${mythosProps.getProperty("versionName")}"
+    implementation project(':mvp')
+    implementation project(':mvp-viewmodel')
+
+    implementation "android.arch.lifecycle:viewmodel:${rootProject.ext.lifecycle_version}"
+    implementation "android.arch.lifecycle:extensions:${rootProject.ext.lifecycle_version}"
 }
 repositories {
     mavenCentral()

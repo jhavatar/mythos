@@ -1,14 +1,14 @@
 package io.chthonic.mythos.javaexample.ui.vus;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import android.widget.TextView;
 
 import io.chthonic.mythos.javaexample.R;
-import io.chthonic.mythos.mvp.FragmentWrapper;
 import io.chthonic.mythos.mvp.Vu;
 
 /**
@@ -16,12 +16,16 @@ import io.chthonic.mythos.mvp.Vu;
  */
 public class DahVu extends Vu {
 
-    public DahVu(@NotNull LayoutInflater layoutInflater, @NotNull Activity activity, @Nullable FragmentWrapper fragmentWrapper, @Nullable ViewGroup parentView) {
-        super(layoutInflater, activity, fragmentWrapper, parentView);
+    public DahVu(@NonNull LayoutInflater layoutInflater, @NonNull Activity activity, @Nullable Fragment fragment, @Nullable ViewGroup parentView) {
+        super(layoutInflater, activity, fragment, parentView);
     }
 
     @Override
     public int getRootViewLayoutId() {
         return R.layout.layout_dah;
+    }
+
+    public void setText(String text) {
+        ((TextView) getRootView().findViewById(R.id.dah_text)).setText(text);
     }
 }
