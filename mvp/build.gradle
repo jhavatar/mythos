@@ -82,12 +82,12 @@ artifacts {
 install {
     repositories.mavenInstaller {
         pom.project {
-            name = "core"
-            description 'Core Model-View-Presenter library for Android apps.'
+            name = "mvp"
+            description 'Model-View-Presenter library for Android apps.'
             url siteUrl
             packaging 'aar'
             groupId group
-            artifactId = "core"
+            artifactId = "mvp"
             version version
 
             licenses {
