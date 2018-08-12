@@ -1,6 +1,7 @@
 package io.chthonic.mythos.javaexample.ui.presenters;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 import io.chthonic.mythos.javaexample.ui.vus.RoVu;
 import io.chthonic.mythos.mvp.Presenter;
@@ -17,7 +18,7 @@ public class RoPresenter extends Presenter<RoVu> {
     }
 
     @Override
-    public void onLink(RoVu vu, Bundle inState, Bundle args) {
+    public void onLink(@NonNull RoVu vu, Bundle inState, @NonNull Bundle args) {
         super.onLink(vu, inState, args);
 
         vu.updateDahDisplay(showDah);

@@ -29,10 +29,11 @@ public class RoFragment extends MVPFragment<RoPresenter, RoVu> {
     @NonNull
     @Override
     public MVPDispatcher<RoPresenter, RoVu> createMVPDispatcher() {
+        @SuppressWarnings("unchecked")
         PesenterCacheViewModel<RoPresenter> viewModel = (PesenterCacheViewModel<RoPresenter>) ViewModelProviders.of(this).get(String.valueOf(MVP_UID), PesenterCacheViewModel.class);
-        PresenterCache presenterCache = viewModel.getCache();
+        PresenterCache<RoPresenter> presenterCache = viewModel.getCache();
         if (presenterCache == null) {
-            presenterCache = new PresenterCacheBasicLazy<RoPresenter>(new Callable<RoPresenter>() {
+            presenterCache = new PresenterCacheBasicLazy<>(new Callable<RoPresenter>() {
                 @Override
                 public RoPresenter call() throws Exception {
                     return new RoPresenter();

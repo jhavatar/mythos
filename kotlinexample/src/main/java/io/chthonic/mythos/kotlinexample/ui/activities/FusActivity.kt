@@ -31,7 +31,7 @@ class FusActivity : MVPActivity<FusPresenter, FusVu>() {
         val viewModel = ViewModelProviders.of(this).get(MVP_UID.toString(), PesenterCacheViewModel::class.java)
                 as PesenterCacheViewModel<FusPresenter>
         val presenterCache = viewModel.cache ?: run {
-            val cache = PresenterCacheBasicLazy<FusPresenter>({ FusPresenter() }, false)
+            val cache = PresenterCacheBasicLazy({ FusPresenter() }, false)
             viewModel.cache = cache
             cache
         }

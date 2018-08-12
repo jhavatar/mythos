@@ -1,6 +1,7 @@
 package io.chthonic.mythos.javaexample.ui.presenters;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 import io.chthonic.mythos.javaexample.ui.vus.FusVu;
 import io.chthonic.mythos.mvp.Presenter;
@@ -18,7 +19,7 @@ public class FusPresenter extends Presenter<FusVu> {
     }
 
     @Override
-    public void onLink(FusVu vu, Bundle inState, Bundle args) {
+    public void onLink(@NonNull FusVu vu, Bundle inState, @NonNull Bundle args) {
         super.onLink(vu, inState, args);
 
         vu.updateRoDisplay(showRo);

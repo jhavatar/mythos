@@ -62,11 +62,17 @@ public class DahLayout extends MVPLayout<DahPresenter, DahVu> {
 
     @Override
     protected void registerLifecycleCallback() {
-        App.lifecycleManager.registerCallback(getLifecycleCallbackKey(), this.getLifecycleCallback());
+        String key = getLifecycleCallbackKey();
+        if (key != null) {
+            App.lifecycleManager.registerCallback(key, this.getLifecycleCallback());
+        }
     }
 
     @Override
     protected void unregisterLifecycleCallback() {
-        App.lifecycleManager.unregisterCallback(getLifecycleCallbackKey(), this.getLifecycleCallback());
+        String key = getLifecycleCallbackKey();
+        if (key != null) {
+            App.lifecycleManager.unregisterCallback(key, this.getLifecycleCallback());
+        }
     }
 }

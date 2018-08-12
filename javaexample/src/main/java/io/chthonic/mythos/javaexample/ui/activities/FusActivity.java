@@ -35,7 +35,7 @@ public class FusActivity extends MVPActivity<FusPresenter, FusVu> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Map<Class<? extends Fragment>, String> lifecycleKeyMap = new HashMap();
+        Map<Class<? extends Fragment>, String> lifecycleKeyMap = new HashMap<>();
         lifecycleKeyMap.put(RoFragment.class, getResources().getString(R.string.ro_lifecycle_key));
         fragmentLifecycleDispatcher = new FragmentLifecycleDispatcher(lifecycleKeyMap);
         App.lifecycleManager.registerDispatcher(fragmentLifecycleDispatcher);
@@ -53,10 +53,11 @@ public class FusActivity extends MVPActivity<FusPresenter, FusVu> {
     @NonNull
     @Override
     public MVPDispatcher<FusPresenter, FusVu> createMVPDispatcher() {
+        @SuppressWarnings("unchecked")
         PesenterCacheViewModel<FusPresenter> viewModel = (PesenterCacheViewModel<FusPresenter>) ViewModelProviders.of(this).get(String.valueOf(MVP_UID), PesenterCacheViewModel.class);
-        PresenterCache presenterCache = viewModel.getCache();
+        PresenterCache<FusPresenter> presenterCache = viewModel.getCache();
         if (presenterCache == null) {
-            presenterCache = new PresenterCacheBasicLazy<FusPresenter>(new Callable<FusPresenter>() {
+            presenterCache = new PresenterCacheBasicLazy<>(new Callable<FusPresenter>() {
                 @Override
                 public FusPresenter call() throws Exception {
                     return new FusPresenter();

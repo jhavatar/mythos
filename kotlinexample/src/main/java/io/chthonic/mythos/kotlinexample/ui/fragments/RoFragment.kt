@@ -39,7 +39,7 @@ class RoFragment : MVPFragment<RoPresenter, RoVu>() {
         val viewModel = ViewModelProviders.of(this).get(RoFragment.MVP_UID.toString(), PesenterCacheViewModel::class.java)
                 as PesenterCacheViewModel<RoPresenter>
         val presenterCache = viewModel.cache ?: run {
-            val cache = PresenterCacheBasicLazy<RoPresenter>({ RoPresenter() }, false)
+            val cache = PresenterCacheBasicLazy({ RoPresenter() }, false)
             viewModel.cache = cache
             cache
         }

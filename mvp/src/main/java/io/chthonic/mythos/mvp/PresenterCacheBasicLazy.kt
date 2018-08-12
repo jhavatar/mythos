@@ -4,6 +4,9 @@ import java.util.concurrent.Callable
 
 /**
  * Created by jhavatar on 7/29/2018.
+ * @param P type Of Presenter returned.
+ * @param oneTimeCreatePresenterFunction creates initial Presenter returned by getCached()
+ * @param mvpDispatcherShouldDestroy should MVPDispatcher call destroyCached().
  */
 class PresenterCacheBasicLazy<out P>(oneTimeCreatePresenterFunction: ()->P, override val mvpDispatcherShouldDestroy: Boolean) : PresenterCache<P> where P : Presenter<*>{
 
