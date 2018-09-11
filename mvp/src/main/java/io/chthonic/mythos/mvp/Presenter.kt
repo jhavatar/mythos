@@ -32,6 +32,18 @@ abstract class Presenter<V> where V : Vu {
     var firstLink: Boolean = true
         private set
 
+
+    /**
+     * keep track of the hashCode of the last Vu linked to calculate firstLinkWithVu
+     */
+    private var lastVuHash: Int? = null
+
+    /**
+     * True if it is the first time this Presenter is linked with its current Vu
+     */
+    var firstLinkWithVu: Boolean = true
+        private set
+
     /**
      * Called when Presenter is linked to object implementing MVP pattern and ([vu]).
      * @param [vu] View in MVP.
@@ -40,6 +52,9 @@ abstract class Presenter<V> where V : Vu {
      */
     open fun onLink(vu: V, inState: Bundle?, args: Bundle) {
         this._vuRef = WeakReference(vu)
+        val nuVuHash = vu.hashCode()
+        firstLinkWithVu = nuVuHash == lastVuHash
+        lastVuHash =  nuVuHash
     }
 
     /**
@@ -49,6 +64,7 @@ abstract class Presenter<V> where V : Vu {
     open fun onUnlink() {
         this._vuRef = null
         firstLink = false
+        firstLinkWithVu = false
     }
 
     /**
