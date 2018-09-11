@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import java.util.concurrent.Callable;
 
+import io.chthonic.mythos.javaexample.ui.presenters.FusPresenter;
 import io.chthonic.mythos.javaexample.ui.presenters.RoPresenter;
 import io.chthonic.mythos.javaexample.ui.vus.RoVu;
 import io.chthonic.mythos.mvp.MVPDispatcher;
@@ -16,6 +17,7 @@ import io.chthonic.mythos.mvp.MVPFragment;
 import io.chthonic.mythos.mvp.PresenterCache;
 import io.chthonic.mythos.mvp.PresenterCacheBasicLazy;
 import io.chthonic.mythos.viewmodel.PesenterCacheViewModel;
+import kotlin.jvm.functions.Function0;
 import kotlin.jvm.functions.Function4;
 
 /**
@@ -29,25 +31,18 @@ public class RoFragment extends MVPFragment<RoPresenter, RoVu> {
     @NonNull
     @Override
     public MVPDispatcher<RoPresenter, RoVu> createMVPDispatcher() {
-        @SuppressWarnings("unchecked")
-        PesenterCacheViewModel<RoPresenter> viewModel = (PesenterCacheViewModel<RoPresenter>) ViewModelProviders.of(this).get(String.valueOf(MVP_UID), PesenterCacheViewModel.class);
-        PresenterCache<RoPresenter> presenterCache = viewModel.getCache();
-        if (presenterCache == null) {
-            presenterCache = new PresenterCacheBasicLazy<>(new Callable<RoPresenter>() {
-                @Override
-                public RoPresenter call() throws Exception {
-                    return new RoPresenter();
-                }
-            }, false);
-
-            viewModel.setCache(presenterCache);
-        }
         return new MVPDispatcher<>(MVP_UID,
-                presenterCache, new Function4<LayoutInflater, Activity, Fragment, ViewGroup, RoVu>() {
-            @Override
-            public RoVu invoke(LayoutInflater layoutInflater, Activity activity, Fragment fragment, ViewGroup parentView) {
-                return new RoVu(layoutInflater, activity, fragment, parentView);
-            }
-        });
+                PesenterCacheViewModel.getViewModelPresenterCache(this, MVP_UID, new Function0<RoPresenter>() {
+                    @Override
+                    public RoPresenter invoke() {
+                        return new RoPresenter();
+                    }
+                }),
+                new Function4<LayoutInflater, Activity, Fragment, ViewGroup, RoVu>() {
+                    @Override
+                    public RoVu invoke(LayoutInflater layoutInflater, Activity activity, Fragment fragment, ViewGroup parentView) {
+                        return new RoVu(layoutInflater, activity, fragment, parentView);
+                    }
+                });
     }
 }

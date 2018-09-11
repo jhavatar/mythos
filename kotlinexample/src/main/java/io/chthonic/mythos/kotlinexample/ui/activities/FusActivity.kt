@@ -27,23 +27,10 @@ class FusActivity : MVPActivity<FusPresenter, FusVu>() {
     }
 
     override fun createMVPDispatcher(): MVPDispatcher<FusPresenter, FusVu> {
-        @Suppress("UNCHECKED_CAST")
-        val viewModel = ViewModelProviders.of(this).get(MVP_UID.toString(), PesenterCacheViewModel::class.java)
-                as PesenterCacheViewModel<FusPresenter>
-        val presenterCache = viewModel.cache ?: run {
-            val cache = PresenterCacheBasicLazy({ FusPresenter() }, false)
-            viewModel.cache = cache
-            cache
-        }
-
         return MVPDispatcher (MVP_UID,
-                presenterCache
-        ) { layoutInflater: LayoutInflater,
-            activity: Activity,
-            fragment: Fragment?,
-            parentView: ViewGroup? ->
-            FusVu(layoutInflater, activity, parentView = parentView)
-        }
+                PesenterCacheViewModel.getViewModelPresenterCache(this, MVP_UID, { FusPresenter() }),
+                ::FusVu
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

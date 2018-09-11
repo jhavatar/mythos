@@ -33,6 +33,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation "com.github.jhavatar.mythos:mvp:${mythosProps.getProperty("versionName")}"
     implementation "com.github.jhavatar.mythos:viewmodel:${mythosProps.getProperty("versionName")}"
+//    implementation 'com.github.jhavatar.mythos:mvp:develop-SNAPSHOT'
+//    implementation 'com.github.jhavatar.mythos:viewmodel:develop-SNAPSHOT'
 //    implementation project(':mvp')
 //    implementation project(':viewmodel')
 
