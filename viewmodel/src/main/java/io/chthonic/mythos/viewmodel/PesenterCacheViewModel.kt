@@ -18,7 +18,7 @@ class PesenterCacheViewModel<P> : ViewModel() where P : Presenter<*> {
     companion object {
 
         /**
-         * Helper function to get PresenterCache from ViewModel associated with parameters activity and uid
+         * Helper function to easily create/get PresenterCache for/from ViewModel associated with parameters activity and uid
          */
         @JvmStatic
         fun <P>getViewModelPresenterCache(activity: FragmentActivity, uid: Int, presenterFactory: () -> P): PresenterCache<P> where P : Presenter<*> {
@@ -31,7 +31,7 @@ class PesenterCacheViewModel<P> : ViewModel() where P : Presenter<*> {
         }
 
         /**
-         * Helper function to get PresenterCache from ViewModel associated with parameters fragment and uid
+         * Helper function to easily create/get PresenterCache for/from ViewModel associated with parameters fragment and uid
          */
         @JvmStatic
         fun <P>getViewModelPresenterCache(fragment: Fragment, uid: Int, presenterFactory: () -> P): PresenterCache<P> where P : Presenter<*> {
