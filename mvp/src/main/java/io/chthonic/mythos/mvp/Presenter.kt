@@ -53,7 +53,7 @@ abstract class Presenter<V> where V : Vu {
     open fun onLink(vu: V, inState: Bundle?, args: Bundle) {
         this._vuRef = WeakReference(vu)
         val nuVuHash = vu.hashCode()
-        firstLinkWithVu = nuVuHash == lastVuHash
+        firstLinkWithVu = nuVuHash != lastVuHash
         lastVuHash =  nuVuHash
     }
 
