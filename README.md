@@ -11,13 +11,13 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 dependencies {
-    implementation "com.github.jhavatar.mythos:mvp:1.1.4"
+    implementation "com.github.jhavatar.mythos:mvp:1.1.5"
 }
 ```
 
 For a [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) based implementation, also include
 ```groovy
-    implementation "com.github.jhavatar.mythos:viewmodel:1.1.4"
+    implementation "com.github.jhavatar.mythos:viewmodel:1.1.5"
 ```
 
 ## Introduction
