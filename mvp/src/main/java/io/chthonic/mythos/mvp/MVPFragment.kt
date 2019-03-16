@@ -2,7 +2,6 @@ package io.chthonic.mythos.mvp
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.LoaderManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,18 +37,6 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
                 fragment = this,
                 parentView = container)
         return checkNotNull(mvpDispatcher.vu).rootView
-    }
-
-    override fun onActivityCreated (savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        // Note, implementation using Loader has been deprecated, try PesenterCacheViewModel
-        if (mvpDispatcher.presenterCache is LoaderManager.LoaderCallbacks<*>) {
-            loaderManager.initLoader(mvpDispatcher.uid,
-                    null,
-                    @Suppress("UNCHECKED_CAST") // unable to fully check generics in kotlin
-                    mvpDispatcher.presenterCache as LoaderManager.LoaderCallbacks<P>)
-        }
     }
 
     override fun onResume() {
