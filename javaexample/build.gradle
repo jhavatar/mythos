@@ -6,7 +6,6 @@ mythosProps.load(project.rootProject.file('mythos.properties').newDataInputStrea
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         applicationId "io.cthonic.mythos.javaexample"

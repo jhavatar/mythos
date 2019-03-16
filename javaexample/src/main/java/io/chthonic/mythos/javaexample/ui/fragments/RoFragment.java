@@ -1,21 +1,15 @@
 package io.chthonic.mythos.javaexample.ui.fragments;
 
 import android.app.Activity;
-import android.arch.lifecycle.ViewModelProviders;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import java.util.concurrent.Callable;
-
-import io.chthonic.mythos.javaexample.ui.presenters.FusPresenter;
 import io.chthonic.mythos.javaexample.ui.presenters.RoPresenter;
 import io.chthonic.mythos.javaexample.ui.vus.RoVu;
 import io.chthonic.mythos.mvp.MVPDispatcher;
 import io.chthonic.mythos.mvp.MVPFragment;
-import io.chthonic.mythos.mvp.PresenterCache;
-import io.chthonic.mythos.mvp.PresenterCacheBasicLazy;
 import io.chthonic.mythos.viewmodel.PesenterCacheViewModel;
 import kotlin.jvm.functions.Function0;
 import kotlin.jvm.functions.Function4;

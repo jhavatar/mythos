@@ -65,7 +65,7 @@ class MVPDispatcher<P, V> (val uid: Int,
 
     fun restorePresenterState(inState: Bundle?) {
         if (inState?.containsKey(stateKey) == true) {
-            lastPresenterState = inState?.get(stateKey) as Bundle
+            lastPresenterState = inState.get(stateKey) as Bundle
         }
     }
 
@@ -103,7 +103,7 @@ class MVPDispatcher<P, V> (val uid: Int,
                 .forEach { linkArgs.putAll(it) }
 
         // presenter should exist here
-        presenter!!.onLink(vu!!, lastPresenterState, linkArgs)
+        checkNotNull(presenter).onLink(checkNotNull(vu), lastPresenterState, linkArgs)
     }
 
     /**
@@ -114,7 +114,7 @@ class MVPDispatcher<P, V> (val uid: Int,
         val newState = Bundle()
 
         // presenter should exist here
-        presenter!!.onSaveState(newState)
+        checkNotNull(presenter).onSaveState(newState)
         if (newState.size() > 0) {
             lastPresenterState = newState
             outState.putBundle(stateKey, newState)
@@ -130,7 +130,7 @@ class MVPDispatcher<P, V> (val uid: Int,
     fun unlinkPresenter() {
 
         // presenter should exist here
-        presenter!!.onUnlink()
+        checkNotNull(presenter).onUnlink()
     }
 
     /**

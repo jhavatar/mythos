@@ -38,7 +38,7 @@ open class PresenterCacheLoaderCallback<P>(context: Context, val createPresenter
 
 
     override fun onCreateLoader(id: Int, arg: Bundle?): android.support.v4.content.Loader<P> {
-        return PresenterLoader(contextRef.get()!!, createPresenterFunction)
+        return PresenterLoader(checkNotNull(contextRef.get()), createPresenterFunction)
     }
 
     override fun onLoadFinished(loader: android.support.v4.content.Loader<P>, presenter: P) {

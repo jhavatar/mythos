@@ -34,10 +34,10 @@ abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
 
         mvpDispatcher.restorePresenterState(savedInstanceState)
         mvpDispatcher.createVu(inflater,
-                activity = this.activity!!,
+                activity = checkNotNull(this.activity),
                 fragment = this,
                 parentView = container)
-        return mvpDispatcher.vu!!.rootView
+        return checkNotNull(mvpDispatcher.vu).rootView
     }
 
     override fun onActivityCreated (savedInstanceState: Bundle?) {

@@ -10,7 +10,7 @@ import io.chthonic.mythos.mvp.Vu;
  * Created by jhavatar on 8/12/2018.
  */
 public abstract class BasePresenter<V extends Vu> extends Presenter<V>  {
-    private static String SAVE_KEY = "save_key";
+    private static final String SAVE_KEY = "save_key";
 
     private int saveCount = 0;
 

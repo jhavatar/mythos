@@ -117,7 +117,7 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
                     mvpDispatcher.createVu(LayoutInflater.from(context),
                             activity = context as Activity,
                             parentView = this@MVPLayout)
-                    addView(mvpDispatcher.vu!!.rootView)
+                    addView(checkNotNull(mvpDispatcher.vu).rootView)
                 }
             }
 
@@ -125,7 +125,7 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
                 if (!resumed) {
                     resumed = true
 
-                    mvpDispatcher.linkPresenter(if (args != null) args!! else Bundle())
+                    mvpDispatcher.linkPresenter(args?.let { it } ?: Bundle())
                 }
             }
 
@@ -194,7 +194,7 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
         super.onAttachedToWindow()
 
         registerLifecycleCallback()
-        lifecycleCallback.onCreated(if (args != null) args!! else Bundle())
+        lifecycleCallback.onCreated(args?.let { it } ?: Bundle())
         lifecycleCallback.onResumed()
     }
 

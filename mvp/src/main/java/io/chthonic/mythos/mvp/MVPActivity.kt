@@ -30,7 +30,7 @@ abstract class MVPActivity<P, V>: AppCompatActivity() where P : Presenter<V>, V 
 
         mvpDispatcher.restorePresenterState(savedInstanceState)
         mvpDispatcher.createVu(this.layoutInflater, this)
-        setContentView(mvpDispatcher.vu!!.rootView)
+        setContentView(checkNotNull(mvpDispatcher.vu).rootView)
 
         // Note, implementation using Loader has been deprecated, try PesenterCacheViewModel
         if (mvpDispatcher.presenterCache is LoaderManager.LoaderCallbacks<*>) {

@@ -53,7 +53,7 @@ public class FusActivity extends MVPActivity<FusPresenter, FusVu> {
         return new MVPDispatcher<>(MVP_UID,
                 PesenterCacheViewModel.getViewModelPresenterCache(this, MVP_UID, new Callable<FusPresenter>() {
                     @Override
-                    public FusPresenter call() throws Exception {
+                    public FusPresenter call() {
                         return new FusPresenter();
                     }
                 }),

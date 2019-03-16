@@ -64,11 +64,11 @@ abstract class Vu(layoutInflater: LayoutInflater,
      * @return View that becomes property's rootView.
      */
     protected open fun createRootView(inflater: LayoutInflater) : View {
-        if (parentView != null) {
-            return inflater.inflate(getRootViewLayoutId(), parentView, false)
+        return if (parentView != null) {
+            inflater.inflate(getRootViewLayoutId(), parentView, false)
             
         } else {
-            return inflater.inflate(getRootViewLayoutId(), null)
+            inflater.inflate(getRootViewLayoutId(), null)
         }
     }
 

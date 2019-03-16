@@ -26,7 +26,7 @@ class RoVu (inflater: LayoutInflater,
     override fun onCreate() {
         super.onCreate()
 
-        rootView.button_toggle_dah.setOnClickListener { v ->
+        rootView.button_toggle_dah.setOnClickListener { _ ->
             toggleDahListener?.invoke()
         }
     }

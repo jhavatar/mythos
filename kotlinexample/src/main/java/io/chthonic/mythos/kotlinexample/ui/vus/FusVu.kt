@@ -35,11 +35,11 @@ class FusVu(inflater: LayoutInflater,
     override fun onCreate() {
         super.onCreate()
 
-        rootView.button_toggle_ro.setOnClickListener { v ->
+        rootView.button_toggle_ro.setOnClickListener { _ ->
             toggleRoListener?.invoke()
         }
 
-        rootView.button_toggle_dah.setOnClickListener { v ->
+        rootView.button_toggle_dah.setOnClickListener { _ ->
            toggleDahListener?.invoke()
         }
     }
