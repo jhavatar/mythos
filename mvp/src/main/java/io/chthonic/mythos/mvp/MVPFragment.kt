@@ -1,7 +1,7 @@
 package io.chthonic.mythos.mvp
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +16,7 @@ import android.view.ViewGroup
  * @param P type of Presenter.
  * @param V type of Vu.
  */
-abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu {
+abstract class MVPFragment<P, V> : androidx.fragment.app.Fragment() where P : Presenter<V>, V : Vu {
 
     val mvpDispatcher: MVPDispatcher<P, V> by lazy {
         createMVPDispatcher()

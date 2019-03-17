@@ -1,8 +1,8 @@
 package io.chthonic.mythos.mvp
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import android.view.View
 
 /**
@@ -11,7 +11,7 @@ import android.view.View
  * When a lifecycle event occurs, for all callbacks registered to lifecycle's key, call corresponding method.
  * @property keyMap maps key to support fragments class that represents the fragment's lifecycle
  */
-class FragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, String>): FragmentManager.FragmentLifecycleCallbacks(), MVPLifecycleCallbackDispatcher {
+class FragmentLifecycleDispatcher(val keyMap: Map<Class<out androidx.fragment.app.Fragment>, String>): androidx.fragment.app.FragmentManager.FragmentLifecycleCallbacks(), MVPLifecycleCallbackDispatcher {
 
     /**
      *  List of keys that dispatcher supports where each key maps to a unique lifecycle flow.
@@ -47,13 +47,13 @@ class FragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, String>):
         registrations.clear()
     }
 
-    private fun getKey(fragment: Fragment?): String? {
+    private fun getKey(fragment: androidx.fragment.app.Fragment?): String? {
         return if (fragment != null) {
             keyMap[fragment::class.java]
         } else null
     }
 
-    private fun getCallbacks(fragment: Fragment?): Set<MVPLifecycleCallback>? {
+    private fun getCallbacks(fragment: androidx.fragment.app.Fragment?): Set<MVPLifecycleCallback>? {
         return if (fragment != null) {
             val key = getKey(fragment)
             if (key != null) {
@@ -69,8 +69,8 @@ class FragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, String>):
     }
 
 
-    override fun onFragmentViewCreated(fm: FragmentManager, f: Fragment, v: View,
-                              savedInstanceState: Bundle?) {
+    override fun onFragmentViewCreated(fm: androidx.fragment.app.FragmentManager, f: androidx.fragment.app.Fragment, v: View,
+                                       savedInstanceState: Bundle?) {
         val callbacks = getCallbacks(f)
         callbacks?.toList()?.forEach {
             it.onCreated(savedInstanceState)
@@ -78,7 +78,7 @@ class FragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, String>):
     }
 
 
-    override fun onFragmentResumed(fm: FragmentManager, f: Fragment) {
+    override fun onFragmentResumed(fm: androidx.fragment.app.FragmentManager, f: androidx.fragment.app.Fragment) {
         val callbacks = getCallbacks(f)
         callbacks?.toList()?.forEach {
             it.onResumed()
@@ -86,14 +86,14 @@ class FragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, String>):
     }
 
 
-    override fun onFragmentPaused(fm: FragmentManager, f: Fragment) {
+    override fun onFragmentPaused(fm: androidx.fragment.app.FragmentManager, f: androidx.fragment.app.Fragment) {
         val callbacks = getCallbacks(f)
         callbacks?.toList()?.forEach {
             it.onPaused()
         }
     }
 
-    override fun onFragmentViewDestroyed(fm: FragmentManager, f: Fragment) {
+    override fun onFragmentViewDestroyed(fm: androidx.fragment.app.FragmentManager, f: androidx.fragment.app.Fragment) {
         val callbacks = getCallbacks(f)
         callbacks?.toList()?.forEach {
             it.onDestroyed()
@@ -101,7 +101,7 @@ class FragmentLifecycleDispatcher(val keyMap: Map<Class<out Fragment>, String>):
     }
 
 
-    override fun onFragmentSaveInstanceState(fm: FragmentManager, f: Fragment, outState: Bundle) {
+    override fun onFragmentSaveInstanceState(fm: androidx.fragment.app.FragmentManager, f: androidx.fragment.app.Fragment, outState: Bundle) {
         val callbacks = getCallbacks(f)
         callbacks?.toList()?.forEach {
             it.onSaveInstanceState(outState)

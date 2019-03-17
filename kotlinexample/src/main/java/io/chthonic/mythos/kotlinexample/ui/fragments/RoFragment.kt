@@ -1,6 +1,5 @@
 package io.chthonic.mythos.kotlinexample.ui.fragments
 
-import com.squareup.leakcanary.RefWatcher
 import io.chthonic.mythos.kotlinexample.ui.presenters.RoPresenter
 import io.chthonic.mythos.kotlinexample.ui.vus.RoVu
 import io.chthonic.mythos.mvp.MVPDispatcher
@@ -21,8 +20,6 @@ class RoFragment : MVPFragment<RoPresenter, RoVu>() {
             TAG.hashCode()
         }
     }
-
-    private lateinit var  refwatcher: RefWatcher
 
     override fun createMVPDispatcher(): MVPDispatcher<RoPresenter, RoVu> {
         return MVPDispatcher(MVP_UID,

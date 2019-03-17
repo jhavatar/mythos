@@ -37,8 +37,8 @@ dependencies {
     implementation project(':mvp')
     implementation project(':viewmodel')
 
-    implementation "android.arch.lifecycle:viewmodel:${rootProject.ext.lifecycle_version}"
-    implementation "android.arch.lifecycle:extensions:${rootProject.ext.lifecycle_version}"
+//    implementation "androidx.lifecycle:lifecycle-viewmodel:${rootProject.ext.lifecycleVersion}"
+//    implementation "androidx.lifecycle:lifecycle-extensions:${rootProject.ext.lifecycleVersion}"
 
     implementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
     implementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.3'

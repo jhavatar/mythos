@@ -1,7 +1,7 @@
 package io.chthonic.mythos.mvp
 
 import android.app.Activity
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +19,7 @@ import android.view.ViewGroup
  */
 abstract class Vu(layoutInflater: LayoutInflater,
                   val activity: Activity,
-                  val fragment: Fragment? = null,
+                  val fragment: androidx.fragment.app.Fragment? = null,
                   val parentView: ViewGroup? = null) {
 
     /**

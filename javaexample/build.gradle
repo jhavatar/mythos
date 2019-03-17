@@ -25,15 +25,15 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
-    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
+//    implementation "androidx.appcompat:appcompat:${rootProject.ext.baseXAndroidVersion}"
 
 //    implementation "com.github.jhavatar.mythos:mvp:${mythosProps.getProperty("versionName")}"
 //    implementation "com.github.jhavatar.mythos:viewmodel:${mythosProps.getProperty("versionName")}"
     implementation project(':mvp')
     implementation project(':viewmodel')
 
-    implementation "android.arch.lifecycle:viewmodel:${rootProject.ext.lifecycle_version}"
-    implementation "android.arch.lifecycle:extensions:${rootProject.ext.lifecycle_version}"
+//    implementation "androidx.lifecycle:lifecycle-viewmodel:${rootProject.ext.lifecycleVersion}"
+//    implementation "androidx.lifecycle:lifecycle-extensions:${rootProject.ext.lifecycleVersion}"
 }
 repositories {
     mavenCentral()

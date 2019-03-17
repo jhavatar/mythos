@@ -30,7 +30,7 @@ android {
         versionCode = mythosProps.getProperty("versionCode") as Integer
         versionName version
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -46,11 +46,11 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':mvp')
 
-    implementation "android.arch.lifecycle:viewmodel:${rootProject.ext.lifecycle_version}"
-    implementation "android.arch.lifecycle:extensions:${rootProject.ext.lifecycle_version}"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:${rootProject.ext.lifecycleVersion}"
+    implementation "androidx.lifecycle:lifecycle-extensions:${rootProject.ext.lifecycleVersion}"
 
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
 }
 
 if (project.hasProperty("android")) { // Android libraries

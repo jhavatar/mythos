@@ -1,10 +1,8 @@
 package io.chthonic.mythos.viewmodel
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import io.chthonic.mythos.mvp.Presenter
 import io.chthonic.mythos.mvp.PresenterCache
 import io.chthonic.mythos.mvp.PresenterCacheBasicLazy
@@ -21,25 +19,25 @@ class PesenterCacheViewModel<P> : ViewModel() where P : Presenter<*> {
          * Helper function to easily create/get PresenterCache for/from ViewModel associated with parameters activity and uid
          */
         @JvmStatic
-        fun <P>getViewModelPresenterCache(activity: FragmentActivity, uid: Int, presenterFactory: () -> P): PresenterCache<P> where P : Presenter<*> {
+        fun <P>getViewModelPresenterCache(activity: androidx.fragment.app.FragmentActivity, uid: Int, presenterFactory: () -> P): PresenterCache<P> where P : Presenter<*> {
             return getViewModelPresenterCache(ViewModelProviders.of(activity), uid, presenterFactory)
         }
 
         @JvmStatic
-        fun <P>getViewModelPresenterCache(activity: FragmentActivity, uid: Int, callable: Callable<P>): PresenterCache<P> where P : Presenter<*> {
-            return getViewModelPresenterCache(activity, uid, { callable.call() })
+        fun <P>getViewModelPresenterCache(activity: androidx.fragment.app.FragmentActivity, uid: Int, callable: Callable<P>): PresenterCache<P> where P : Presenter<*> {
+            return getViewModelPresenterCache(activity, uid) { callable.call() }
         }
 
         /**
          * Helper function to easily create/get PresenterCache for/from ViewModel associated with parameters fragment and uid
          */
         @JvmStatic
-        fun <P>getViewModelPresenterCache(fragment: Fragment, uid: Int, presenterFactory: () -> P): PresenterCache<P> where P : Presenter<*> {
+        fun <P>getViewModelPresenterCache(fragment: androidx.fragment.app.Fragment, uid: Int, presenterFactory: () -> P): PresenterCache<P> where P : Presenter<*> {
             return getViewModelPresenterCache(ViewModelProviders.of(fragment), uid, presenterFactory)
         }
 
         @JvmStatic
-        fun <P>getViewModelPresenterCache(fragment: Fragment, uid: Int, callable: Callable<P>): PresenterCache<P> where P : Presenter<*> {
+        fun <P>getViewModelPresenterCache(fragment: androidx.fragment.app.Fragment, uid: Int, callable: Callable<P>): PresenterCache<P> where P : Presenter<*> {
             return getViewModelPresenterCache(fragment, uid, { callable.call() })
         }
 

@@ -2,7 +2,7 @@ package io.chthonic.mythos.mvp
 
 import android.app.Activity
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.ViewGroup
 
@@ -21,7 +21,7 @@ class MVPDispatcher<P, V> (val uid: Int,
                            val presenterCache: PresenterCache<P>,
                            private val createVuFunction: (layoutInflater: LayoutInflater,
                                                           activity: Activity,
-                                                          fragment: Fragment?,
+                                                          fragment: androidx.fragment.app.Fragment?,
                                                           parentView: ViewGroup?) -> V) where P : Presenter<V>,  V : Vu {
 
     /**
@@ -35,10 +35,10 @@ class MVPDispatcher<P, V> (val uid: Int,
                 createVuFunction: CreateVuFunction<V>) :
                     this(uid,
                             presenterCache,
-                            {layoutInflater: LayoutInflater,
-                             activity: Activity,
-                             fragment: Fragment?,
-                             parentView: ViewGroup? ->
+                            { layoutInflater: LayoutInflater,
+                              activity: Activity,
+                              fragment: androidx.fragment.app.Fragment?,
+                              parentView: ViewGroup? ->
                                 createVuFunction.invoke(layoutInflater, activity, fragment, parentView)
                     })
 
@@ -79,7 +79,7 @@ class MVPDispatcher<P, V> (val uid: Int,
     @JvmOverloads
     fun createVu(layoutInflater: LayoutInflater,
                  activity: Activity,
-                 fragment: Fragment? = null,
+                 fragment: androidx.fragment.app.Fragment? = null,
                  parentView: ViewGroup? = null) {
 
         val nuVu = createVuFunction(layoutInflater,
@@ -162,7 +162,7 @@ class MVPDispatcher<P, V> (val uid: Int,
          */
         fun invoke(layoutInflater: LayoutInflater,
                    activity: Activity,
-                   fragment: Fragment?,
+                   fragment: androidx.fragment.app.Fragment?,
                    parentView: ViewGroup?) : V
     }
 }
