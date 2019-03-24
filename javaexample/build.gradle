@@ -32,8 +32,8 @@ dependencies {
     implementation project(':mvp')
     implementation project(':viewmodel')
 
-    implementation "android.arch.lifecycle:viewmodel:${rootProject.ext.lifecycle_version}"
-    implementation "android.arch.lifecycle:extensions:${rootProject.ext.lifecycle_version}"
+//    implementation "android.arch.lifecycle:viewmodel:${rootProject.ext.lifecycle_version}"
+//    implementation "android.arch.lifecycle:extensions:${rootProject.ext.lifecycle_version}"
 }
 repositories {
     mavenCentral()
