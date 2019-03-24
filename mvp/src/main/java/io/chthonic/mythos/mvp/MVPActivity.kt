@@ -1,8 +1,7 @@
 package io.chthonic.mythos.mvp
 
 import android.os.Bundle
-import android.support.v4.app.LoaderManager
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 
 /**
@@ -30,15 +29,7 @@ abstract class MVPActivity<P, V>: AppCompatActivity() where P : Presenter<V>, V 
 
         mvpDispatcher.restorePresenterState(savedInstanceState)
         mvpDispatcher.createVu(this.layoutInflater, this)
-        setContentView(mvpDispatcher.vu!!.rootView)
-
-        // Note, implementation using Loader has been deprecated, try PesenterCacheViewModel
-        if (mvpDispatcher.presenterCache is LoaderManager.LoaderCallbacks<*>) {
-            supportLoaderManager.initLoader(mvpDispatcher.uid,
-                    null,
-                    @Suppress("UNCHECKED_CAST") // unable to fully check generics in kotlin
-                    mvpDispatcher.presenterCache as LoaderManager.LoaderCallbacks<P>)
-        }
+        setContentView(checkNotNull(mvpDispatcher.vu).rootView)
     }
 
     override fun onResume() {

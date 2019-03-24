@@ -1,9 +1,5 @@
 package io.chthonic.mythos.kotlinexample.ui.fragments
 
-import android.os.Bundle
-import com.squareup.leakcanary.LeakCanary
-import com.squareup.leakcanary.RefWatcher
-import io.chthonic.mythos.kotlinexample.App
 import io.chthonic.mythos.kotlinexample.ui.presenters.RoPresenter
 import io.chthonic.mythos.kotlinexample.ui.vus.RoVu
 import io.chthonic.mythos.mvp.MVPDispatcher
@@ -25,22 +21,9 @@ class RoFragment : MVPFragment<RoPresenter, RoVu>() {
         }
     }
 
-    private lateinit var  refwatcher: RefWatcher
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        refwatcher = LeakCanary.install(App.app)
-    }
-
     override fun createMVPDispatcher(): MVPDispatcher<RoPresenter, RoVu> {
         return MVPDispatcher(MVP_UID,
                 PesenterCacheViewModel.getViewModelPresenterCache(this, MVP_UID, { RoPresenter() }),
                 ::RoVu)
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        refwatcher.watch(this)
-    }
-
 }

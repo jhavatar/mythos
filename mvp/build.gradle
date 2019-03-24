@@ -25,7 +25,6 @@ def gitUrl = 'https://github.com/jhavatar/mythos.git'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
@@ -48,7 +47,7 @@ repositories {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
-    api "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
+    api "androidx.appcompat:appcompat:${rootProject.ext.baseXAndroidVersion}"
     api "org.jetbrains.kotlin:kotlin-stdlib:${rootProject.ext.kotlin_version}"
 }
 

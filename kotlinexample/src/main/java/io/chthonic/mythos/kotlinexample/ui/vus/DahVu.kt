@@ -1,7 +1,7 @@
 package io.chthonic.mythos.kotlinexample.ui.vus
 
 import android.app.Activity
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.chthonic.mythos.kotlinexample.R
@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.layout_dah.view.*
  */
 class DahVu(inflater: LayoutInflater,
             activity: Activity,
-            fragment: Fragment? = null,
+            fragment: androidx.fragment.app.Fragment? = null,
             parentView: ViewGroup? = null):
         Vu(inflater,
                 activity = activity,

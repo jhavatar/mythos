@@ -1,7 +1,7 @@
 package io.chthonic.mythos.javaexample.ui.presenters;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import io.chthonic.mythos.javaexample.ui.vus.FusVu;
 

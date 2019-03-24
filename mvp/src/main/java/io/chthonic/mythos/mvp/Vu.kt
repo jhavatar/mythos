@@ -1,7 +1,7 @@
 package io.chthonic.mythos.mvp
 
 import android.app.Activity
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +19,7 @@ import android.view.ViewGroup
  */
 abstract class Vu(layoutInflater: LayoutInflater,
                   val activity: Activity,
-                  val fragment: Fragment? = null,
+                  val fragment: androidx.fragment.app.Fragment? = null,
                   val parentView: ViewGroup? = null) {
 
     /**
@@ -64,11 +64,11 @@ abstract class Vu(layoutInflater: LayoutInflater,
      * @return View that becomes property's rootView.
      */
     protected open fun createRootView(inflater: LayoutInflater) : View {
-        if (parentView != null) {
-            return inflater.inflate(getRootViewLayoutId(), parentView, false)
+        return if (parentView != null) {
+            inflater.inflate(getRootViewLayoutId(), parentView, false)
             
         } else {
-            return inflater.inflate(getRootViewLayoutId(), null)
+            inflater.inflate(getRootViewLayoutId(), null)
         }
     }
 

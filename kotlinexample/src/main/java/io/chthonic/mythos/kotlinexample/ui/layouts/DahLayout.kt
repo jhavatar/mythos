@@ -2,7 +2,7 @@ package io.chthonic.mythos.kotlinexample.ui.layouts
 
 import android.content.Context
 import android.os.Build
-import android.support.annotation.RequiresApi
+import androidx.annotation.RequiresApi
 import android.util.AttributeSet
 import io.chthonic.mythos.kotlinexample.App
 import io.chthonic.mythos.kotlinexample.ui.presenters.DahPresenter

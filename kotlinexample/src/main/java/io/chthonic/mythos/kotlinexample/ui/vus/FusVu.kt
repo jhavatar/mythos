@@ -2,8 +2,8 @@ package io.chthonic.mythos.kotlinexample.ui.vus
 
 //import kotlinx.android.synthetic.main.activity_fus
 import android.app.Activity
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.chthonic.mythos.kotlinexample.R
@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_fus.view.*
  */
 class FusVu(inflater: LayoutInflater,
             activity: Activity,
-            fragment: Fragment? = null,
+            fragment: androidx.fragment.app.Fragment? = null,
             parentView: ViewGroup? = null) :
         Vu(inflater,
                 activity = activity,
@@ -35,18 +35,18 @@ class FusVu(inflater: LayoutInflater,
     override fun onCreate() {
         super.onCreate()
 
-        rootView.button_toggle_ro.setOnClickListener { v ->
+        rootView.button_toggle_ro.setOnClickListener { _ ->
             toggleRoListener?.invoke()
         }
 
-        rootView.button_toggle_dah.setOnClickListener { v ->
+        rootView.button_toggle_dah.setOnClickListener { _ ->
            toggleDahListener?.invoke()
         }
     }
 
     fun updateRoDisplay(show: Boolean) {
         val supportFragmentManager = (activity as AppCompatActivity).supportFragmentManager
-        val rohFragment: Fragment? = supportFragmentManager.findFragmentByTag(RoFragment.TAG)
+        val rohFragment: androidx.fragment.app.Fragment? = supportFragmentManager.findFragmentByTag(RoFragment.TAG)
 
         if (show and (rohFragment == null)) {
             val fragment = RoFragment()
