@@ -51,5 +51,29 @@ See the Kotlin or Java example in the project for a guide.
 - onCreate()
 - onDestroy()
 
+## Change log
+v1.2.0
+- Switch from support lib to AndroidX
+
+v1.1.6
+- Removed deprecated `PresenterLoad` and `PresenterCacheLoaderCallback`
+- Libary updates
+
+v1.1.5
+- Added helper method `getViewModelPresenterCache` on `PesenterCacheViewModel` to easily create and get PresenterCache associated with activity or fragment 
+- Added method `firstLinkWithVu` on `Presenter`
+- Library updates
+
+v1.1.4
+- Added `PresenterCacheViewModel` which uses Android architecture's `ViewModel`
+- Added `PresenterCacheLazy`which lazy-loads the `Presenter`
+- Removed `FragmentWrapper` since standard `Fragment` has been deprecated.
+- Deprecated `PresenterLoad` and `PresenterCacheLoaderCallback`
+- Libary updates
+
+
+
+
+
 
 
