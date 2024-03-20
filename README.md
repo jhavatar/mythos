@@ -1,5 +1,7 @@
 [![Release](https://jitpack.io/v/jhavatar/mythos.svg)](https://jitpack.io/#jhavatar/mythos)
 
+# ⚠️ DISCOURAGED to use this library with new projects
+
 # mythos
 A simple Model-View-Presenter library for Android apps.
 
