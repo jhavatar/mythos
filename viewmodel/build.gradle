@@ -75,16 +75,20 @@ dependencies {
 //    outputDirectory.set(file(buildDir).toPath().resolve("dokka/javadoc").toFile())
 //}
 
-tasks.register("sourcesJar", Jar) {
-    archiveClassifier.set("sources")
-    from android.sourceSets.main.java.srcDirs
-}
-
-tasks.register("dokkaJavadocJar", Jar) {
-    dependsOn tasks.dokkaJavadoc
-    archiveClassifier.set("javadoc")
-    from(tasks.dokkaJavadoc)
-}
+//tasks.register("sourcesJar", Jar) {
+//    archiveClassifier.set("sources")
+//    from android.sourceSets.main.java.srcDirs
+//}
+//
+//tasks.register("dokkaJavadocJar", Jar) {
+//    dependsOn tasks.dokkaJavadoc
+//    archiveClassifier.set("javadoc")
+//    from(tasks.dokkaJavadoc)
+//}
+//
+//tasks.named("generateMetadataFileForReleasePublication") {
+//    dependsOn tasks.named("sourcesJar"), tasks.named("dokkaJavadocJar")
+//}
 
 //artifacts {
 //    archives javadocJar
@@ -103,8 +107,8 @@ publishing {
             groupId = group
             artifactId = "viewmodel"
             version = version
-            artifact sourcesJar
-            artifact dokkaJavadocJar
+//            artifact sourcesJar
+//            artifact dokkaJavadocJar
 //                licenses {
 //                    license {
 //                        name = 'The Apache Software License, Version 2.0'
