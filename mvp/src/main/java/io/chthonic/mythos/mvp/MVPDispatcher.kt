@@ -2,9 +2,10 @@ package io.chthonic.mythos.mvp
 
 import android.app.Activity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 
 /**
  * Created by jhavatar on 3/9/2016.
@@ -17,12 +18,16 @@ import android.view.ViewGroup
  * @property createVuFunction function that creates Vu to use.
  * @constructor create MVPDispatcher instance.
  */
-class MVPDispatcher<P, V> (val uid: Int,
-                           val presenterCache: PresenterCache<P>,
-                           private val createVuFunction: (layoutInflater: LayoutInflater,
-                                                          activity: Activity,
-                                                          fragment: androidx.fragment.app.Fragment?,
-                                                          parentView: ViewGroup?) -> V) where P : Presenter<V>,  V : Vu {
+class MVPDispatcher<P, V>(
+    val uid: Int,
+    val presenterCache: PresenterCache<P>,
+    private val createVuFunction: (
+        layoutInflater: LayoutInflater,
+        activity: Activity,
+        fragment: Fragment?,
+        parentView: ViewGroup?
+    ) -> V,
+) where P : Presenter<V>, V : Vu<out ViewBinding> {
 
     /**
      * @param uid id that uniquely identifies dispatcher and is used i.a. as key when saving Presenter's state.
@@ -30,17 +35,19 @@ class MVPDispatcher<P, V> (val uid: Int,
      * @param createVuFunction implements function that creates Vu to use.
      * @constructor create MVPDispatcher instance.
      */
-    constructor(uid: Int,
-                presenterCache: PresenterCache<P>,
-                createVuFunction: CreateVuFunction<V>) :
-                    this(uid,
-                            presenterCache,
-                            { layoutInflater: LayoutInflater,
-                              activity: Activity,
-                              fragment: androidx.fragment.app.Fragment?,
-                              parentView: ViewGroup? ->
-                                createVuFunction.invoke(layoutInflater, activity, fragment, parentView)
-                    })
+    constructor(
+        uid: Int,
+        presenterCache: PresenterCache<P>,
+        createVuFunction: CreateVuFunction<V>
+    ) :
+            this(uid,
+                presenterCache,
+                { layoutInflater: LayoutInflater,
+                  activity: Activity,
+                  fragment: Fragment?,
+                  parentView: ViewGroup? ->
+                    createVuFunction.invoke(layoutInflater, activity, fragment, parentView)
+                })
 
     private val stateKey: String = "presenter_$uid"
 
@@ -65,7 +72,7 @@ class MVPDispatcher<P, V> (val uid: Int,
 
     fun restorePresenterState(inState: Bundle?) {
         if (inState?.containsKey(stateKey) == true) {
-            lastPresenterState = inState.get(stateKey) as Bundle
+            lastPresenterState = inState.getBundle(stateKey)
         }
     }
 
@@ -77,15 +84,19 @@ class MVPDispatcher<P, V> (val uid: Int,
      * @param parentView the ViewGroup that is the direct parent to Vu's rootView (Optional).
      */
     @JvmOverloads
-    fun createVu(layoutInflater: LayoutInflater,
-                 activity: Activity,
-                 fragment: androidx.fragment.app.Fragment? = null,
-                 parentView: ViewGroup? = null) {
+    fun createVu(
+        layoutInflater: LayoutInflater,
+        activity: Activity,
+        fragment: Fragment? = null,
+        parentView: ViewGroup? = null
+    ) {
 
-        val nuVu = createVuFunction(layoutInflater,
-                activity,
-                fragment,
-                parentView)
+        val nuVu = createVuFunction(
+            layoutInflater,
+            activity,
+            fragment,
+            parentView
+        )
         vu = nuVu
 
         nuVu.onCreate()
@@ -99,8 +110,8 @@ class MVPDispatcher<P, V> (val uid: Int,
 
         val linkArgs = Bundle()
         args.asSequence()
-                .filterNotNull()
-                .forEach { linkArgs.putAll(it) }
+            .filterNotNull()
+            .forEach { linkArgs.putAll(it) }
 
         // presenter should exist here
         checkNotNull(presenter).onLink(checkNotNull(vu), lastPresenterState, linkArgs)
@@ -151,7 +162,7 @@ class MVPDispatcher<P, V> (val uid: Int,
      * Implements method that creates Vu.
      * @param V type of Vu that invoke method returns.
      */
-    interface CreateVuFunction<out V> where  V : Vu {
+    interface CreateVuFunction<out V> where  V : Vu<out ViewBinding> {
 
         /**
          * @param layoutInflater the Inflater available to inflate Vu's rootView.
@@ -160,9 +171,11 @@ class MVPDispatcher<P, V> (val uid: Int,
          * @param parentView the ViewGroup that is the direct parent to Vu's rootView (Optional).
          * @return created Vu.
          */
-        fun invoke(layoutInflater: LayoutInflater,
-                   activity: Activity,
-                   fragment: androidx.fragment.app.Fragment?,
-                   parentView: ViewGroup?) : V
+        fun invoke(
+            layoutInflater: LayoutInflater,
+            activity: Activity,
+            fragment: Fragment?,
+            parentView: ViewGroup?,
+        ): V
     }
 }

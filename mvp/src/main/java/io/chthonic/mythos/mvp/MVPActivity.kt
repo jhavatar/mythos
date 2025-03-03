@@ -2,6 +2,7 @@ package io.chthonic.mythos.mvp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewbinding.ViewBinding
 
 
 /**
@@ -14,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
  * @param P type of Presenter.
  * @param V type of Vu.
  */
-abstract class MVPActivity<P, V>: AppCompatActivity() where P : Presenter<V>, V : Vu {
+abstract class MVPActivity<P, V>: AppCompatActivity() where P : Presenter<V>, V : Vu<out ViewBinding> {
     val mvpDispatcher: MVPDispatcher<P, V> by lazy {
         createMVPDispatcher()
     }

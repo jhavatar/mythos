@@ -5,6 +5,7 @@ Properties mythosProps = new Properties()
 mythosProps.load(project.rootProject.file('mythos.properties').newDataInputStream())
 
 android {
+    namespace = "io.chthonic.mythos.javaexample"
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
@@ -20,16 +21,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
-
+kotlin {
+    jvmToolchain(rootProject.ext.javaVersion)
+}
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
 
-    implementation "com.github.jhavatar.mythos:mvp:${mythosProps.getProperty("versionName")}"
-    implementation "com.github.jhavatar.mythos:viewmodel:${mythosProps.getProperty("versionName")}"
-//    implementation project(':mvp')
-//    implementation project(':viewmodel')
+//    implementation "com.github.jhavatar.mythos:mvp:${mythosProps.getProperty("versionName")}"
+//    implementation "com.github.jhavatar.mythos:viewmodel:${mythosProps.getProperty("versionName")}"
+    implementation project(':mvp')
+    implementation project(':viewmodel')
 }
 repositories {
     mavenCentral()

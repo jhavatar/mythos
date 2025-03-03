@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import io.chthonic.mythos.javaexample.R;
+import io.chthonic.mythos.javaexample.databinding.ActivityFusBinding;
 import io.chthonic.mythos.javaexample.ui.fragments.RoFragment;
 import io.chthonic.mythos.javaexample.ui.layouts.DahLayout;
 import io.chthonic.mythos.mvp.Vu;
@@ -17,7 +18,7 @@ import io.chthonic.mythos.mvp.Vu;
 /**
  * Created by jhavatar on 3/3/2016.
  */
-public class FusVu extends Vu {
+public class FusVu extends Vu<ActivityFusBinding> {
 
     private Runnable toggleRoListener = null;
     private Runnable toggleDahListener = null;
@@ -27,11 +28,6 @@ public class FusVu extends Vu {
                  Fragment fragment,
                  ViewGroup parentView) {
         super(layoutInflater, activity, fragment, parentView);
-    }
-
-    @Override
-    public int getRootViewLayoutId(){
-        return R.layout.activity_fus;
     }
 
     public Runnable getToggleRoListener() {

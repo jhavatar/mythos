@@ -1,6 +1,7 @@
 package io.chthonic.mythos.mvp
 
 import android.os.Bundle
+import androidx.viewbinding.ViewBinding
 import java.lang.ref.WeakReference
 
 /**
@@ -9,7 +10,7 @@ import java.lang.ref.WeakReference
  * The Presenter component of an MVP architectural pattern.
  * @param V type of Vu that is gets linked to Presenter.
  */
-abstract class Presenter<V> where V : Vu {
+abstract class Presenter<V> where V : Vu<out ViewBinding> {
 
     /** Memory-leak-safe reference to attached Vu */
     private var _vuRef: WeakReference<V>? = null
@@ -54,7 +55,7 @@ abstract class Presenter<V> where V : Vu {
         this._vuRef = WeakReference(vu)
         val nuVuHash = vu.hashCode()
         firstLinkWithVu = nuVuHash != lastVuHash
-        lastVuHash =  nuVuHash
+        lastVuHash = nuVuHash
     }
 
     /**

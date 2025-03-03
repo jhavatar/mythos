@@ -10,7 +10,8 @@ import android.os.Bundle
  * When a lifecycle event occurs, for all callbacks registered to lifecycle's key, call corresponding method.
  * @property keyMap maps key to support Activity class that represents the activity's lifecycle
  */
-class ActivityLifecycleDispatcher(val keyMap: Map<Class<out Activity>, String>): Application.ActivityLifecycleCallbacks, MVPLifecycleCallbackDispatcher {
+class ActivityLifecycleDispatcher(val keyMap: Map<Class<out Activity>, String>) :
+    Application.ActivityLifecycleCallbacks, MVPLifecycleCallbackDispatcher {
 
     /**
      *  List of keys that dispatcher supports where each key maps to a unique lifecycle flow.
@@ -67,45 +68,44 @@ class ActivityLifecycleDispatcher(val keyMap: Map<Class<out Activity>, String>):
         }
     }
 
-    override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {
+    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
         val callbacks = getCallbacks(activity)
         callbacks?.toList()?.forEach {
             it.onCreated(savedInstanceState)
         }
     }
 
-    override fun onActivityStarted(activity: Activity?) {
+    override fun onActivityStarted(activity: Activity) {
     }
 
-    override fun onActivityResumed(activity: Activity?) {
+    override fun onActivityResumed(activity: Activity) {
         val callbacks = getCallbacks(activity)
         callbacks?.toList()?.forEach {
             it.onResumed()
         }
     }
 
-    override fun onActivityPaused(activity: Activity?) {
+    override fun onActivityPaused(activity: Activity) {
         val callbacks = getCallbacks(activity)
         callbacks?.toList()?.forEach {
             it.onPaused()
         }
     }
 
-    override fun onActivityStopped(activity: Activity?) {
+    override fun onActivityStopped(activity: Activity) {
     }
 
-    override fun onActivityDestroyed(activity: Activity?) {
+    override fun onActivityDestroyed(activity: Activity) {
         val callbacks = getCallbacks(activity)
         callbacks?.toList()?.forEach {
             it.onDestroyed()
         }
     }
 
-    override fun onActivitySaveInstanceState(activity: Activity?, outState: Bundle?) {
+    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
         val callbacks = getCallbacks(activity)
         callbacks?.toList()?.forEach {
             it.onSaveInstanceState(outState)
         }
     }
-
 }
