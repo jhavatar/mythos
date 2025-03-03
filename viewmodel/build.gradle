@@ -85,7 +85,7 @@ artifacts {
 
 publishing {
     publications {
-        mavenJava(MavenPublication) {
+        release(MavenPublication) {
             pom {
                 name = "viewmodel"
                 description = 'ViewModel PresenterCache implementation for Mythos.'

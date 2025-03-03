@@ -87,7 +87,7 @@ artifacts {
 
 publishing {
     publications {
-        mavenJava(MavenPublication) {
+        release(MavenPublication) {
             pom {
                 name = "mvp"
                 description = 'Model-View-Presenter library for Android apps.'
