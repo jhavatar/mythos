@@ -84,33 +84,38 @@ artifacts {
 
 publishing {
     publications {
-        release(MavenPublication) {
-            pom {
-                name = "mvp"
-                description = 'Model-View-Presenter library for Android apps.'
-                url = siteUrl
-                packaging = 'aar'
-                groupId = group
-                artifactId = "mvp"
-                version = version
+        create("release", MavenPublication) {
+//            from components.release
+//            pom {
+//                name = "mvp"
+            description = 'Model-View-Presenter library for Android apps.'
+//                url = siteUrl
+//                packaging = 'aar'
+            groupId = group
+            artifactId = "mvp"
+            version = version
+            artifact sourcesJar
 
-                licenses {
-                    license {
-                        name = 'The Apache Software License, Version 2.0'
-                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                        distribution = 'repo'
-                    }
-                }
-                scm {
-                    connection = gitUrl
-                    url = siteUrl
-
-                }
-                developers {
-                    developer {
-                        name = 'jhavatar'
-                    }
-                }
+//                licenses {
+//                    license {
+//                        name = 'The Apache Software License, Version 2.0'
+//                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+//                        distribution = 'repo'
+//                    }
+//                }
+//                scm {
+//                    connection = gitUrl
+//                    url = siteUrl
+//
+//                }
+//                developers {
+//                    developer {
+//                        name = 'jhavatar'
+//                    }
+//                }
+//            }
+            afterEvaluate {
+                from components.release
             }
         }
     }

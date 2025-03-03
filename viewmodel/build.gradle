@@ -82,33 +82,38 @@ artifacts {
 
 publishing {
     publications {
-        release(MavenPublication) {
-            pom {
-                name = "viewmodel"
-                description = 'ViewModel PresenterCache implementation for Mythos.'
-                url = siteUrl
-                packaging = 'aar'
-                groupId = group
-                artifactId = "viewmodel"
-                version = version
-
-                licenses {
-                    license {
-                        name = 'The Apache Software License, Version 2.0'
-                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                        distribution = 'repo'
-                    }
-                }
-                scm {
-                    connection = gitUrl
-                    url = siteUrl
-
-                }
-                developers {
-                    developer {
-                        name = 'jhavatar'
-                    }
-                }
+        create("release", MavenPublication) {
+//            from components.release
+//            pom {
+//                name = "viewmodel"
+            description = 'ViewModel PresenterCache implementation for Mythos.'
+//                url = siteUrl
+//                packaging = 'aar'
+            groupId = group
+            artifactId = "viewmodel"
+            version = version
+            artifact sourcesJar
+//                licenses {
+//                    license {
+//                        name = 'The Apache Software License, Version 2.0'
+//                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+//                        distribution = 'repo'
+//                    }
+//                }
+//                scm {
+//                    connection = gitUrl
+//                    url = siteUrl
+//
+//                }
+//                developers {
+//                    developer {
+//                        name = 'jhavatar'
+//                    }
+//                }
+//            }
+//        }
+            afterEvaluate {
+                from components.release
             }
         }
     }
