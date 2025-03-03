@@ -1,10 +1,13 @@
 package io.chthonic.mythos.mvp
 
 import android.app.Activity
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
+import java.lang.reflect.Method
+import java.lang.reflect.ParameterizedType
 
 /**
  * Created by jhavatar on 3/3/2016.
@@ -17,17 +20,25 @@ import android.view.ViewGroup
  * @property parentView the ViewGroup that is the direct parent to Vu's rootView (Optional).
  * @constructor Creates MVP's View.
  */
-abstract class Vu(layoutInflater: LayoutInflater,
-                  val activity: Activity,
-                  val fragment: androidx.fragment.app.Fragment? = null,
-                  val parentView: ViewGroup? = null) {
+abstract class Vu<VB : ViewBinding>(
+    layoutInflater: LayoutInflater,
+    val activity: Activity,
+    val fragment: Fragment? = null,
+    val parentView: ViewGroup? = null,
+) {
+
+    /**
+     * The view binding of the views that the Vu manages.
+     */
+    val binding: VB by lazy {
+        inflateBinding(layoutInflater)
+    }
 
     /**
      * The root of the views that the Vu manages.
      */
-    val rootView : View by lazy {
-        createRootView(layoutInflater)
-    }
+    val rootView: View
+        get() = binding.root
 
     /**
      * True if Vu has been destroyed, i.e. rootView will no longer be referenced.
@@ -37,7 +48,7 @@ abstract class Vu(layoutInflater: LayoutInflater,
 
 
     /**
-     * Called after rootView is created.
+     * Called after binding is created.
      */
     open fun onCreate() {
 
@@ -51,25 +62,28 @@ abstract class Vu(layoutInflater: LayoutInflater,
     }
 
     /**
-     * Layout resource file that by default is inflated to be rootView of the Vu.
-     * Note, If not creating rootView from a layout resource file -- override createRootView().
-     * @return resource-id of a layout resource file.
+     * Inflate view binding
+     * NB, don't reference binding since this method creates it.
+     * Default implementation creates binding by inflating generic [VB]
+     * @return VieBinding that becomes the property's [binding].
      */
-    abstract fun getRootViewLayoutId() : Int
-
-    /**
-     * Create rootView.
-     * NB, don't reference rootView since this method creates it.
-     * Default implementation creates rootView by inflating getRootViewLayoutId()'s result.
-     * @return View that becomes property's rootView.
-     */
-    protected open fun createRootView(inflater: LayoutInflater) : View {
-        return if (parentView != null) {
-            inflater.inflate(getRootViewLayoutId(), parentView, false)
-            
+    open fun inflateBinding(inflater: LayoutInflater): VB {
+        val type =
+            (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<VB>
+        val inflateMethod: Method = if (parentView != null) {
+            type.getMethod(
+                "inflate",
+                LayoutInflater::class.java,
+                ViewGroup::class.java,
+                Boolean::class.java,
+            )
         } else {
-            inflater.inflate(getRootViewLayoutId(), null)
+            type.getMethod("inflate", LayoutInflater::class.java)
+        }
+        return if (parentView != null) {
+            inflateMethod.invoke(null, inflater, parentView, false) as VB
+        } else {
+            inflateMethod.invoke(null, inflater) as VB
         }
     }
-
 }

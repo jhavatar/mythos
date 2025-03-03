@@ -1,21 +1,23 @@
 package io.chthonic.mythos.javaexample.ui.vus;
 
 import android.app.Activity;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+
 import io.chthonic.mythos.javaexample.R;
+import io.chthonic.mythos.javaexample.databinding.FragmentRoBinding;
 import io.chthonic.mythos.javaexample.ui.layouts.DahLayout;
 import io.chthonic.mythos.mvp.Vu;
 
 /**
  * Created by jhavatar on 3/22/2016.
  */
-public class RoVu extends Vu {
+public class RoVu extends Vu<FragmentRoBinding> {
 
     private Runnable toggleDahListener = null;
 
@@ -39,11 +41,6 @@ public class RoVu extends Vu {
                 }
             }
         });
-    }
-
-    @Override
-    public int getRootViewLayoutId() {
-        return R.layout.fragment_ro;
     }
 
     public Runnable getToggleDahListener() {

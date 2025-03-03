@@ -1,10 +1,11 @@
 package io.chthonic.mythos.mvp
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 
 /**
  * Created by jhavatar on 3/4/2016.
@@ -16,7 +17,7 @@ import android.view.ViewGroup
  * @param P type of Presenter.
  * @param V type of Vu.
  */
-abstract class MVPFragment<P, V> : androidx.fragment.app.Fragment() where P : Presenter<V>, V : Vu {
+abstract class MVPFragment<P, V> : Fragment() where P : Presenter<V>, V : Vu<out ViewBinding> {
 
     val mvpDispatcher: MVPDispatcher<P, V> by lazy {
         createMVPDispatcher()
@@ -27,15 +28,19 @@ abstract class MVPFragment<P, V> : androidx.fragment.app.Fragment() where P : Pr
      */
     abstract fun createMVPDispatcher(): MVPDispatcher<P, V>
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?) : View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
 
         mvpDispatcher.restorePresenterState(savedInstanceState)
-        mvpDispatcher.createVu(inflater,
-                activity = checkNotNull(this.activity),
-                fragment = this,
-                parentView = container)
+        mvpDispatcher.createVu(
+            inflater,
+            activity = checkNotNull(this.activity),
+            fragment = this,
+            parentView = container,
+        )
         return checkNotNull(mvpDispatcher.vu).rootView
     }
 
@@ -59,7 +64,7 @@ abstract class MVPFragment<P, V> : androidx.fragment.app.Fragment() where P : Pr
         super.onDestroy()
     }
 
-    override fun onSaveInstanceState (outState: Bundle) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         mvpDispatcher.savePresenterState(outState)
     }

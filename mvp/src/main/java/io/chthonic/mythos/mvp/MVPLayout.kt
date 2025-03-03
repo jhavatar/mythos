@@ -5,11 +5,12 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
-import androidx.annotation.RequiresApi
-import androidx.core.view.ViewCompat
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import androidx.annotation.RequiresApi
+import androidx.core.view.ViewCompat
+import androidx.viewbinding.ViewBinding
 import kotlin.properties.ObservableProperty
 import kotlin.reflect.KProperty
 
@@ -23,7 +24,8 @@ import kotlin.reflect.KProperty
  * @param P type of Presenter.
  * @param V type of Vu.
  */
-abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
+abstract class MVPLayout<P, V> :
+    FrameLayout where P : Presenter<V>, V : Vu<out ViewBinding> {
 
     companion object {
         const val ARGS_KEY = "_args_key"
@@ -39,9 +41,13 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
      * key to optionally access a ui lifecycle. e.g. from previously registered with, same key, activity or fragment.
      * Note, will auto re-register when key is changed.
      */
-    var lifecycleCallbackKey: String? by object:ObservableProperty<String?>(null) {
+    var lifecycleCallbackKey: String? by object : ObservableProperty<String?>(null) {
 
-        override fun beforeChange(property: KProperty<*>, oldValue: String?, newValue: String?): Boolean {
+        override fun beforeChange(
+            property: KProperty<*>,
+            oldValue: String?,
+            newValue: String?,
+        ): Boolean {
             if ((oldValue != newValue) && ViewCompat.isAttachedToWindow(this@MVPLayout)) {
                 unregisterLifecycleCallback()
             }
@@ -64,12 +70,21 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
         initAttrs(context, attrs)
     }
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr,
+    ) {
         initAttrs(context, attrs, defStyleAttr = defStyleAttr)
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) : super(
+        context,
+        attrs,
+        defStyleAttr,
+        defStyleRes,
+    ) {
         initAttrs(context, attrs, defStyleAttr = defStyleAttr, defStyleRes = defStyleRes)
     }
 
@@ -91,22 +106,29 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
      */
     protected abstract fun unregisterLifecycleCallback()
 
-    fun initAttrs(context: Context?, attrs: AttributeSet?, defStyleAttr: Int = 0, defStyleRes: Int = 0) {
+    fun initAttrs(
+        context: Context?,
+        attrs: AttributeSet?,
+        defStyleAttr: Int = 0,
+        defStyleRes: Int = 0,
+    ) {
         if (attrs != null) {
             val ta = context?.obtainStyledAttributes(
-                    attrs,
-                    R.styleable.MVPLayout,
-                    defStyleAttr,
-                    defStyleRes)
+                attrs,
+                R.styleable.MVPLayout,
+                defStyleAttr,
+                defStyleRes,
+            )
 
-            lifecycleCallbackKey = ta?.getString(R.styleable.MVPLayout_mvplayout_callback_key) ?: lifecycleCallbackKey
+            lifecycleCallbackKey =
+                ta?.getString(R.styleable.MVPLayout_mvplayout_callback_key) ?: lifecycleCallbackKey
             ta?.recycle()
         }
     }
 
 
     protected val lifecycleCallback: MVPLifecycleCallback by lazy {
-        object:MVPLifecycleCallback {
+        object : MVPLifecycleCallback {
             private var created: Boolean = false
             private var resumed: Boolean = false
 
@@ -114,9 +136,11 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
                 if (!created) {
                     created = true
 
-                    mvpDispatcher.createVu(LayoutInflater.from(context),
-                            activity = context as Activity,
-                            parentView = this@MVPLayout)
+                    mvpDispatcher.createVu(
+                        LayoutInflater.from(context),
+                        activity = context as Activity,
+                        parentView = this@MVPLayout,
+                    )
                     addView(checkNotNull(mvpDispatcher.vu).rootView)
                 }
             }
@@ -160,7 +184,7 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
     }
 
 
-    override fun onRestoreInstanceState (inState: Parcelable) {
+    override fun onRestoreInstanceState(inState: Parcelable) {
         super.onRestoreInstanceState(null)
 
         val inBundle: Bundle = inState as Bundle
@@ -173,7 +197,7 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
         }
     }
 
-    override fun onSaveInstanceState (): Parcelable {
+    override fun onSaveInstanceState(): Parcelable {
         super.onSaveInstanceState()
         val outState = Bundle()
 
@@ -190,7 +214,7 @@ abstract class MVPLayout<P, V>: FrameLayout  where P : Presenter<V>, V : Vu {
         return outState
     }
 
-    override fun onAttachedToWindow(){
+    override fun onAttachedToWindow() {
         super.onAttachedToWindow()
 
         registerLifecycleCallback()

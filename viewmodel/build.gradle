@@ -11,7 +11,7 @@ buildscript {
 }
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'maven-publish'
 apply plugin: 'org.jetbrains.dokka'
 
 Properties mythosProps = new Properties()
@@ -22,6 +22,7 @@ def siteUrl = 'https://github.com/jhavatar/mythos'
 def gitUrl = 'https://github.com/jhavatar/mythos.git'
 
 android {
+    namespace = "io.chthonic.mythos.viewmodel"
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
@@ -41,7 +42,9 @@ android {
     }
 
 }
-
+kotlin {
+    jvmToolchain(rootProject.ext.javaVersion)
+}
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':mvp')
@@ -55,18 +58,18 @@ dependencies {
 
 if (project.hasProperty("android")) { // Android libraries
     task sourcesJar(type: Jar) {
-        classifier = 'sources'
+        archiveClassifier.set('sources')
         from android.sourceSets.main.java.srcDirs
     }
 } else { // Java libraries
     task sourcesJar(type: Jar, dependsOn: classes) {
-        classifier = 'sources'
+        archiveClassifier.set('sources')
         from sourceSets.main.allSource
     }
 }
 
 task javadocJar(type: Jar, dependsOn: dokka) {
-    classifier = 'javadoc'
+    archiveClassifier = 'javadoc'
     from "$buildDir/javadoc"
 }
 dokka {
@@ -80,32 +83,34 @@ artifacts {
     archives sourcesJar
 }
 
-install {
-    repositories.mavenInstaller {
-        pom.project {
-            name = "viewmodel"
-            description 'ViewModel PresenterCache implementation for Mythos.'
-            url siteUrl
-            packaging 'aar'
-            groupId group
-            artifactId = "viewmodel"
-            version version
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            pom {
+                name = "viewmodel"
+                description = 'ViewModel PresenterCache implementation for Mythos.'
+                url = siteUrl
+                packaging = 'aar'
+                groupId = group
+                artifactId = "viewmodel"
+                version = version
 
-            licenses {
-                license {
-                    name 'The Apache Software License, Version 2.0'
-                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    distribution 'repo'
+                licenses {
+                    license {
+                        name = 'The Apache Software License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution = 'repo'
+                    }
                 }
-            }
-            scm {
-                connection gitUrl
-                url siteUrl
+                scm {
+                    connection = gitUrl
+                    url = siteUrl
 
-            }
-            developers {
-                developer {
-                    name 'jhavatar'
+                }
+                developers {
+                    developer {
+                        name = 'jhavatar'
+                    }
                 }
             }
         }

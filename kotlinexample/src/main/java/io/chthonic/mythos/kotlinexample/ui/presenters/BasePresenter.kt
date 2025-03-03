@@ -1,13 +1,14 @@
 package io.chthonic.mythos.kotlinexample.ui.presenters
 
 import android.os.Bundle
+import androidx.viewbinding.ViewBinding
 import io.chthonic.mythos.mvp.Presenter
 import io.chthonic.mythos.mvp.Vu
 
 /**
  * Created by jhavatar on 8/12/2018.
  */
-abstract class BasePresenter<V>: Presenter<V>() where V : Vu {
+abstract class BasePresenter<V>: Presenter<V>() where V : Vu<out ViewBinding> {
     companion object {
         private const val SAVE_KEY = "save_key"
     }
