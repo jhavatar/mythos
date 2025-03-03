@@ -31,7 +31,6 @@ kotlin {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
-
 //    implementation "com.github.jhavatar.mythos:mvp:${mythosProps.getProperty("versionName")}"
 //    implementation "com.github.jhavatar.mythos:viewmodel:${mythosProps.getProperty("versionName")}"
     implementation project(':mvp')

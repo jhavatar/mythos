@@ -5,8 +5,6 @@ buildscript {
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${rootProject.ext.kotlin_version}"
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
-        classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.16"
     }
 }
 apply plugin: 'com.android.library'
@@ -72,10 +70,9 @@ task javadocJar(type: Jar, dependsOn: dokka) {
     archiveClassifier = 'javadoc'
     from "$buildDir/javadoc"
 }
-dokka {
-//    moduleName = 'mvp'
-    outputFormat = 'javadoc'
-    outputDirectory = "$buildDir/javadoc"
+
+tasks.dokkaJavadoc {
+    outputDirectory.set(file(buildDir).toPath().resolve("dokka/javadoc").toFile())
 }
 
 artifacts {
