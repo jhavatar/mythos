@@ -13,13 +13,13 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 dependencies {
-    implementation "com.github.jhavatar.mythos:mvp:1.2.0"
+    implementation "com.github.jhavatar.mythos:mvp:2.0.5"
 }
 ```
 
 For a [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) based implementation, also include
 ```groovy
-    implementation "com.github.jhavatar.mythos:viewmodel:1.2.0"
+    implementation "com.github.jhavatar.mythos:viewmodel:2.0.5"
 ```
 
 ## Introduction
@@ -54,6 +54,9 @@ See the Kotlin or Java example in the project for a guide.
 - onDestroy()
 
 ## Change log
+v2.0.5
+- Switch from Koptlin extensions to `ViewBinding`
+ 
 v1.2.0
 - Switch from support lib to AndroidX
 
