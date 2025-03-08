@@ -1,6 +1,9 @@
 package io.chthonic.mythos.javaexample.ui.vus;
 
 import android.app.Activity;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 
 import io.chthonic.mythos.javaexample.R;
 import io.chthonic.mythos.javaexample.databinding.ActivityFusBinding;
+import io.chthonic.mythos.javaexample.databinding.LayoutDahBinding;
 import io.chthonic.mythos.javaexample.ui.fragments.RoFragment;
 import io.chthonic.mythos.javaexample.ui.layouts.DahLayout;
 import io.chthonic.mythos.mvp.Vu;
@@ -44,6 +48,16 @@ public class FusVu extends Vu<ActivityFusBinding> {
 
     public void setToggleDahListener(Runnable toggleDahListener) {
         this.toggleDahListener = toggleDahListener;
+    }
+
+    @NonNull
+    @Override
+    protected ActivityFusBinding inflateBinding(@NonNull LayoutInflater layoutInflater, @Nullable ViewGroup parentView) {
+        if (parentView != null) {
+            return ActivityFusBinding.inflate(layoutInflater, parentView, false);
+        } else {
+            return ActivityFusBinding.inflate(layoutInflater);
+        }
     }
 
     @Override

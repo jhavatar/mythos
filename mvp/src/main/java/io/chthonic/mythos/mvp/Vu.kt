@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import java.lang.reflect.Method
-import java.lang.reflect.ParameterizedType
 
 /**
  * Created by jhavatar on 3/3/2016.
@@ -31,7 +29,7 @@ abstract class Vu<VB : ViewBinding>(
      * The view binding of the views that the Vu manages.
      */
     val binding: VB by lazy {
-        inflateBinding(layoutInflater)
+        inflateBinding(layoutInflater, parentView)
     }
 
     /**
@@ -46,6 +44,15 @@ abstract class Vu<VB : ViewBinding>(
     var destroyed: Boolean = false
         private set
 
+    /**
+     * Inflate view binding
+     * NB, don't reference [binding] since this method creates it.
+     * @return VieBinding that becomes property [binding].
+     */
+    protected abstract fun inflateBinding(
+        layoutInflater: LayoutInflater,
+        parentView: ViewGroup?
+    ): VB
 
     /**
      * Called after binding is created.
@@ -59,31 +66,5 @@ abstract class Vu<VB : ViewBinding>(
      */
     open fun onDestroy() {
         destroyed = true
-    }
-
-    /**
-     * Inflate view binding
-     * NB, don't reference binding since this method creates it.
-     * Default implementation creates binding by inflating generic [VB]
-     * @return VieBinding that becomes the property's [binding].
-     */
-    open fun inflateBinding(inflater: LayoutInflater): VB {
-        val type =
-            (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<VB>
-        val inflateMethod: Method = if (parentView != null) {
-            type.getMethod(
-                "inflate",
-                LayoutInflater::class.java,
-                ViewGroup::class.java,
-                Boolean::class.java,
-            )
-        } else {
-            type.getMethod("inflate", LayoutInflater::class.java)
-        }
-        return if (parentView != null) {
-            inflateMethod.invoke(null, inflater, parentView, false) as VB
-        } else {
-            inflateMethod.invoke(null, inflater) as VB
-        }
     }
 }

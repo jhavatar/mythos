@@ -14,18 +14,28 @@ import io.chthonic.mythos.mvp.Vu
  * Created by jhavatar on 3/22/2016.
  */
 class RoVu(
-    inflater: LayoutInflater,
+    layoutInflater: LayoutInflater,
     activity: Activity,
     fragment: Fragment? = null,
     parentView: ViewGroup? = null,
 ) : Vu<FragmentRoBinding>(
-    inflater,
+    layoutInflater,
     activity = activity,
     fragment = fragment,
     parentView = parentView,
 ) {
 
     var toggleDahListener: (() -> Unit)? = null
+
+    override fun inflateBinding(
+        layoutInflater: LayoutInflater,
+        parentView: ViewGroup?,
+    ): FragmentRoBinding =
+        if (parentView != null) {
+            FragmentRoBinding.inflate(layoutInflater, parentView, false)
+        } else {
+            FragmentRoBinding.inflate(layoutInflater)
+        }
 
     override fun onCreate() {
         super.onCreate()

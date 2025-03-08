@@ -25,4 +25,14 @@ public class DahVu extends Vu<LayoutDahBinding> {
     public void setText(String text) {
         ((TextView) getRootView().findViewById(R.id.dah_text)).setText(text);
     }
+
+    @NonNull
+    @Override
+    protected LayoutDahBinding inflateBinding(@NonNull LayoutInflater layoutInflater, @Nullable ViewGroup parentView) {
+        if (parentView != null) {
+            return LayoutDahBinding.inflate(layoutInflater, parentView, false);
+        } else {
+            return LayoutDahBinding.inflate(layoutInflater);
+        }
+    }
 }

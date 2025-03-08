@@ -15,12 +15,12 @@ import io.chthonic.mythos.mvp.Vu
  * Created by jhavatar on 3/3/2016.
  */
 class FusVu(
-    inflater: LayoutInflater,
+    layoutInflater: LayoutInflater,
     activity: Activity,
     fragment: Fragment? = null,
     parentView: ViewGroup? = null,
 ) : Vu<ActivityFusBinding>(
-    inflater,
+    layoutInflater,
     activity = activity,
     fragment = fragment,
     parentView = parentView,
@@ -28,6 +28,16 @@ class FusVu(
 
     var toggleRoListener: (() -> Unit)? = null
     var toggleDahListener: (() -> Unit)? = null
+
+    override fun inflateBinding(
+        layoutInflater: LayoutInflater,
+        parentView: ViewGroup?,
+    ): ActivityFusBinding =
+        if (parentView != null) {
+            ActivityFusBinding.inflate(layoutInflater, parentView, false)
+        } else {
+            ActivityFusBinding.inflate(layoutInflater)
+        }
 
     override fun onCreate() {
         super.onCreate()

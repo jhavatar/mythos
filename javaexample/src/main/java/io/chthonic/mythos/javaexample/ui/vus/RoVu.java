@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import io.chthonic.mythos.javaexample.R;
@@ -27,6 +29,16 @@ public class RoVu extends Vu<FragmentRoBinding> {
                 ViewGroup parentView) {
 
         super(layoutInflater, activity, fragment, parentView);
+    }
+
+    @NonNull
+    @Override
+    protected FragmentRoBinding inflateBinding(@NonNull LayoutInflater layoutInflater, @Nullable ViewGroup parentView) {
+        if (parentView != null) {
+            return FragmentRoBinding.inflate(layoutInflater, parentView, false);
+        } else {
+            return FragmentRoBinding.inflate(layoutInflater);
+        }
     }
 
     @Override

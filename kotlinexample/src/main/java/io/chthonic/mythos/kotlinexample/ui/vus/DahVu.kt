@@ -11,12 +11,12 @@ import io.chthonic.mythos.mvp.Vu
  * Created by jhdev on 3/30/2016.
  */
 class DahVu(
-    inflater: LayoutInflater,
+    layoutInflater: LayoutInflater,
     activity: Activity,
     fragment: Fragment? = null,
     parentView: ViewGroup? = null,
 ) : Vu<LayoutDahBinding>(
-    inflater,
+    layoutInflater,
     activity = activity,
     fragment = fragment,
     parentView = parentView,
@@ -25,4 +25,14 @@ class DahVu(
     fun setText(text: String) {
         binding.dahText.text = text
     }
+
+    override fun inflateBinding(
+        layoutInflater: LayoutInflater,
+        parentView: ViewGroup?,
+    ): LayoutDahBinding =
+        if (parentView != null) {
+            LayoutDahBinding.inflate(layoutInflater, parentView, false)
+        } else {
+            LayoutDahBinding.inflate(layoutInflater)
+        }
 }
