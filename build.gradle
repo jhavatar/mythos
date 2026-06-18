@@ -38,7 +38,7 @@ allprojects {
 ext {
     compileSdkVersion = 36
     targetSdkVersion = 36
-    minSdkVersion = 21
+    minSdkVersion = 23
     baseXAndroidVersion = '1.7.1'
     lifecycleVersion = '2.11.0'
     javaVersion = 17
