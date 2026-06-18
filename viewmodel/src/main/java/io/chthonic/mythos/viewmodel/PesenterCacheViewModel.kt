@@ -2,7 +2,6 @@ package io.chthonic.mythos.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import io.chthonic.mythos.mvp.Presenter
 import io.chthonic.mythos.mvp.PresenterCache
 import io.chthonic.mythos.mvp.PresenterCacheBasicLazy
@@ -20,7 +19,7 @@ class PesenterCacheViewModel<P> : ViewModel() where P : Presenter<*> {
          */
         @JvmStatic
         fun <P>getViewModelPresenterCache(activity: androidx.fragment.app.FragmentActivity, uid: Int, presenterFactory: () -> P): PresenterCache<P> where P : Presenter<*> {
-            return getViewModelPresenterCache(ViewModelProviders.of(activity), uid, presenterFactory)
+            return getViewModelPresenterCache(ViewModelProvider(activity), uid, presenterFactory)
         }
 
         @JvmStatic
@@ -33,7 +32,7 @@ class PesenterCacheViewModel<P> : ViewModel() where P : Presenter<*> {
          */
         @JvmStatic
         fun <P>getViewModelPresenterCache(fragment: androidx.fragment.app.Fragment, uid: Int, presenterFactory: () -> P): PresenterCache<P> where P : Presenter<*> {
-            return getViewModelPresenterCache(ViewModelProviders.of(fragment), uid, presenterFactory)
+            return getViewModelPresenterCache(ViewModelProvider(fragment), uid, presenterFactory)
         }
 
         @JvmStatic
@@ -58,7 +57,7 @@ class PesenterCacheViewModel<P> : ViewModel() where P : Presenter<*> {
     var cache: PresenterCache<P>? = null
         set(value) {
             value?.let{
-                assert(!it.mvpDispatcherShouldDestroy) {"mvpDispatcherShouldDestroy should be false for this implementation."}
+                require(!it.mvpDispatcherShouldDestroy) {"mvpDispatcherShouldDestroy should be false for this implementation."}
             }
             field = value
         }

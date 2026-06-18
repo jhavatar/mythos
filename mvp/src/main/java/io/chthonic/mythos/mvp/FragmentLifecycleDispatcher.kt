@@ -7,6 +7,9 @@ import android.view.View
  * Interface required by MVPLifecycleCallbackManager for lifecycle event dispatcher.
  * Provide key for each unique lifecycle flow that it supports.
  * When a lifecycle event occurs, for all callbacks registered to lifecycle's key, call corresponding method.
+ *
+ * Note, callbacks are looked up by Fragment class, not Fragment instance. If more than one instance of the
+ * same Fragment class is alive at once, all instances share the same registered callbacks for that class's key.
  * @property keyMap maps key to support fragments class that represents the fragment's lifecycle
  */
 class FragmentLifecycleDispatcher(val keyMap: Map<Class<out androidx.fragment.app.Fragment>, String>): androidx.fragment.app.FragmentManager.FragmentLifecycleCallbacks(), MVPLifecycleCallbackDispatcher {

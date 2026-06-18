@@ -8,6 +8,10 @@ import android.os.Bundle
  * Interface required by MVPLifecycleCallbackManager for lifecycle event dispatcher.
  * Provide key for each unique lifecycle flow that it supports.
  * When a lifecycle event occurs, for all callbacks registered to lifecycle's key, call corresponding method.
+ *
+ * Note, callbacks are looked up by Activity class, not Activity instance. If more than one instance of the
+ * same Activity class is alive at once (e.g. multi-window/multi-instance launch), all instances share the
+ * same registered callbacks for that class's key.
  * @property keyMap maps key to support Activity class that represents the activity's lifecycle
  */
 class ActivityLifecycleDispatcher(val keyMap: Map<Class<out Activity>, String>) :

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.os.Parcel
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -30,6 +31,29 @@ abstract class MVPLayout<P, V> :
     companion object {
         const val ARGS_KEY = "_args_key"
         const val MVP_STATE_KEY = "_mvp_state_key"
+    }
+
+    private class SavedState : BaseSavedState {
+        var payload: Bundle? = null
+
+        constructor(superState: Parcelable?) : super(superState)
+
+        constructor(source: Parcel) : super(source) {
+            payload = source.readBundle(javaClass.classLoader)
+        }
+
+        override fun writeToParcel(out: Parcel, flags: Int) {
+            super.writeToParcel(out, flags)
+            out.writeBundle(payload)
+        }
+
+        companion object {
+            @JvmField
+            val CREATOR: Parcelable.Creator<SavedState> = object : Parcelable.Creator<SavedState> {
+                override fun createFromParcel(source: Parcel): SavedState = SavedState(source)
+                override fun newArray(size: Int): Array<SavedState?> = arrayOfNulls(size)
+            }
+        }
     }
 
     val mvpDispatcher: MVPDispatcher<P, V> by lazy {
@@ -185,20 +209,26 @@ abstract class MVPLayout<P, V> :
 
 
     override fun onRestoreInstanceState(inState: Parcelable) {
-        super.onRestoreInstanceState(null)
-
-        val inBundle: Bundle = inState as Bundle
-        if (inBundle.containsKey(ARGS_KEY)) {
-            args = inBundle.getBundle(ARGS_KEY)
+        if (inState !is SavedState) {
+            super.onRestoreInstanceState(inState)
+            return
         }
-        if (inBundle.containsKey(MVP_STATE_KEY)) {
-            val mvpState: Bundle? = inBundle.getBundle(MVP_STATE_KEY)
-            mvpDispatcher.restorePresenterState(mvpState)
+        super.onRestoreInstanceState(inState.superState)
+
+        val inBundle: Bundle? = inState.payload
+        if (inBundle != null) {
+            if (inBundle.containsKey(ARGS_KEY)) {
+                args = inBundle.getBundle(ARGS_KEY)
+            }
+            if (inBundle.containsKey(MVP_STATE_KEY)) {
+                val mvpState: Bundle? = inBundle.getBundle(MVP_STATE_KEY)
+                mvpDispatcher.restorePresenterState(mvpState)
+            }
         }
     }
 
     override fun onSaveInstanceState(): Parcelable {
-        super.onSaveInstanceState()
+        val savedState = SavedState(super.onSaveInstanceState())
         val outState = Bundle()
 
         val mvpStateNew = Bundle()
@@ -211,7 +241,8 @@ abstract class MVPLayout<P, V> :
             outState.putParcelable(ARGS_KEY, args)
         }
 
-        return outState
+        savedState.payload = outState
+        return savedState
     }
 
     override fun onAttachedToWindow() {
